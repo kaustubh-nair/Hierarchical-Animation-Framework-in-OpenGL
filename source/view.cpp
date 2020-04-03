@@ -3,8 +3,8 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 Camera camera;
-float WIDTH = 800.0f;
-float HEIGHT = 600.0f;
+float WIDTH = 3000.0f;
+float HEIGHT = 2250.0f;
 bool firstMouse;  //first mouse click
 
 GLFWwindow* View::initialize_window()

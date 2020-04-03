@@ -11,8 +11,9 @@ void Controller::mainLoop( void )
   GLFWwindow* window = this->mainWindow;
 
   /* load ply files into model */
-  std::vector<std::string> filepaths = {"data/beethoven.ply", "data/fracttree.ply", "data/teapot.ply" , "data/big_spider.ply"};
-  std::vector<glm::vec3> meshPos = {glm::vec3(0.0f,0.0f,-30.0f), glm::vec3(-200.0f,-200.0f,0.0f), glm::vec3(200.0f,-200.0f,0.0f), glm::vec3(200.0f,200.0f,0.0f)};
+  std::vector<std::string> filepaths;
+  std::vector<glm::vec3> meshPos;
+  loadPlyFiles(filepaths, meshPos);
   model.setup(filepaths, meshPos);
 
   /* setup shaders */
@@ -20,7 +21,7 @@ void Controller::mainLoop( void )
   Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
   Shader normalColoringShader("source/shaders/normal_coloring_shader.vs", "source/shaders/normal_coloring_shader.fs");
 
-  glm::mat4 proj = glm::ortho(-(WIDTH / 2.0f), WIDTH / 2.0f, -(HEIGHT / 2.0f),HEIGHT / 2.0f, -100.0f, 100.0f);
+  glm::mat4 proj = glm::ortho(-(WIDTH / 2.0f), WIDTH / 2.0f, -(HEIGHT / 2.0f),HEIGHT / 2.0f, -1000.0f, 1000.0f);
   glm::mat4 viewMatrix = view.getViewMatrix();
 
   glEnable(GL_DEPTH_TEST);
@@ -47,7 +48,7 @@ void Controller::mainLoop( void )
     shader.setMat4("projection", proj);
     shader.setMat4("view", viewMatrix);
     shader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
-    shader.setVec3("lightPos",60.5f, 60.5f, 99.0f );
+    shader.setVec3("lightPos",60.5f, 60.5f,90.0f );
 
     model.draw(shader, lightingShader);
 
@@ -120,4 +121,21 @@ void Controller::toggleWireframe()
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
   else
     glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+}
+
+void Controller::loadPlyFiles(std::vector<std::string> &filepaths, std::vector<glm::vec3> &meshPos)
+{
+  // loading 9 spheres
+  /*
+  float dist = 400.0f;
+  for(int i = -1; i < 2; i++)
+  {
+    for(int j = -1; j < 2; j++)
+     {
+        filepaths.push_back("data/beethoven.ply");
+        meshPos.push_back(glm::vec3(dist * i, dist * j, 0.0f));
+     }
+   }*/
+    filepaths.push_back("data/teapot.ply");
+    meshPos.push_back(glm::vec3(0.0f,0.0f, 0.0f));
 }
