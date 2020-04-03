@@ -5,6 +5,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "../include/definitions.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "../include/stb_image.h"
+
 int main()
 {
     Controller *controller = new Controller();
