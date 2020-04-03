@@ -4,7 +4,7 @@
 int ID = 1;
 int num_segments = 10;
 
-Mesh::Mesh(std::string filepath, glm::vec3 position)
+Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
 {
     id = ID;
     selected = false;
@@ -17,6 +17,7 @@ Mesh::Mesh(std::string filepath, glm::vec3 position)
     scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(275.0f,275.0f,275.0f));
     rotationMatrix = glm::mat4(1.0f);
     splatMultipler = 1.0f;
+    texturePath = texture;
 }
 
 void Mesh::setupSplats()
@@ -37,7 +38,7 @@ void Mesh::setupSplats()
 }
 
 
-void Mesh::setup()
+void Mesh::generateTextureObject()
 {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -48,7 +49,8 @@ void Mesh::setup()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load and generate the texture
     int width, height, nrChannels;
-    unsigned char *data = stbi_load("data/frontend-large.jpg", &width, &height, &nrChannels, 0);
+    const char* path = texturePath.c_str();
+    unsigned char *data = stbi_load(path, &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -59,8 +61,13 @@ void Mesh::setup()
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
+}
 
 
+void Mesh::setup()
+{
+
+    generateTextureObject();
     std::vector<Vertex>::iterator vertex;
     float x,y,z,d;
 

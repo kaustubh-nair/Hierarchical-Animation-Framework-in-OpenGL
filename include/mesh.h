@@ -28,7 +28,7 @@ class Mesh {
     std::vector<Vertex> inCircleVertices;
     std::vector<GLuint> fanStartingElements;
 
-    Mesh(std::string filepath, glm::vec3 position);
+    Mesh(std::string filepath, glm::vec3 position, std::string texturePath);
     void setup();
     void draw(Shader shader);
     void setupSplats();
@@ -42,6 +42,9 @@ class Mesh {
     void rotate(glm::vec2 direction);
     void changeSplatRadius(int direction);
     void addToInCircles(glm::vec3 normal, glm::vec3 vertex, bool center);
+    void generateTextureObject();
+
+    std::string texturePath;
 
 
   private:

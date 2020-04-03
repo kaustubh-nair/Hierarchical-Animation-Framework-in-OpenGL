@@ -13,8 +13,10 @@ void Controller::mainLoop( void )
     /* load ply files into model */
     std::vector<std::string> filepaths;
     std::vector<glm::vec3> meshPos;
-    loadPlyFiles(filepaths, meshPos);
-    model.setup(filepaths, meshPos);
+    std::vector<std::string> texturePaths;
+
+    loadPlyFiles(filepaths, meshPos, texturePaths);
+    model.setup(filepaths, meshPos, texturePaths);
 
     /* setup shaders */
     Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
@@ -123,7 +125,7 @@ void Controller::toggleWireframe()
         glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 }
 
-void Controller::loadPlyFiles(std::vector<std::string> &filepaths, std::vector<glm::vec3> &meshPos)
+void Controller::loadPlyFiles(std::vector<std::string> &filepaths, std::vector<glm::vec3> &meshPos, std::vector<std::string> &texturePaths)
 {
     // loading 9 spheres
     /*
@@ -136,6 +138,7 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths, std::vector<g
                 meshPos.push_back(glm::vec3(dist * i, dist * j, 0.0f));
           }
       }*/
-        filepaths.push_back("data/sphere.ply");
-        meshPos.push_back(glm::vec3(0.0f,0.0f, 0.0f));
+    filepaths.push_back("data/sphere.ply");
+    meshPos.push_back(glm::vec3(0.0f,0.0f, 0.0f));
+    texturePaths.push_back("data/container.jpg");
 }

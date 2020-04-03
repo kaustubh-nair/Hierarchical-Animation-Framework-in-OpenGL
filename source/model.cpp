@@ -5,18 +5,21 @@ Model::Model()
     selectedMesh = -1;
     renderSplats = false;
 }
-void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos)
+
+void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos, std::vector<std::string> texturePaths)
 {
     std::vector<std::string>::iterator filepath;
     std::vector<glm::vec3>::iterator position = meshPos.begin();
+    std::vector<std::string>::iterator texturePath = texturePaths.begin();
 
     for (filepath = filepaths.begin(); filepath < filepaths.end(); filepath++)
     {
-        Mesh mesh(*filepath, *position);
+        Mesh mesh(*filepath, *position, *texturePath);
         mesh.setup();
         meshes.push_back(mesh);
 
         position++;
+        texturePath++;
     }
 
 }

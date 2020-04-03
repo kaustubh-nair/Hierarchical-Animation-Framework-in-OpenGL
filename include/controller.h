@@ -31,7 +31,7 @@ class Controller {
     void mainLoop();
     void reactToCallback(int ret);
     void toggleWireframe();
-    void loadPlyFiles(std::vector<std::string> &filepaths, std::vector<glm::vec3> &meshPos);
+    void loadPlyFiles(std::vector<std::string> &filepaths, std::vector<glm::vec3> &meshPos, std::vector<std::string> &texturePaths);
 
   private:
 };

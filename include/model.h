@@ -12,7 +12,7 @@ class Model
     bool renderSplats;
 
     Model();
-    void setup(std::vector<std::string> filepaths, std::vector<glm::vec3> locations);
+    void setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos, std::vector<std::string> texturePaths);
     void draw(Shader shader, Shader lightingShader);
     void refresh();
     void changeSplatRadius(int direction);
