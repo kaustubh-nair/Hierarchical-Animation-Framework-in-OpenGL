@@ -5,6 +5,6 @@
 
 class Texture 
 {
-}
+};
 
 #endif
