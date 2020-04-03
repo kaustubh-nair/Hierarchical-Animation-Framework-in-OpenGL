@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <string>
 #include <vector>
+#include <cmath>
 
 #include "../include/ply_parser.h"
 #include "../include/vertex.h"
@@ -43,6 +44,7 @@ class Mesh {
     void changeSplatRadius(int direction);
     void addToInCircles(glm::vec3 normal, glm::vec3 vertex, bool center);
     void generateTextureObject();
+    void computeTextureMapping();
 
     std::string texturePath;
 

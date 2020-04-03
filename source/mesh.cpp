@@ -45,8 +45,8 @@ void Mesh::generateTextureObject()
     // set the texture wrapping/filtering options (on the currently bound texture object)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     // load and generate the texture
     int width, height, nrChannels;
     const char* path = texturePath.c_str();
@@ -64,19 +64,24 @@ void Mesh::generateTextureObject()
 }
 
 
+void Mesh::computeTextureMapping()
+{
+    std::vector<Vertex>::iterator vertex;
+    float u, v;
+
+    for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
+    {
+        u = acos(vertex->position.x + 0.5f);
+        v = vertex->position.z + 0.5f;
+        vertex->texCoord = glm::vec2(u, v);
+    }
+}
 void Mesh::setup()
 {
 
     generateTextureObject();
-    std::vector<Vertex>::iterator vertex;
-    float x,y,z,d;
 
-    for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
-    {
-        x = vertex->position.x + 0.5f;
-        y = vertex->position.y + 0.5f;
-        vertex->texCoord = glm::vec2(x, y);
-    }
+    computeTextureMapping();
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
