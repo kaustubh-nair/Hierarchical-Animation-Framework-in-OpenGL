@@ -9,6 +9,7 @@
 #include "../include/vertex.h"
 #include "../include/in_circle.h"
 #include "../include/shader.h"
+#include "../include/stb_image.h"
 
 
 
@@ -45,6 +46,7 @@ class Mesh {
 
   private:
     unsigned int VAO, VBO, EBO;
+    unsigned int texture;
     float splatMultipler;
     glm::vec3 position;
 
