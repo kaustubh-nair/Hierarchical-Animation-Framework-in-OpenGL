@@ -24,7 +24,7 @@ void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> mes
 
 }
 
-/* refresh while rendering splats */
+/* refresh for rendering splats */
 void Model::refresh()
 {
     std::vector<Mesh>::iterator mesh;
@@ -115,61 +115,4 @@ void Model::changeSplatRadius(int direction)
         return;
     meshes[this->selectedMesh - 1].changeSplatRadius(direction);
 }
-
-
-/*object selection code*/
-/*
-void Model::selectObject(glm::vec3 position)
-{
-    std::vector<Mesh>::iterator mesh;
-    std::vector<int>::iterator id;
-
-    std::vector<int> minIds;
-    float minDistance = 100.0f;
-    int minId;
-
-    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
-    {
-        float distance;
-        glm::vec3 objPos = mesh->position/6.0f;
-        distance = glm::distance(glm::vec2(objPos.x, objPos.y), glm::vec2(position.x, position.y));
-
-        if(distance < 0.6f)
-            minIds.push_back(mesh->id);
-
-        minId = mesh->id;
-    }
-
-    if(minIds.size() > 1)
-    {
-        for(mesh = meshes.begin(); mesh < meshes.end(); mesh++)
-        {
-            for(id = minIds.begin(); id < minIds.end(); id++)
-            {
-                if(mesh->id == *id)
-                {
-                    if(mesh->position.z < minDistance)
-                    {
-                        minDistance = mesh->position.z;
-                        minId = *id;
-                    }
-                }
-            }
-
-        }
-    }
-    else
-        minId = minIds.at(0);
-    for(mesh = meshes.begin(); mesh < meshes.end(); mesh++)
-    {
-        if(mesh->id == minId)
-        {
-            mesh->selected = true;
-            //print(mesh->id);
-            break;
-        }
-    }
-}
-*/
-
 
