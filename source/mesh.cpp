@@ -24,6 +24,8 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
         vertex->computeTextureCoords();
 
+    Vertex::initializeNeighbours(vertices, indices);
+
 }
 
 void Mesh::setupSplats()

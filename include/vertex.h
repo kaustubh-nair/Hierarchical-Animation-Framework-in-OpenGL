@@ -8,6 +8,8 @@
 
 #include <vector>
 #include <cmath>
+#include <set>
+#include <iostream>
 
 
 
@@ -23,10 +25,17 @@ struct Vertex
     glm::vec2 cylTexCoords1;  //normal from cylinder to vertex
     glm::vec2 cylTexCoords2;  //normal from vertex to cylinder
     glm::vec2 cylTexCoords3;  //vertex to cylinder
+
     std::vector<glm::vec3> face_normals;
+    std::set<unsigned int> neighbours;  //indices of neighbouring vertices
+
+
 
     void computeTextureCoords();
+    static void initializeNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
 
 };
+
+
 
 #endif

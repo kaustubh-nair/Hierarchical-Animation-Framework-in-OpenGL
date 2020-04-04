@@ -88,9 +88,33 @@ glm::vec2 findSphPointFromObjectNormal(glm::vec3 position, glm::vec3 normal)
 
 void Vertex::computeTextureCoords()
 {
-    cylTexCoords2 = findCylPointFromObjectNormal(position, normal);
-    cylTexCoords3 = findCylMapping(position);
+    //cylTexCoords2 = findCylPointFromObjectNormal(position, normal);
+    //cylTexCoords3 = findCylMapping(position);
 
-    sphTexCoords2 = findSphPointFromObjectNormal(position, normal);
-    sphTexCoords3 = findSphMapping(position);
+    //sphTexCoords2 = findSphPointFromObjectNormal(position, normal);
+    //sphTexCoords3 = findSphMapping(position);
+}
+
+void Vertex::initializeNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices)
+{
+    int n = indices.size();
+    for(int i = 0; i < n; i+=3)
+    {
+        Vertex a = vertices[indices[i]];
+        Vertex b = vertices[indices[i+1]];
+        Vertex c = vertices[indices[i+2]];
+
+        a.neighbours.insert(i+1);
+        a.neighbours.insert(i+2);
+
+        b.neighbours.insert(i);
+        b.neighbours.insert(i+2);
+
+        c.neighbours.insert(i+1);
+        c.neighbours.insert(i);
+
+        vertices[indices[i]] = a;
+        vertices[indices[i+1]] = b;
+        vertices[indices[i+2]] = c;
+    }
 }
