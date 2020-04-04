@@ -6,7 +6,8 @@ Model::Model()
     renderSplats = false;
 }
 
-void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos, std::vector<std::string> texturePaths)
+void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,
+                  std::vector<std::string> texturePaths, int textureRenderingStyle)
 {
     std::vector<std::string>::iterator filepath;
     std::vector<glm::vec3>::iterator position = meshPos.begin();
@@ -15,7 +16,7 @@ void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> mes
     for (filepath = filepaths.begin(); filepath < filepaths.end(); filepath++)
     {
         Mesh mesh(*filepath, *position, *texturePath);
-        mesh.setup();
+        mesh.setup(textureRenderingStyle);
         meshes.push_back(mesh);
 
         position++;
@@ -25,7 +26,7 @@ void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> mes
 }
 
 /* refresh for rendering splats */
-void Model::refresh()
+void Model::refresh(int textureRenderingStyle)
 {
     std::vector<Mesh>::iterator mesh;
 
@@ -34,7 +35,7 @@ void Model::refresh()
         if(this->renderSplats)
             mesh->setupSplats();
         else
-            mesh->setup();
+            mesh->setup(textureRenderingStyle);
     }
 }
 

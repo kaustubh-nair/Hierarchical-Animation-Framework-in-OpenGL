@@ -3,6 +3,7 @@
 #define print_array(a,size) for(int i = 0; i < size; i++){print(a[i]);}
 
 
+// picking objects
 #define SELECT_OBJECT_1 1
 #define SELECT_OBJECT_2 2
 #define SELECT_OBJECT_3 3
@@ -15,6 +16,7 @@
 
 #define OBJECT_SELECTED 8
 
+// translation
 #define RIGHT 11
 #define LEFT 12
 #define DOWN 13
@@ -35,3 +37,11 @@
 #define DECREASE_SPLAT_RADIUS 24
 
 #define TOGGLE_NORMAL_COLORING 25
+
+// texture rendering styles
+#define CYLINDER_PROJECT 26
+#define CYLINDER_NORMAL_FROM_OBJECT 27
+#define CYLINDER_NORMAL 28
+#define SPHERICAL_PROJECT 29
+#define SPHERICAL_NORMAL 30
+#define SPHERICAL_NORMAL_FROM_OBJECT 31

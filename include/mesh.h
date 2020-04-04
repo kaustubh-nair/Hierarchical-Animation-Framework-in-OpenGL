@@ -4,7 +4,6 @@
 #include <GL/glew.h>
 #include <string>
 #include <vector>
-#include <cmath>
 
 #include "../include/ply_parser.h"
 #include "../include/vertex.h"
@@ -30,7 +29,7 @@ class Mesh {
     std::vector<GLuint> fanStartingElements;
 
     Mesh(std::string filepath, glm::vec3 position, std::string texturePath);
-    void setup();
+    void setup(int textureRenderingStyle);
     void draw(Shader shader);
     void setupSplats();
     void drawSplats(Shader shader);
@@ -45,6 +44,7 @@ class Mesh {
     void addToInCircles(glm::vec3 normal, glm::vec3 vertex, bool center);
     void generateTextureObject();
     void computeTextureMapping();
+    void setTextureBufferAttribute(int textureRenderingStyle);
 
     std::string texturePath;
 

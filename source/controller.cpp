@@ -1,6 +1,7 @@
 #include "../include/controller.h"
 #include<cmath>
 
+int textureRenderingStyle = CYLINDER_NORMAL_FROM_OBJECT;
 void Controller::mainLoop( void )
 {
     glewExperimental = GL_TRUE;
@@ -16,7 +17,7 @@ void Controller::mainLoop( void )
     std::vector<std::string> texturePaths;
 
     loadPlyFiles(filepaths, meshPos, texturePaths);
-    model.setup(filepaths, meshPos, texturePaths);
+    model.setup(filepaths, meshPos, texturePaths, textureRenderingStyle);
 
     /* setup shaders */
     Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
@@ -92,7 +93,7 @@ void Controller::reactToCallback(int ret)
                 break;
         case TOGGLE_SPLATS:
                 model.renderSplats = !model.renderSplats;
-                model.refresh();
+                model.refresh(textureRenderingStyle);
                 break;
         case TOGGLE_WIREFRAME:
                 this->toggleWireframe();
@@ -146,7 +147,12 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths, std::vector<g
     meshPos.push_back(glm::vec3(100.0f,10.0f, 0.0f));
     texturePaths.push_back("data/rainbow.png");
 
+    filepaths.push_back("data/cylinder.ply");
+    meshPos.push_back(glm::vec3(100.0f,10.0f, 0.0f));
+    texturePaths.push_back("data/rainbow.png");
+
     filepaths.push_back("data/bun_zipper.ply");
     meshPos.push_back(glm::vec3(100.0f,10.0f, 0.0f));
     texturePaths.push_back("data/rainbow.png");
+
 }

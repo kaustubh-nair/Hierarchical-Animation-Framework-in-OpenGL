@@ -18,6 +18,12 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     rotationMatrix = glm::mat4(1.0f);
     splatMultipler = 1.0f;
     texturePath = texture;
+
+    // compute and save texture map coordinates
+    std::vector<Vertex>::iterator vertex;
+    for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
+        vertex->computeTextureCoords();
+
 }
 
 void Mesh::setupSplats()
@@ -63,25 +69,10 @@ void Mesh::generateTextureObject()
     stbi_image_free(data);
 }
 
-
-void Mesh::computeTextureMapping()
-{
-    std::vector<Vertex>::iterator vertex;
-    float u, v;
-
-    for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
-    {
-        u = acos(vertex->position.x + 0.5f);
-        v = vertex->position.z + 0.5f;
-        vertex->texCoord = glm::vec2(u, v);
-    }
-}
-void Mesh::setup()
+void Mesh::setup(int textureRenderingStyle)
 {
 
     generateTextureObject();
-
-    computeTextureMapping();
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -94,7 +85,7 @@ void Mesh::setup()
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2 * sizeof(glm::vec3)));
+    setTextureBufferAttribute(textureRenderingStyle);
     glEnableVertexAttribArray(2);
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -222,5 +213,24 @@ void Mesh::changeSplatRadius(int direction)
     {
         this->splatMultipler -= 0.1f;
         this->setupSplats();
+    }
+}
+
+void Mesh::setTextureBufferAttribute(int textureRenderingStyle)
+{
+    switch(textureRenderingStyle)
+    {
+        case CYLINDER_PROJECT:
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)((2*sizeof(glm::vec3)) + (5*sizeof(glm::vec2))));
+            break;
+        case CYLINDER_NORMAL_FROM_OBJECT:
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)((2*sizeof(glm::vec3)) + (4*sizeof(glm::vec2))));
+            break;
+        case SPHERICAL_PROJECT:
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)((2*sizeof(glm::vec3)) + (2*sizeof(glm::vec2))));
+            break;
+        case SPHERICAL_NORMAL_FROM_OBJECT:
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)((2*sizeof(glm::vec3)) + (sizeof(glm::vec2))));
+            break;
     }
 }

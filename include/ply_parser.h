@@ -132,7 +132,8 @@ class PlyParser
     }
 
 
-    /* scale vertices to [-0.5,0.5] */
+    /* scale vertices to [-0.5,0.5] */ 
+    /* changing this will affect texture mapping */
     void normalize_vertices(std::vector<Vertex> &vertices, float min, float max)
     {
       std::vector<Vertex>::iterator vertex;
