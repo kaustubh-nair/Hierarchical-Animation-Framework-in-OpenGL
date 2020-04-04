@@ -139,7 +139,7 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths, std::vector<g
                 meshPos.push_back(glm::vec3(dist * i, dist * j, 0.0f));
           }
       }*/
-    filepaths.push_back("data/sphere.ply");
+    filepaths.push_back("data/teapot.ply");
     meshPos.push_back(glm::vec3(0.0f,0.0f, 0.0f));
     texturePaths.push_back("data/rainbow.png");
     /*

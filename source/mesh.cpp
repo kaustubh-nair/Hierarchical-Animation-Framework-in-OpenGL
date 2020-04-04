@@ -25,6 +25,7 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
         vertex->computeTextureCoords();
 
     Vertex::initializeNeighbours(vertices, indices);
+    Vertex::subdivide(vertices, indices);
 
 }
 

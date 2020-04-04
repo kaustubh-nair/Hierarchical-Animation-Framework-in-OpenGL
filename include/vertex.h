@@ -10,6 +10,7 @@
 #include <cmath>
 #include <set>
 #include <iostream>
+#include "../include/definitions.h"
 
 
 
@@ -27,6 +28,7 @@ class Vertex
         glm::vec2 cylTexCoords2;  //normal from vertex to cylinder
         glm::vec2 cylTexCoords3;  //vertex to cylinder
 
+        glm::vec3 newPosition;
         std::vector<glm::vec3> face_normals;
         std::set<unsigned int> neighbours;  //indices of neighbouring vertices
 
@@ -34,6 +36,7 @@ class Vertex
 
         void computeTextureCoords();
         static void initializeNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
+        static void subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
 
 };
 

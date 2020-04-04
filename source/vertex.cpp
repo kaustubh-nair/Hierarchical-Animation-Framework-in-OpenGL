@@ -2,6 +2,80 @@
 
 float PI = 3.14159265;
 
+
+
+void Vertex::initializeNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices)
+{
+    int n = indices.size();
+    for(int i = 0; i < n; i+=3)
+    {
+        int x = indices[i]; int y = indices[i+1]; int z = indices[i+2];
+
+        Vertex a = vertices[x];
+        Vertex b = vertices[y];
+        Vertex c = vertices[z];
+
+        a.neighbours.insert(y);
+        a.neighbours.insert(z);
+
+        b.neighbours.insert(x);
+        b.neighbours.insert(z);
+
+        c.neighbours.insert(y);
+        c.neighbours.insert(x);
+
+        vertices[x] = a;
+        vertices[y] = b;
+        vertices[z] = c;
+    }
+}
+
+void Vertex::subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices)
+{
+    int n = indices.size();
+
+    /*
+    for(int i = 0; i < n; i+=3)
+    {
+        Vertex a = vertices[indices[i]];
+        Vertex b = vertices[indices[i+1]];
+        Vertex c = vertices[indices[i+2]];
+        // add new vertices
+
+    }
+    */
+    // move old vertices
+    n = vertices.size();
+    int degree, k;
+    float u;
+    glm::vec3 neighboursPos;
+    std::set <unsigned int>neighbours;
+    for(int i = 0; i < n; i++)
+    {
+        neighboursPos = glm::vec3(0.0f, 0.0f, 0.0f);
+        neighbours = vertices[i].neighbours;
+        degree = neighbours.size();
+        if(degree == 3)
+            u = 3.0f/16;
+        else
+            u = 3.0f/(8*degree);
+
+        std::set<unsigned int>::iterator neighbour;
+
+        for(neighbour = neighbours.begin(); neighbour != neighbours.end(); neighbour++)
+        {
+            neighboursPos += vertices[*neighbour].position;
+        }
+        neighboursPos = glm::normalize(neighboursPos);
+        vertices[i].newPosition = ((1-(degree*u))*vertices[i].position) + (u*neighboursPos);
+    }
+
+    for(int i = 0; i < n; i++)
+    {
+        vertices[i].position = vertices[i].newPosition;
+    }
+}
+
 glm::vec2 findCylMapping(glm::vec3 position)
 {
     float u = acos(position.x);
@@ -89,32 +163,8 @@ glm::vec2 findSphPointFromObjectNormal(glm::vec3 position, glm::vec3 normal)
 void Vertex::computeTextureCoords()
 {
     //cylTexCoords2 = findCylPointFromObjectNormal(position, normal);
-    //cylTexCoords3 = findCylMapping(position);
+    cylTexCoords3 = findCylMapping(position);
 
     //sphTexCoords2 = findSphPointFromObjectNormal(position, normal);
     //sphTexCoords3 = findSphMapping(position);
-}
-
-void Vertex::initializeNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices)
-{
-    int n = indices.size();
-    for(int i = 0; i < n; i+=3)
-    {
-        Vertex a = vertices[indices[i]];
-        Vertex b = vertices[indices[i+1]];
-        Vertex c = vertices[indices[i+2]];
-
-        a.neighbours.insert(i+1);
-        a.neighbours.insert(i+2);
-
-        b.neighbours.insert(i);
-        b.neighbours.insert(i+2);
-
-        c.neighbours.insert(i+1);
-        c.neighbours.insert(i);
-
-        vertices[indices[i]] = a;
-        vertices[indices[i+1]] = b;
-        vertices[indices[i+2]] = c;
-    }
 }
