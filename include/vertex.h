@@ -13,26 +13,27 @@
 
 
 
-struct Vertex 
+class Vertex 
 {
-    glm::vec3 position;
-    glm::vec3 normal;
+    public:
+        glm::vec3 position;
+        glm::vec3 normal;
 
-    glm::vec2 sphTexCoords1;  //normal from sphere to vertex
-    glm::vec2 sphTexCoords2;  //normal from vertex to sphere
-    glm::vec2 sphTexCoords3;  //vertex to sphere
+        glm::vec2 sphTexCoords1;  //normal from sphere to vertex
+        glm::vec2 sphTexCoords2;  //normal from vertex to sphere
+        glm::vec2 sphTexCoords3;  //vertex to sphere
 
-    glm::vec2 cylTexCoords1;  //normal from cylinder to vertex
-    glm::vec2 cylTexCoords2;  //normal from vertex to cylinder
-    glm::vec2 cylTexCoords3;  //vertex to cylinder
+        glm::vec2 cylTexCoords1;  //normal from cylinder to vertex
+        glm::vec2 cylTexCoords2;  //normal from vertex to cylinder
+        glm::vec2 cylTexCoords3;  //vertex to cylinder
 
-    std::vector<glm::vec3> face_normals;
-    std::set<unsigned int> neighbours;  //indices of neighbouring vertices
+        std::vector<glm::vec3> face_normals;
+        std::set<unsigned int> neighbours;  //indices of neighbouring vertices
 
 
 
-    void computeTextureCoords();
-    static void initializeNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
+        void computeTextureCoords();
+        static void initializeNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
 
 };
 
