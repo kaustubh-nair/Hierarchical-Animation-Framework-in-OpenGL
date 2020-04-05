@@ -27,7 +27,7 @@ class Edge
         static bool isEdge(unsigned int a, unsigned int b, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
         static void computeEdges(std::vector<unsigned int> indices, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> &edges);
 
-        void split();
+        void split(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d );
 };
 
 #endif

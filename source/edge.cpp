@@ -94,9 +94,10 @@ void Edge::computeEdges(std::vector<unsigned int> indices,
     }
 }
 
-void Edge::split()
+// a,b are edge vertices  c,d are neighbouring vertices
+void Edge::split(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d )
 {
-
+    newPoint = ((3.0f/8) * (a + b)) + (1.0f/8) * (c + d);
 }
 
 std::pair<std::pair<unsigned int, unsigned int>, Edge> make_edge_map(unsigned int a, unsigned int b, unsigned int c)

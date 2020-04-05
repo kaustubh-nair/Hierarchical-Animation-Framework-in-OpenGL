@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <cmath>
+#include <unordered_map>
 #include <set>
 #include <iostream>
 #include "../include/definitions.h"
@@ -41,7 +42,5 @@ class Vertex
         static void subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
 
 };
-
-
 
 #endif
