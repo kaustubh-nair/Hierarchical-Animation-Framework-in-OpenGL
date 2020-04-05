@@ -94,7 +94,6 @@ void Vertex::subdivide(std::vector<Vertex> &vertices,
     //cleanup??
     //update edges
 
-    /*
     // move old vertices
     n = vertices.size();
     int degree, k;
@@ -117,7 +116,7 @@ void Vertex::subdivide(std::vector<Vertex> &vertices,
 
             for(neighbour = neighbours.begin(); neighbour != neighbours.end(); neighbour++)
             {
-                neighboursPos += vertices[*neighbour].position;
+                neighboursPos = neighboursPos + vertices[*neighbour].position;
             }
             neighboursPos = glm::normalize(neighboursPos);
             vertices[i].newPosition = ((1-(degree*multiplier))*vertices[i].position) + (multiplier*neighboursPos);
@@ -126,9 +125,13 @@ void Vertex::subdivide(std::vector<Vertex> &vertices,
 
     for(int i = 0; i < n; i++)
     {
-        vertices[i].position = vertices[i].newPosition;
+        if(not vertices[i].isNew)
+            vertices[i].position = vertices[i].newPosition;
     }
-    */
+
+    //cleanup
+    for(int i = 0;i < n;i++)
+        vertices[i].isNew = false;
 }
 
 glm::vec2 findCylMapping(glm::vec3 position)
