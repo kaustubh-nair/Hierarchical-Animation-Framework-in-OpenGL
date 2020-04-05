@@ -34,8 +34,13 @@ void Vertex::updateNeighbours(std::vector<Vertex> &vertices, std::vector<unsigne
     }
 }
 
-void Vertex::subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices)
+void Vertex::subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, std::vector<Edge> &edges)
 {
+    std::vector<Edge>::iterator edge;
+    for(edge = edges.begin(); edge < edges.end(); edge++)
+        edge->split();
+
+
     int n = indices.size();
 
     // insert new vertices

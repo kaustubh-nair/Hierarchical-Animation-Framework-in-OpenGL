@@ -24,7 +24,7 @@ class Edge
         Edge(unsigned int a, unsigned int b);
         bool isEdge(unsigned int a, unsigned int b);
         static void computeEdges(std::vector<unsigned int> indices, std::vector<Edge> &edges);
-        static void split(std::vector<unsigned int> &edges)
+        void split();
 };
 
 #endif

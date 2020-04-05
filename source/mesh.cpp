@@ -32,7 +32,7 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
 
 void Mesh::subdivide()
 {
-    Vertex::subdivide(vertices, indices);
+    Vertex::subdivide(vertices, indices, edges);
 }
 
 void Mesh::setupSplats()

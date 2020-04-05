@@ -26,7 +26,7 @@ void Edge::computeEdges(std::vector<unsigned int> indices, std::vector<Edge> &ed
     }
 }
 
-void Edge::split(std::vector<unsigned int> &edges)
+void Edge::split()
 {
 
 }

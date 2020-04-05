@@ -11,6 +11,7 @@
 #include <set>
 #include <iostream>
 #include "../include/definitions.h"
+#include "../include/edge.h"
 
 
 
@@ -37,7 +38,7 @@ class Vertex
 
         void computeTextureCoords();
         static void updateNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
-        static void subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
+        static void subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, std::vector<Edge> &edges);
 
 };
 
