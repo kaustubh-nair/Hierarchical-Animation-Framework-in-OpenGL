@@ -28,10 +28,8 @@ class Edge
         Edge(unsigned int a, unsigned int b, unsigned int c);
         static bool isEdge(unsigned int a, unsigned int b, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
         static void computeEdges(std::vector<unsigned int> indices, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> &edges);
-        static std::pair<unsigned int, unsigned int> find_key(unsigned int a, unsigned int b, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
+
         void split();
-        static void insert_second_shared_point(std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> &edges, 
-                                      std::pair<unsigned int, unsigned int> key, int a);
 };
 
 #endif

@@ -36,7 +36,7 @@ void Vertex::updateNeighbours(std::vector<Vertex> &vertices, std::vector<unsigne
 
 void Vertex::subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges)
 {
-    std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair, hash_pair>::iterator edge;
+    std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair>::iterator edge;
     for(edge = edges.begin(); edge != edges.end(); edge++)
         (edge->second).split();
 
@@ -174,7 +174,7 @@ glm::vec2 findSphPointFromObjectNormal(glm::vec3 position, glm::vec3 normal)
 void Vertex::computeTextureCoords()
 {
     //cylTexCoords2 = findCylPointFromObjectNormal(position, normal);
-    cylTexCoords3 = findCylMapping(position);
+    //cylTexCoords3 = findCylMapping(position);
 
     //sphTexCoords2 = findSphPointFromObjectNormal(position, normal);
     //sphTexCoords3 = findSphMapping(position);
