@@ -9,30 +9,29 @@ Edge::Edge(unsigned int a, unsigned int b, unsigned int c)
     v = b;
     sharedPoint1 = c;
 }
-void insert_second_shared_point(std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> &edges, 
-                                      std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair>::iterator itr,
-                                      int a)
+
+void Edge::insert_second_shared_point(int a)
 {
-    if((itr->second).sharedPoint2 == 0)
-    {
-      (itr->second).sharedPoint2 = a;
-    }
+    if(sharedPoint2 == 0)
+      sharedPoint2 = a;
+    else
+        print("shared point already exists");
 }
 
 
-std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair>::iterator find_key(unsigned int a, unsigned int b,
-                                                     std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges)
+Edge* Edge::find_edge(unsigned int a, unsigned int b,
+                      std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges)
 {
     std::pair <unsigned int, unsigned int> key(a, b);
 
     auto itr = edges.find(key);
     if(itr != edges.end())
-        return itr;
+        return &(itr->second);
     key = std::make_pair(b, a);
 
     itr = edges.find(key);
     if(itr != edges.end())
-        return itr;
+        return &(itr->second);
 }
 
 bool Edge::isEdge(unsigned int a, unsigned int b,
@@ -68,7 +67,8 @@ void Edge::computeEdges(std::vector<unsigned int> indices,
         }
         else
         {
-            insert_second_shared_point(edges, find_key(a, b, edges), c);
+            Edge *edge = find_edge(a, b, edges);
+            edge->insert_second_shared_point(c);
         }
 
 
@@ -79,7 +79,8 @@ void Edge::computeEdges(std::vector<unsigned int> indices,
         }
         else
         {
-            insert_second_shared_point(edges, find_key(b, c, edges), a);
+            Edge *edge = find_edge(b, c, edges);
+            edge->insert_second_shared_point(a);
         }
 
         if(!Edge::isEdge(a, c, edges))
@@ -89,7 +90,8 @@ void Edge::computeEdges(std::vector<unsigned int> indices,
         }
         else
         {
-            insert_second_shared_point(edges, find_key(a, c, edges), b);
+            Edge *edge = find_edge(a, c, edges);
+            edge->insert_second_shared_point(b);
         }
     }
 }

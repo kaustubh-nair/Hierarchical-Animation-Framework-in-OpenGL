@@ -20,6 +20,7 @@ class Edge
         unsigned int u;
         unsigned int v;
         glm::vec3 newPoint;   //midpoint to split edge
+        unsigned int newPointIndex;
         unsigned int sharedPoint1;   //third point of first triangle in the edge
         unsigned int sharedPoint2 = 0;   //third point of second triangle in the edge
 
@@ -29,6 +30,9 @@ class Edge
                            std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
         static void computeEdges(std::vector<unsigned int> indices,
                                  std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> &edges);
+        static Edge* find_edge(unsigned int a, unsigned int b,
+                        std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
+        void insert_second_shared_point(int a);
 
         void split(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d );
 };
