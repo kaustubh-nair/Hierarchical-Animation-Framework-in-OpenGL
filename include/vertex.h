@@ -39,7 +39,9 @@ class Vertex
 
         void computeTextureCoords();
         static void updateNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
-        static void subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
+        static void subdivide(std::vector<Vertex> &vertices,
+                              std::vector<unsigned int> &indices,
+                              std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
 
 };
 
