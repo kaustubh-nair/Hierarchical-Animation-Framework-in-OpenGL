@@ -13,6 +13,8 @@
 #include <set>
 #include <iostream>
 #include "../include/definitions.h"
+#include "../include/hash_pair.h"
+#include <unordered_map>
 
 class Edge
 {
@@ -20,11 +22,16 @@ class Edge
         unsigned int u;
         unsigned int v;
         unsigned int newPoint;   //midpoint to split edge
+        unsigned int sharedPoint1;   //third point of first triangle in the edge
+        unsigned int sharedPoint2 = 0;   //third point of second triangle in the edge
 
-        Edge(unsigned int a, unsigned int b);
-        bool isEdge(unsigned int a, unsigned int b);
-        static void computeEdges(std::vector<unsigned int> indices, std::vector<Edge> &edges);
+        Edge(unsigned int a, unsigned int b, unsigned int c);
+        static bool isEdge(unsigned int a, unsigned int b, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
+        static void computeEdges(std::vector<unsigned int> indices, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> &edges);
+        static std::pair<unsigned int, unsigned int> find_key(unsigned int a, unsigned int b, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
         void split();
+        static void insert_second_shared_point(std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> &edges, 
+                                      std::pair<unsigned int, unsigned int> key, int a);
 };
 
 #endif

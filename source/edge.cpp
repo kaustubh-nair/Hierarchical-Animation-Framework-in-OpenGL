@@ -1,17 +1,56 @@
 #include "../include/edge.h"
 
-Edge::Edge(unsigned int a, unsigned int b)
+std::pair<std::pair<unsigned int, unsigned int>, Edge> make_edge_map(unsigned int a, unsigned int b, unsigned int c);
+
+
+Edge::Edge(unsigned int a, unsigned int b, unsigned int c)
 {
     u = a;
     v = b;
+    sharedPoint1 = c;
 }
-
-bool Edge::isEdge(unsigned int a, unsigned int b)
+void Edge::insert_second_shared_point(std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> &edges, 
+                                      std::pair<unsigned int, unsigned int> key, int a)
 {
-    return (a == v and b == u) or (b == v and a == u);
+    //if(edges[key].second.sharedPoint2 == 0)
+    //{
+        std::cout<<"ASD";
+        //edges[key].second.sharedPoint2 = a;
+    //}
 }
 
-void Edge::computeEdges(std::vector<unsigned int> indices, std::vector<Edge> &edges)
+
+std::pair<unsigned int, unsigned int> Edge::find_key(unsigned int a, unsigned int b,
+                                                     std::unordered_map<std::pair<unsigned int,
+                                                     unsigned int>, Edge, hash_pair> edges)
+{
+    std::pair <unsigned int, unsigned int> key(a, b);
+
+    if(edges.find(key) != edges.end())
+        return key;
+    key = std::make_pair(b, a);
+
+    if(edges.find(key) != edges.end())
+        return key;
+}
+
+bool Edge::isEdge(unsigned int a, unsigned int b, std::unordered_map<std::pair<unsigned int, unsigned int>,
+                  Edge, hash_pair> edges)
+{
+    std::pair <unsigned int, unsigned int> key(a, b);
+
+    if(edges.find(key) != edges.end())
+        return true;
+    key = std::make_pair(b, a);
+
+    if(edges.find(key) != edges.end())
+        return true;
+    return false;
+}
+
+void Edge::computeEdges(std::vector<unsigned int> indices,
+                        std::unordered_map<std::pair<unsigned int, unsigned int>,
+                        Edge, hash_pair> &edges)
 {
     unsigned int a,b,c;
     for(int i = 0; i < indices.size(); i+=3)
@@ -20,13 +59,51 @@ void Edge::computeEdges(std::vector<unsigned int> indices, std::vector<Edge> &ed
         b = indices[i+1];
         c = indices[i+2];
 
-        edges.push_back(Edge(a,b));
-        edges.push_back(Edge(b,c));
-        edges.push_back(Edge(a,c));
+        if(!Edge::isEdge(a, b, edges))
+        {
+            std::pair<std::pair<unsigned int, unsigned int>, Edge> edge_map = make_edge_map(a,b,c);
+            edges.insert(edge_map);
+        }
+        else
+        {
+            std::pair<unsigned int, unsigned int> key = find_key(a, b, edges);
+            insert_second_shared_point(edges, key, c);
+        }
+
+
+        if(!Edge::isEdge(b, c, edges))
+        {
+            std::pair<std::pair<unsigned int, unsigned int>, Edge> edge_map = make_edge_map(b,c,a);
+            edges.insert(edge_map);
+        }
+        else
+        {
+            std::pair<unsigned int, unsigned int> key = find_key(b, c, edges);
+            insert_second_shared_point(edges, key, a);
+        }
+
+        if(!Edge::isEdge(a, c, edges))
+        {
+            std::pair<std::pair<unsigned int, unsigned int>, Edge> edge_map = make_edge_map(a,c,b);
+            edges.insert(edge_map);
+        }
+        else
+        {
+            std::pair<unsigned int, unsigned int> key = find_key(a, c, edges);
+            insert_second_shared_point(edges, key, b);
+        }
     }
 }
 
 void Edge::split()
 {
 
+}
+
+std::pair<std::pair<unsigned int, unsigned int>, Edge> make_edge_map(unsigned int a, unsigned int b, unsigned int c)
+{
+    Edge edge(a,b,c);
+    std::pair<unsigned int, unsigned int> key(a,b);
+    std::pair<std::pair<unsigned int, unsigned int>, Edge> edge_map(key, edge);
+    return edge_map;
 }

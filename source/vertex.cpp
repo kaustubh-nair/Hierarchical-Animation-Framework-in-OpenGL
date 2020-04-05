@@ -34,11 +34,11 @@ void Vertex::updateNeighbours(std::vector<Vertex> &vertices, std::vector<unsigne
     }
 }
 
-void Vertex::subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, std::vector<Edge> &edges)
+void Vertex::subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges)
 {
-    std::vector<Edge>::iterator edge;
-    for(edge = edges.begin(); edge < edges.end(); edge++)
-        edge->split();
+    std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair, hash_pair>::iterator edge;
+    for(edge = edges.begin(); edge != edges.end(); edge++)
+        (edge->second).split();
 
 
     int n = indices.size();

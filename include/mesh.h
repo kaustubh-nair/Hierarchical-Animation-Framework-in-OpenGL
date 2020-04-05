@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include "../include/ply_parser.h"
 #include "../include/vertex.h"
@@ -23,7 +24,7 @@ class Mesh {
     bool selected;
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
-    std::vector<Edge> edges;
+    std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges;
 
     /* splat related info */
     std::vector<InCircle> inCircles;
