@@ -24,9 +24,15 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
         vertex->computeTextureCoords();
 
-    Vertex::initializeNeighbours(vertices, indices);
-    Vertex::subdivide(vertices, indices);
+    Vertex::updateNeighbours(vertices, indices);
+    Edge::computeEdges(indices, edges);
+    subdivide();
 
+}
+
+void Mesh::subdivide()
+{
+    Vertex::subdivide(vertices, indices);
 }
 
 void Mesh::setupSplats()

@@ -4,9 +4,13 @@ float PI = 3.14159265;
 
 
 
-void Vertex::initializeNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices)
+void Vertex::updateNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices)
 {
     int n = indices.size();
+
+    for(int i = 0; i < vertices.size(); i++)
+        vertices[i].neighbours.clear();
+
     for(int i = 0; i < n; i+=3)
     {
         int x = indices[i]; int y = indices[i+1]; int z = indices[i+2];
@@ -34,6 +38,7 @@ void Vertex::subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> 
 {
     int n = indices.size();
 
+    // insert new vertices
     /*
     for(int i = 0; i < n; i+=3)
     {
@@ -44,6 +49,7 @@ void Vertex::subdivide(std::vector<Vertex> &vertices, std::vector<unsigned int> 
 
     }
     */
+
     // move old vertices
     n = vertices.size();
     int degree, k;
