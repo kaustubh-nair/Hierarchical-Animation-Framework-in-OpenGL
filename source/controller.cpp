@@ -113,6 +113,9 @@ void Controller::reactToCallback(int ret)
         case ROTATE_OBJECT:
                 model.rotate(view.direction);
                 break;
+        case SUBDIVIDE:
+                model.subdivide();
+                break;
     }
 }
 
@@ -148,7 +151,7 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths, std::vector<g
     meshPos.push_back(glm::vec3(100.0f,10.0f, 0.0f));
     texturePaths.push_back("data/rainbow.png");
 
-    filepaths.push_back("data/octahedron.ply");
+    filepaths.push_back("data/tetrahedron.ply");
     meshPos.push_back(glm::vec3(100.0f,10.0f, 0.0f));
     texturePaths.push_back("data/rainbow.png");
 

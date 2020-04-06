@@ -20,18 +20,19 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     texturePath = texture;
 
     // compute and save texture map coordinates
+    /*
     std::vector<Vertex>::iterator vertex;
     for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
         vertex->computeTextureCoords();
-
-    Vertex::updateNeighbours(vertices, indices);
-    Edge::computeEdges(indices, edges);
-    subdivide();
+        */
 
 }
 
 void Mesh::subdivide()
 {
+    edges.clear();
+    Vertex::updateNeighbours(vertices, indices);
+    Edge::computeEdges(indices, edges);
     Vertex::subdivide(vertices, indices, edges);
 }
 
@@ -81,7 +82,7 @@ void Mesh::generateTextureObject()
 void Mesh::setup(int textureRenderingStyle)
 {
 
-    generateTextureObject();
+    //generateTextureObject();
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -94,7 +95,9 @@ void Mesh::setup(int textureRenderingStyle)
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
-    setTextureBufferAttribute(textureRenderingStyle);
+
+    //setTextureBufferAttribute(textureRenderingStyle);
+
     glEnableVertexAttribArray(2);
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

@@ -25,6 +25,7 @@ class Model
     void rotate(glm::vec2 direction);
 
     void drawLighting( Shader shader);
+    void subdivide();
   private:
     std::vector<Mesh> meshes;
     int selectedMesh;

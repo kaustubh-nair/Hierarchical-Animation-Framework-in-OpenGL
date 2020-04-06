@@ -117,3 +117,10 @@ void Model::changeSplatRadius(int direction)
     meshes[this->selectedMesh - 1].changeSplatRadius(direction);
 }
 
+void Model::subdivide()
+{
+    if(this->selectedMesh == -1)
+        return;
+    meshes[this->selectedMesh - 1].subdivide();
+
+}

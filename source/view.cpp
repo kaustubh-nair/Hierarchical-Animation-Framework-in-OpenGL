@@ -58,6 +58,7 @@ int View::listenToCallbacks(GLFWwindow *window)
         {GLFW_KEY_J, DECREASE_SPLAT_RADIUS},
         {GLFW_KEY_K, INCREASE_SPLAT_RADIUS},
         {GLFW_KEY_N, TOGGLE_NORMAL_COLORING},
+        {GLFW_KEY_Q, SUBDIVIDE},
 
     };
 

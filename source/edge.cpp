@@ -12,10 +12,10 @@ Edge::Edge(unsigned int a, unsigned int b, unsigned int c)
 
 void Edge::insert_second_shared_point(int a)
 {
-    if(sharedPoint2 == 0)
+    //if(sharedPoint2 == 0)
       sharedPoint2 = a;
-    else
-        print("shared point already exists");
+    //else
+        //print("shared point already exists");
 }
 
 
