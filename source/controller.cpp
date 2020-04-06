@@ -115,6 +115,7 @@ void Controller::reactToCallback(int ret)
                 break;
         case SUBDIVIDE:
                 model.subdivide();
+                model.refresh(textureRenderingStyle);
                 break;
     }
 }

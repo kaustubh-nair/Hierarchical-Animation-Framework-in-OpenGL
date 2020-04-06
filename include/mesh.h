@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include<cmath>
 
 #include "../include/ply_parser.h"
 #include "../include/vertex.h"

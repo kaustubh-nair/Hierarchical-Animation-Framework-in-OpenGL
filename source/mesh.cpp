@@ -1,5 +1,4 @@
 #include "../include/mesh.h"
-#include<cmath>
 
 int ID = 1;
 int num_segments = 10;
