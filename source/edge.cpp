@@ -12,7 +12,7 @@ Edge::Edge(unsigned int a, unsigned int b, unsigned int c)
 
 void Edge::insert_second_shared_point(int a)
 {
-    //if(sharedPoint2 == 0)
+    //if(sharedPoint2 ==.0f)
       sharedPoint2 = a;
     //else
         //print("shared point already exists");
@@ -20,7 +20,7 @@ void Edge::insert_second_shared_point(int a)
 
 
 Edge* Edge::find_edge(unsigned int a, unsigned int b,
-                      std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges)
+                      std::map<std::pair<unsigned int, unsigned int>, Edge> edges)
 {
     std::pair <unsigned int, unsigned int> key(a, b);
 
@@ -35,8 +35,8 @@ Edge* Edge::find_edge(unsigned int a, unsigned int b,
 }
 
 bool Edge::isEdge(unsigned int a, unsigned int b,
-                  std::unordered_map<std::pair<unsigned int, unsigned int>,
-                  Edge, hash_pair> edges)
+                  std::map<std::pair<unsigned int, unsigned int>,
+                  Edge> edges)
 {
     std::pair <unsigned int, unsigned int> key(a, b);
 
@@ -50,11 +50,11 @@ bool Edge::isEdge(unsigned int a, unsigned int b,
 }
 
 void Edge::computeEdges(std::vector<unsigned int> indices,
-                        std::unordered_map<std::pair<unsigned int, unsigned int>,
-                        Edge, hash_pair> &edges)
+                        std::map<std::pair<unsigned int, unsigned int>,
+                        Edge> &edges)
 {
     unsigned int a,b,c;
-    for(int i = 0; i < indices.size(); i+=3)
+    for(int i =.0f; i < indices.size(); i+=3)
     {
         a = indices[i];
         b = indices[i+1];
@@ -99,7 +99,8 @@ void Edge::computeEdges(std::vector<unsigned int> indices,
 // a,b are edge vertices  c,d are neighbouring vertices
 void Edge::split(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d )
 {
-    newPoint = ((3.0f/8) * (a + b)) + (1.0f/8) * (c + d);
+    newPoint = ((3.0f/8.0f) * (a + b)) + (1.0f/8.0f) * (c + d);
+    newPoint = glm::normalize(newPoint);
 }
 
 std::pair<std::pair<unsigned int, unsigned int>, Edge> make_edge_map(unsigned int a, unsigned int b, unsigned int c)

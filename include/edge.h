@@ -12,7 +12,7 @@
 #include <iostream>
 #include "../include/definitions.h"
 #include "../include/hash_pair.h"
-#include <unordered_map>
+#include <map>
 
 class Edge
 {
@@ -27,11 +27,11 @@ class Edge
         Edge(unsigned int a, unsigned int b, unsigned int c);
         static bool isEdge(unsigned int a,
                            unsigned int b,
-                           std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
+                           std::map<std::pair<unsigned int, unsigned int>, Edge> edges);
         static void computeEdges(std::vector<unsigned int> indices,
-                                 std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> &edges);
+                                 std::map<std::pair<unsigned int, unsigned int>, Edge> &edges);
         static Edge* find_edge(unsigned int a, unsigned int b,
-                        std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges);
+                        std::map<std::pair<unsigned int, unsigned int>, Edge> edges);
         void insert_second_shared_point(int a);
 
         void split(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d );

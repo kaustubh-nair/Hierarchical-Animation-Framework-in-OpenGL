@@ -37,10 +37,10 @@ void Vertex::updateNeighbours(std::vector<Vertex> &vertices,
 
 void Vertex::subdivide(std::vector<Vertex> &vertices,
                        std::vector<unsigned int> &indices,
-                       std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair> edges)
+                       std::map<std::pair<unsigned int, unsigned int>, Edge> edges)
 {
     /*split edges*/
-    std::unordered_map<std::pair<unsigned int, unsigned int>, Edge, hash_pair>::iterator itr;
+    std::map<std::pair<unsigned int, unsigned int>, Edge>::iterator itr;
     int index = vertices.size();
     for(itr = edges.begin(); itr != edges.end(); itr++)
     {
