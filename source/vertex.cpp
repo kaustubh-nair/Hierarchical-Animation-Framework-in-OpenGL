@@ -118,8 +118,8 @@ void Vertex::subdivide(std::vector<Vertex> &vertices,
             {
                 neighboursPos = neighboursPos + vertices[*neighbour].position;
             }
-            neighboursPos = glm::normalize(neighboursPos);
-            vertices[i].newPosition = ((1-(degree*multiplier))*vertices[i].position) + (multiplier*neighboursPos);
+            //neighboursPos = glm::normalize(neighboursPos);
+            vertices[i].newPosition = glm::normalize(((1-(degree*multiplier))*vertices[i].position) + (multiplier*neighboursPos));
         }
     }
 
