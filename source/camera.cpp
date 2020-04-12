@@ -5,6 +5,7 @@ glm::mat4 Camera::getViewMatrix()
   return glm::lookAt(position, position + front, up);
 }
 
+
 Camera::Camera()
 {
     position  = glm::vec3(0.0f, 0.0f, 3.0f);

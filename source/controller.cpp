@@ -50,8 +50,9 @@ void Controller::mainLoop( void )
 
         shader.setMat4("projection", proj);
         shader.setMat4("view", viewMatrix);
+        shader.setVec3("viewPos", view.getViewPos());
         shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-        glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 10.0f);
+        glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 0.0f);
         shader.setVec3("lightPos",lightPos.x, lightPos.y, lightPos.z);
 
         model.draw(shader, lightingShader, lightPos);
@@ -146,16 +147,14 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths, std::vector<g
       }*/
 
     filepaths.push_back("data/octahedron.ply");
-    meshPos.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    meshPos.push_back(glm::vec3(0.0f, 0.0f, -1.0f));
     texturePaths.push_back("data/rainbow.png");
 
-    filepaths.push_back("data/icosahedron.ply");
-    meshPos.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    filepaths.push_back("data/sphere.ply");
+    meshPos.push_back(glm::vec3(0.0f, 0.0f, -1.0f));
     texturePaths.push_back("data/rainbow.png");
 
     filepaths.push_back("data/beethoven.ply");
-    meshPos.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    meshPos.push_back(glm::vec3(0.0f, 0.0f, -1.0f));
     texturePaths.push_back("data/rainbow.png");
-
-
 }

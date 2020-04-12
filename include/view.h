@@ -25,6 +25,7 @@ class View {
     GLFWwindow* initialize_window();
     int listenToCallbacks(GLFWwindow *window);
     glm::mat4 getViewMatrix();
+    glm::vec3 getViewPos();
   private:
 };
 #endif

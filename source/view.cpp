@@ -42,6 +42,11 @@ glm::mat4 View::getViewMatrix()
     return camera.getViewMatrix();
 }
 
+glm::vec3 View::getViewPos()
+{
+    return camera.position;
+}
+
 int View::listenToCallbacks(GLFWwindow *window)
 {
 
