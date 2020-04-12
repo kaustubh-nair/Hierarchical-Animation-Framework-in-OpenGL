@@ -17,9 +17,9 @@ void Lighting::setup()
   glEnableVertexAttribArray(0);
 }
 
-void Lighting::draw(Shader shader)
+void Lighting::draw(Shader shader, glm::vec3 lightPos)
 {
-  glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3( 2.5f, 2.5f, 10.0f ));
+  glm::mat4 model = glm::translate(glm::mat4(1.0f), lightPos);
   shader.setMat4("model", model);
 
   // render the cube

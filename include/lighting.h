@@ -12,7 +12,7 @@ class Lighting {
   public:
     glm::vec3 position;
     void setup();
-    void draw(Shader shader);
+    void draw(Shader shader, glm::vec3 lightPos);
   private:
     unsigned int VAO, VBO;
 

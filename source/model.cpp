@@ -39,7 +39,7 @@ void Model::refresh(int textureRenderingStyle)
     }
 }
 
-void Model::draw(Shader shader, Shader lightingShader)
+void Model::draw(Shader shader, Shader lightingShader, glm::vec3 lightPos)
 {
     std::vector<Mesh>::iterator mesh;
 
@@ -51,7 +51,7 @@ void Model::draw(Shader shader, Shader lightingShader)
             mesh->draw(shader);
     }
     Lighting lighting;
-    lighting.draw(lightingShader);
+    lighting.draw(lightingShader, lightPos);
 }
 
 

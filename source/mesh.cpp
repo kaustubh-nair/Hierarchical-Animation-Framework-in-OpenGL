@@ -13,7 +13,7 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     position = position;
     inCircles = parser.inCircles;
     translationMatrix = glm::translate(glm::mat4(1.0f), position);
-    scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(275.0f,275.0f,275.0f));
+    scalingMatrix = glm::mat4(1.0f);
     rotationMatrix = glm::mat4(1.0f);
     splatMultipler = 1.0f;
     texturePath = texture;
@@ -201,7 +201,7 @@ void Mesh::rotate(glm::vec2 direction)
 
 void Mesh::translate(glm::vec2 direction)
 {
-    translationMatrix = glm::translate(translationMatrix, glm::vec3(0.4f * direction.x, 0.6f*direction.y, 0.0f));
+    translationMatrix = glm::translate(translationMatrix, glm::vec3(0.0004f * direction.x, 0.0006f*direction.y, 0.0f));
 }
 
 void Mesh::scale(int direction)

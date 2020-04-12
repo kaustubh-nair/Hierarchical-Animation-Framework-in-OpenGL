@@ -13,7 +13,7 @@ class Model
 
     Model();
     void setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos, std::vector<std::string> texturePaths, int textureRenderingStyle);
-    void draw(Shader shader, Shader lightingShader);
+    void draw(Shader shader, Shader lightingShader, glm::vec3 lightPos);
     void refresh(int textureRenderingStyle);
     void changeSplatRadius(int direction);
 
