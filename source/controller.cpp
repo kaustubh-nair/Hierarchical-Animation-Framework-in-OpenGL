@@ -2,9 +2,8 @@
 #include<cmath>
 
 /* load and save meshes for the three scenes */
-void Controller::setup()
+void Controller::setupMeshes()
 {
-    /* load ply files into model */
     std::vector<std::string> filepaths;
     std::vector<glm::vec3> meshPos;
     std::vector<std::string> texturePaths;
@@ -29,7 +28,7 @@ void Controller::mainLoop()
 
     GLFWwindow* window = this->mainWindow;
 
-    setup();
+    setupMeshes();
 
     /* setup shaders */
     Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
