@@ -89,74 +89,74 @@ void Controller::reactToCallback(int ret)
             model.unselect();
             break;
         case SELECT_OBJECT_1:
-                model.select(1);
-                break;
+            model.select(1);
+            break;
         case SELECT_OBJECT_2:
-                model.select(2);
-                break;
+            model.select(2);
+            break;
         case SELECT_OBJECT_3:
-                model.select(3);
-                break;
+            model.select(3);
+            break;
         case SELECT_OBJECT_4:
-                model.select(4);
-                break;
+            model.select(4);
+            break;
         case SCALE_OBJECT_DOWN:
-                model.scale(DOWN);
-                break;
+            model.scale(DOWN);
+            break;
         case SCALE_OBJECT_UP:
-                model.scale(UP);
-                break;
+            model.scale(UP);
+            break;
         case TOGGLE_SPLATS:
-                model.renderSplats = !model.renderSplats;
-                model.refresh();
-                break;
+            model.renderSplats = !model.renderSplats;
+            model.refresh();
+            break;
         case TOGGLE_WIREFRAME:
-                this->toggleWireframe();
-                break;
+            this->toggleWireframe();
+            break;
         case INCREASE_SPLAT_RADIUS:
-                model.changeSplatRadius(UP);
-                break;
+            model.changeSplatRadius(UP);
+            break;
         case DECREASE_SPLAT_RADIUS:
-                model.changeSplatRadius(DOWN);
-                break;
+            model.changeSplatRadius(DOWN);
+            break;
         case TOGGLE_NORMAL_COLORING:
-                this->normalColoring = !this->normalColoring;
-                break;
+            this->normalColoring = !this->normalColoring;
+            break;
         case TRANSLATE_OBJECT:
-                model.translate(view.direction);
-                break;
+            model.translate(view.direction);
+            break;
         case ROTATE_OBJECT:
-                model.rotate(view.direction);
-                break;
+            model.rotate(view.direction);
+            break;
         case SUBDIVIDE:
-                model.subdivide();
-                model.refresh();
-                break;
+            model.subdivide();
+            model.refresh();
+            break;
         case SCENE_1:
-                settings.currentScene = SCENE_1;
-                break;
+            settings.currentScene = SCENE_1;
+            break;
         case SCENE_2:
-                settings.currentScene = SCENE_2;
-                break;
+            settings.currentScene = SCENE_2;
+            break;
         case SCENE_3:
-                settings.currentScene = SCENE_3;
-                break;
+            settings.currentScene = SCENE_3;
+            break;
         case CYLINDER_PROJECT:
-                settings.textureRenderingStyle = CYLINDER_PROJECT;
-                model.refresh();
-                break;
+            settings.textureRenderingStyle = CYLINDER_PROJECT;
+            model.refresh();
+            break;
         case CYLINDER_NORMAL_FROM_OBJECT:
-                settings.textureRenderingStyle = CYLINDER_NORMAL_FROM_OBJECT;
-                model.refresh();
-                break;
+            settings.textureRenderingStyle = CYLINDER_NORMAL_FROM_OBJECT;
+            model.refresh();
+            break;
         case SPHERICAL_NORMAL_FROM_OBJECT:
-                settings.textureRenderingStyle = SPHERICAL_NORMAL_FROM_OBJECT;
-                model.refresh();
-                break;
+            settings.textureRenderingStyle = SPHERICAL_NORMAL_FROM_OBJECT;
+            model.refresh();
+            break;
         case SPHERICAL_PROJECT:
-                settings.textureRenderingStyle = SPHERICAL_PROJECT;
-                model.refresh();
-                break;
+            settings.textureRenderingStyle = SPHERICAL_PROJECT;
+            model.refresh();
+            break;
     }
 }
 
