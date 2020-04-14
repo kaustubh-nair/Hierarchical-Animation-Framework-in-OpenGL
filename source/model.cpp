@@ -2,7 +2,6 @@
 
 Model::Model()
 {
-    selectedMesh = -1;
     renderSplats = false;
 }
 
@@ -66,21 +65,21 @@ void Model::unselect()
 
     for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
     {
-        if(mesh->id == this->selectedMesh)
+        if(mesh->id == settings.selectedMesh)
         {
             mesh->selected = false;
             break;
         }
     }
-    this->selectedMesh = -1;
+    settings.selectedMesh = -1;
 }
 
 void Model::select(int id)
 {
     int currentScene = settings.currentScene;
-    if(this->selectedMesh != -1)
+    if(settings.selectedMesh != -1)
         return;
-    this->selectedMesh = id;
+    settings.selectedMesh = id;
 
     std::vector<Mesh>::iterator mesh;
     for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
@@ -96,42 +95,42 @@ void Model::select(int id)
 void Model::translate(glm::vec2 direction)
 {
     int currentScene = settings.currentScene;
-    if(this->selectedMesh == -1)
+    if(settings.selectedMesh == -1)
         return;
-    scenes[currentScene].meshes[this->selectedMesh - 1].translate(direction);
+    scenes[currentScene].meshes[settings.selectedMesh - 1].translate(direction);
 }
 
 void Model::scale(int direction)
 {
     int currentScene = settings.currentScene;
-    if(this->selectedMesh == -1)
+    if(settings.selectedMesh == -1)
         return;
 
-    scenes[currentScene].meshes[this->selectedMesh - 1].scale(direction);
+    scenes[currentScene].meshes[settings.selectedMesh - 1].scale(direction);
 }
 
 void Model::rotate(glm::vec2 direction)
 {
     int currentScene = settings.currentScene;
-    if(this->selectedMesh == -1)
+    if(settings.selectedMesh == -1)
         return;
-    scenes[currentScene].meshes[this->selectedMesh - 1].rotate(direction);
+    scenes[currentScene].meshes[settings.selectedMesh - 1].rotate(direction);
 
 }
 
 void Model::changeSplatRadius(int direction)
 {
     int currentScene = settings.currentScene;
-    if(this->selectedMesh == -1)
+    if(settings.selectedMesh == -1)
         return;
-    scenes[currentScene].meshes[this->selectedMesh - 1].changeSplatRadius(direction);
+    scenes[currentScene].meshes[settings.selectedMesh - 1].changeSplatRadius(direction);
 }
 
 void Model::subdivide()
 {
     int currentScene = settings.currentScene;
-    if(this->selectedMesh == -1)
+    if(settings.selectedMesh == -1)
         return;
-    scenes[currentScene].meshes[this->selectedMesh - 1].subdivide();
+    scenes[currentScene].meshes[settings.selectedMesh - 1].subdivide();
 
 }

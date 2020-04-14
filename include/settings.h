@@ -7,7 +7,7 @@ struct Settings
 {
     int textureRenderingStyle;
     int currentScene = SCENE_1;
-    int selectedMesh;
+    int selectedMesh = -1;
     bool normalColoring;
     bool splats;
     int splatMultipler;

@@ -30,7 +30,6 @@ class Model
         void drawLighting( Shader shader);
         void subdivide();
     private:
-        int selectedMesh;
         std::map<int, Scene> scenes;
 
 };
