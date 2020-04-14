@@ -11,13 +11,14 @@
 #include "../include/mesh.h"
 #include "../include/ply_parser.h"
 
+extern struct Settings settings;
+
 class Controller {
   public:
     View view;
     Model model;
     GLFWwindow* mainWindow = nullptr;
     bool normalColoring;
-    int textureRenderingStyle;
 
     Controller()
     {

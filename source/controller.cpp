@@ -1,6 +1,8 @@
 #include "../include/controller.h"
 #include<cmath>
 
+Settings settings;
+
 /* load and save meshes for the three scenes */
 void Controller::setupMeshes()
 {
@@ -9,13 +11,13 @@ void Controller::setupMeshes()
     std::vector<std::string> texturePaths;
 
     loadPlyFiles(filepaths, meshPos, texturePaths, SCENE_1);
-    model.setup(filepaths, meshPos, texturePaths, textureRenderingStyle, SCENE_1);
+    model.setup(filepaths, meshPos, texturePaths, SCENE_1);
 
     loadPlyFiles(filepaths, meshPos, texturePaths, SCENE_2);
-    model.setup(filepaths, meshPos, texturePaths, textureRenderingStyle, SCENE_2);
+    model.setup(filepaths, meshPos, texturePaths, SCENE_2);
 
     loadPlyFiles(filepaths, meshPos, texturePaths, SCENE_3);
-    model.setup(filepaths, meshPos, texturePaths, textureRenderingStyle, SCENE_3);
+    model.setup(filepaths, meshPos, texturePaths, SCENE_3);
 }
 
 
@@ -106,7 +108,7 @@ void Controller::reactToCallback(int ret)
                 break;
         case TOGGLE_SPLATS:
                 model.renderSplats = !model.renderSplats;
-                model.refresh(textureRenderingStyle);
+                model.refresh();
                 break;
         case TOGGLE_WIREFRAME:
                 this->toggleWireframe();
@@ -128,7 +130,7 @@ void Controller::reactToCallback(int ret)
                 break;
         case SUBDIVIDE:
                 model.subdivide();
-                model.refresh(textureRenderingStyle);
+                model.refresh();
                 break;
         case SCENE_1:
                 model.currentScene = SCENE_1;
@@ -140,20 +142,20 @@ void Controller::reactToCallback(int ret)
                 model.currentScene = SCENE_3;
                 break;
         case CYLINDER_PROJECT:
-                textureRenderingStyle = CYLINDER_PROJECT;
-                model.refresh(textureRenderingStyle);
+                settings.textureRenderingStyle = CYLINDER_PROJECT;
+                model.refresh();
                 break;
         case CYLINDER_NORMAL_FROM_OBJECT:
-                textureRenderingStyle = CYLINDER_NORMAL_FROM_OBJECT;
-                model.refresh(textureRenderingStyle);
+                settings.textureRenderingStyle = CYLINDER_NORMAL_FROM_OBJECT;
+                model.refresh();
                 break;
         case SPHERICAL_NORMAL_FROM_OBJECT:
-                textureRenderingStyle = SPHERICAL_NORMAL_FROM_OBJECT;
-                model.refresh(textureRenderingStyle);
+                settings.textureRenderingStyle = SPHERICAL_NORMAL_FROM_OBJECT;
+                model.refresh();
                 break;
         case SPHERICAL_PROJECT:
-                textureRenderingStyle = SPHERICAL_PROJECT;
-                model.refresh(textureRenderingStyle);
+                settings.textureRenderingStyle = SPHERICAL_PROJECT;
+                model.refresh();
                 break;
     }
 }

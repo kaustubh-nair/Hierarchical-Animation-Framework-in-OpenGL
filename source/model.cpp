@@ -7,8 +7,7 @@ Model::Model()
 }
 
 void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,
-                  std::vector<std::string> texturePaths, int textureRenderingStyle,
-                  int sceneID)
+                  std::vector<std::string> texturePaths, int sceneID)
 {
     std::vector<std::string>::iterator filepath;
     std::vector<glm::vec3>::iterator position = meshPos.begin();
@@ -18,7 +17,7 @@ void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> mes
     for (filepath = filepaths.begin(); filepath < filepaths.end(); filepath++)
     {
         Mesh mesh(*filepath, *position, *texturePath);
-        mesh.setup(textureRenderingStyle);
+        mesh.setup();
         scene.add_mesh(mesh);
 
         position++;
@@ -30,7 +29,7 @@ void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> mes
 }
 
 /* refresh for rendering splats */
-void Model::refresh(int textureRenderingStyle)
+void Model::refresh()
 {
     std::vector<Mesh>::iterator mesh;
 
@@ -39,7 +38,7 @@ void Model::refresh(int textureRenderingStyle)
         if(this->renderSplats)
             mesh->setupSplats();
         else
-            mesh->setup(textureRenderingStyle);
+            mesh->setup();
     }
 }
 

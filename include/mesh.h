@@ -13,11 +13,12 @@
 #include "../include/in_circle.h"
 #include "../include/shader.h"
 #include "../include/stb_image.h"
-
+#include "../include/settings.h"
 
 
 extern int ID;
 extern int num_segments;
+extern struct Settings settings;
 
 class Mesh {
   public:
@@ -33,7 +34,7 @@ class Mesh {
     std::vector<GLuint> fanStartingElements;
 
     Mesh(std::string filepath, glm::vec3 position, std::string texturePath);
-    void setup(int textureRenderingStyle);
+    void setup();
     void draw(Shader shader);
     void setupSplats();
     void drawSplats(Shader shader);
@@ -48,7 +49,7 @@ class Mesh {
     void addToInCircles(glm::vec3 normal, glm::vec3 vertex, bool center);
     void generateTextureObject();
     void computeTextureMapping();
-    void setTextureBufferAttribute(int textureRenderingStyle);
+    void setTextureBufferAttribute();
     void subdivide();
 
     std::string texturePath;

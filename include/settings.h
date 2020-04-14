@@ -1,3 +1,6 @@
+#ifndef SETTINGS_H
+#define SETTINGS_H
+
 #include "../include/definitions.h"
 
 struct Settings
@@ -9,3 +12,5 @@ struct Settings
     bool splats;
     int splatMultipler;
 };
+
+#endif

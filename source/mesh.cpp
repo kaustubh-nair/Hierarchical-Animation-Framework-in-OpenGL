@@ -76,7 +76,7 @@ void Mesh::generateTextureObject()
     stbi_image_free(data);
 }
 
-void Mesh::setup(int textureRenderingStyle)
+void Mesh::setup()
 {
 
     generateTextureObject();
@@ -93,7 +93,7 @@ void Mesh::setup(int textureRenderingStyle)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
 
-    setTextureBufferAttribute(textureRenderingStyle);
+    setTextureBufferAttribute();
 
     glEnableVertexAttribArray(2);
     glEnableVertexAttribArray(1);
@@ -225,9 +225,9 @@ void Mesh::changeSplatRadius(int direction)
     }
 }
 
-void Mesh::setTextureBufferAttribute(int textureRenderingStyle)
+void Mesh::setTextureBufferAttribute()
 {
-    switch(textureRenderingStyle)
+    switch(settings.textureRenderingStyle)
     {
         case CYLINDER_PROJECT:
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)((2*sizeof(glm::vec3)) + (5*sizeof(glm::vec2))));
