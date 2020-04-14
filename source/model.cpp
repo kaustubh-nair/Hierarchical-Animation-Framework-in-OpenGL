@@ -7,21 +7,25 @@ Model::Model()
 }
 
 void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,
-                  std::vector<std::string> texturePaths, int textureRenderingStyle)
+                  std::vector<std::string> texturePaths, int textureRenderingStyle,
+                  int sceneID)
 {
     std::vector<std::string>::iterator filepath;
     std::vector<glm::vec3>::iterator position = meshPos.begin();
     std::vector<std::string>::iterator texturePath = texturePaths.begin();
+    Scene scene;
 
     for (filepath = filepaths.begin(); filepath < filepaths.end(); filepath++)
     {
         Mesh mesh(*filepath, *position, *texturePath);
         mesh.setup(textureRenderingStyle);
-        meshes.push_back(mesh);
+        scene.add_mesh(mesh);
 
         position++;
         texturePath++;
     }
+
+    scenes[sceneID] = scene;
 
 }
 
@@ -30,7 +34,7 @@ void Model::refresh(int textureRenderingStyle)
 {
     std::vector<Mesh>::iterator mesh;
 
-    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
+    for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
     {
         if(this->renderSplats)
             mesh->setupSplats();
@@ -43,7 +47,7 @@ void Model::draw(Shader shader, Shader lightingShader, glm::vec3 lightPos)
 {
     std::vector<Mesh>::iterator mesh;
 
-    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
+    for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
     {
         if(this->renderSplats)
             mesh->drawSplats(shader);
@@ -54,12 +58,11 @@ void Model::draw(Shader shader, Shader lightingShader, glm::vec3 lightPos)
     lighting.draw(lightingShader, lightPos);
 }
 
-
 void Model::unselect()
 {
     std::vector<Mesh>::iterator mesh;
 
-    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
+    for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
     {
         if(mesh->id == this->selectedMesh)
         {
@@ -77,7 +80,7 @@ void Model::select(int id)
     this->selectedMesh = id;
 
     std::vector<Mesh>::iterator mesh;
-    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
+    for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
     {
         if(mesh->id == id)
         {
@@ -89,9 +92,10 @@ void Model::select(int id)
 
 void Model::translate(glm::vec2 direction)
 {
+    Scene scene = scenes[currentScene];
     if(this->selectedMesh == -1)
         return;
-    meshes[this->selectedMesh - 1].translate(direction);
+    scenes[currentScene].meshes[this->selectedMesh - 1].translate(direction);
 }
 
 void Model::scale(int direction)
@@ -99,14 +103,14 @@ void Model::scale(int direction)
     if(this->selectedMesh == -1)
         return;
 
-    meshes[this->selectedMesh - 1].scale(direction);
+    scenes[currentScene].meshes[this->selectedMesh - 1].scale(direction);
 }
 
 void Model::rotate(glm::vec2 direction)
 {
     if(this->selectedMesh == -1)
         return;
-    meshes[this->selectedMesh - 1].rotate(direction);
+    scenes[currentScene].meshes[this->selectedMesh - 1].rotate(direction);
 
 }
 
@@ -114,13 +118,13 @@ void Model::changeSplatRadius(int direction)
 {
     if(this->selectedMesh == -1)
         return;
-    meshes[this->selectedMesh - 1].changeSplatRadius(direction);
+    scenes[currentScene].meshes[this->selectedMesh - 1].changeSplatRadius(direction);
 }
 
 void Model::subdivide()
 {
     if(this->selectedMesh == -1)
         return;
-    meshes[this->selectedMesh - 1].subdivide();
+    scenes[currentScene].meshes[this->selectedMesh - 1].subdivide();
 
 }

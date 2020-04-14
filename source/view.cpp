@@ -64,7 +64,9 @@ int View::listenToCallbacks(GLFWwindow *window)
         {GLFW_KEY_K, INCREASE_SPLAT_RADIUS},
         {GLFW_KEY_N, TOGGLE_NORMAL_COLORING},
         {GLFW_KEY_Q, SUBDIVIDE},
-
+        {GLFW_KEY_Z, SCENE_1},
+        {GLFW_KEY_X, SCENE_2},
+        {GLFW_KEY_C, SCENE_3},
     };
 
     static std::vector<int> oldStates(key_mappings.size(), GLFW_RELEASE);

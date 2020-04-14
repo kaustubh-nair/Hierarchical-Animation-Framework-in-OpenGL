@@ -47,3 +47,7 @@
 #define SPHERICAL_NORMAL_FROM_OBJECT 31
 
 #define SUBDIVIDE 32
+
+#define SCENE_1 33
+#define SCENE_2 34
+#define SCENE_3 35

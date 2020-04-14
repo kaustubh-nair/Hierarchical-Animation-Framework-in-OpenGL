@@ -2,33 +2,38 @@
 #define MODEL_H
 
 #include <vector>
+#include <map>
 
 #include "../include/mesh.h"
 #include "../include/lighting.h"
+#include "../include/scene.h"
 
 class Model
 {
-  public:
-    bool renderSplats;
+    public:
+        bool renderSplats;
+        int currentScene = SCENE_1;
 
-    Model();
-    void setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos, std::vector<std::string> texturePaths, int textureRenderingStyle);
-    void draw(Shader shader, Shader lightingShader, glm::vec3 lightPos);
-    void refresh(int textureRenderingStyle);
-    void changeSplatRadius(int direction);
+        Model();
+        void setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,
+                   std::vector<std::string> texturePaths, int textureRenderingStyle,
+                   int sceneID);
+        void draw(Shader shader, Shader lightingShader, glm::vec3 lightPos);
+        void refresh(int textureRenderingStyle);
+        void changeSplatRadius(int direction);
 
-    void unselect();
-    void select(int direction);
+        void unselect();
+        void select(int direction);
 
-    void translate(glm::vec2 direction);
-    void scale(int direction);
-    void rotate(glm::vec2 direction);
+        void translate(glm::vec2 direction);
+        void scale(int direction);
+        void rotate(glm::vec2 direction);
 
-    void drawLighting( Shader shader);
-    void subdivide();
-  private:
-    std::vector<Mesh> meshes;
-    int selectedMesh;
+        void drawLighting( Shader shader);
+        void subdivide();
+    private:
+        int selectedMesh;
+        std::map<int, Scene> scenes;
 
 };
 
