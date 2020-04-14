@@ -17,6 +17,7 @@ class Controller {
     Model model;
     GLFWwindow* mainWindow = nullptr;
     bool normalColoring;
+    int textureRenderingStyle;
 
     Controller()
     {

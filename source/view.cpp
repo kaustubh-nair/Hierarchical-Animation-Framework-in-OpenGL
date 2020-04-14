@@ -67,6 +67,10 @@ int View::listenToCallbacks(GLFWwindow *window)
         {GLFW_KEY_Z, SCENE_1},
         {GLFW_KEY_X, SCENE_2},
         {GLFW_KEY_C, SCENE_3},
+        {GLFW_KEY_0, CYLINDER_PROJECT},
+        {GLFW_KEY_9, CYLINDER_NORMAL_FROM_OBJECT},
+        {GLFW_KEY_8, SPHERICAL_NORMAL_FROM_OBJECT},
+        {GLFW_KEY_7, SPHERICAL_PROJECT},
     };
 
     static std::vector<int> oldStates(key_mappings.size(), GLFW_RELEASE);

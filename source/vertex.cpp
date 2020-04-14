@@ -220,9 +220,9 @@ glm::vec2 findSphPointFromObjectNormal(glm::vec3 position, glm::vec3 normal)
 
 void Vertex::computeTextureCoords()
 {
-    //cylTexCoords2 = findCylPointFromObjectNormal(position, normal);
-    //cylTexCoords3 = findCylMapping(position);
+    cylTexCoords2 = findCylPointFromObjectNormal(position, normal);
+    cylTexCoords3 = findCylMapping(position);
 
-    //sphTexCoords2 = findSphPointFromObjectNormal(position, normal);
-    //sphTexCoords3 = findSphMapping(position);
+    sphTexCoords2 = findSphPointFromObjectNormal(position, normal);
+    sphTexCoords3 = findSphMapping(position);
 }

@@ -19,11 +19,9 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     texturePath = texture;
 
     // compute and save texture map coordinates
-    /*
     std::vector<Vertex>::iterator vertex;
     for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
         vertex->computeTextureCoords();
-        */
 
 }
 
@@ -81,7 +79,7 @@ void Mesh::generateTextureObject()
 void Mesh::setup(int textureRenderingStyle)
 {
 
-    //generateTextureObject();
+    generateTextureObject();
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -95,7 +93,7 @@ void Mesh::setup(int textureRenderingStyle)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
 
-    //setTextureBufferAttribute(textureRenderingStyle);
+    setTextureBufferAttribute(textureRenderingStyle);
 
     glEnableVertexAttribArray(2);
     glEnableVertexAttribArray(1);

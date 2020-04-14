@@ -1,8 +1,6 @@
 #include "../include/controller.h"
 #include<cmath>
 
-int textureRenderingStyle = CYLINDER_NORMAL_FROM_OBJECT;
-
 /* load and save meshes for the three scenes */
 void Controller::setup()
 {
@@ -141,6 +139,22 @@ void Controller::reactToCallback(int ret)
                 break;
         case SCENE_3:
                 model.currentScene = SCENE_3;
+                break;
+        case CYLINDER_PROJECT:
+                textureRenderingStyle = CYLINDER_PROJECT;
+                model.refresh(textureRenderingStyle);
+                break;
+        case CYLINDER_NORMAL_FROM_OBJECT:
+                textureRenderingStyle = CYLINDER_NORMAL_FROM_OBJECT;
+                model.refresh(textureRenderingStyle);
+                break;
+        case SPHERICAL_NORMAL_FROM_OBJECT:
+                textureRenderingStyle = SPHERICAL_NORMAL_FROM_OBJECT;
+                model.refresh(textureRenderingStyle);
+                break;
+        case SPHERICAL_PROJECT:
+                textureRenderingStyle = SPHERICAL_PROJECT;
+                model.refresh(textureRenderingStyle);
                 break;
     }
 }
