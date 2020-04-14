@@ -12,7 +12,6 @@ class Model
 {
     public:
         bool renderSplats;
-        int currentScene = SCENE_1;
 
         Model();
         void setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,

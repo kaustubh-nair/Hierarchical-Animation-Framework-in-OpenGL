@@ -31,6 +31,7 @@ void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> mes
 /* refresh for rendering splats */
 void Model::refresh()
 {
+    int currentScene = settings.currentScene;
     std::vector<Mesh>::iterator mesh;
 
     for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
@@ -44,6 +45,7 @@ void Model::refresh()
 
 void Model::draw(Shader shader, Shader lightingShader, glm::vec3 lightPos)
 {
+    int currentScene = settings.currentScene;
     std::vector<Mesh>::iterator mesh;
 
     for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
@@ -59,6 +61,7 @@ void Model::draw(Shader shader, Shader lightingShader, glm::vec3 lightPos)
 
 void Model::unselect()
 {
+    int currentScene = settings.currentScene;
     std::vector<Mesh>::iterator mesh;
 
     for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
@@ -74,6 +77,7 @@ void Model::unselect()
 
 void Model::select(int id)
 {
+    int currentScene = settings.currentScene;
     if(this->selectedMesh != -1)
         return;
     this->selectedMesh = id;
@@ -91,7 +95,7 @@ void Model::select(int id)
 
 void Model::translate(glm::vec2 direction)
 {
-    Scene scene = scenes[currentScene];
+    int currentScene = settings.currentScene;
     if(this->selectedMesh == -1)
         return;
     scenes[currentScene].meshes[this->selectedMesh - 1].translate(direction);
@@ -99,6 +103,7 @@ void Model::translate(glm::vec2 direction)
 
 void Model::scale(int direction)
 {
+    int currentScene = settings.currentScene;
     if(this->selectedMesh == -1)
         return;
 
@@ -107,6 +112,7 @@ void Model::scale(int direction)
 
 void Model::rotate(glm::vec2 direction)
 {
+    int currentScene = settings.currentScene;
     if(this->selectedMesh == -1)
         return;
     scenes[currentScene].meshes[this->selectedMesh - 1].rotate(direction);
@@ -115,6 +121,7 @@ void Model::rotate(glm::vec2 direction)
 
 void Model::changeSplatRadius(int direction)
 {
+    int currentScene = settings.currentScene;
     if(this->selectedMesh == -1)
         return;
     scenes[currentScene].meshes[this->selectedMesh - 1].changeSplatRadius(direction);
@@ -122,6 +129,7 @@ void Model::changeSplatRadius(int direction)
 
 void Model::subdivide()
 {
+    int currentScene = settings.currentScene;
     if(this->selectedMesh == -1)
         return;
     scenes[currentScene].meshes[this->selectedMesh - 1].subdivide();

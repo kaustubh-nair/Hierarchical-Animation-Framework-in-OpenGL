@@ -133,13 +133,13 @@ void Controller::reactToCallback(int ret)
                 model.refresh();
                 break;
         case SCENE_1:
-                model.currentScene = SCENE_1;
+                settings.currentScene = SCENE_1;
                 break;
         case SCENE_2:
-                model.currentScene = SCENE_2;
+                settings.currentScene = SCENE_2;
                 break;
         case SCENE_3:
-                model.currentScene = SCENE_3;
+                settings.currentScene = SCENE_3;
                 break;
         case CYLINDER_PROJECT:
                 settings.textureRenderingStyle = CYLINDER_PROJECT;
