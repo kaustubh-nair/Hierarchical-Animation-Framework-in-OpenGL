@@ -35,8 +35,6 @@ class Controller {
     void toggleWireframe();
     void loadPlyFiles(std::vector<std::string> &filepaths, std::vector<glm::vec3> &meshPos, std::vector<std::string> &texturePaths, int scene);
     void setupMeshes();
-
-  private:
 };
 
 

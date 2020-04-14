@@ -53,9 +53,6 @@ class Mesh {
     void subdivide();
 
     std::string texturePath;
-
-
-  private:
     unsigned int VAO, VBO, EBO;
     unsigned int texture;
     float splatMultipler;

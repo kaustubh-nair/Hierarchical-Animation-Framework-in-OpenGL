@@ -29,7 +29,6 @@ class Model
 
         void drawLighting( Shader shader);
         void subdivide();
-    private:
         std::map<int, Scene> scenes;
 
 };
