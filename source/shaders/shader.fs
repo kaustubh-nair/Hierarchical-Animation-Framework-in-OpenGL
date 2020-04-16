@@ -12,7 +12,6 @@ uniform sampler2D Texture;
 uniform vec3 viewPos;
 uniform bool noTextures;
 
-
 void main()
 {
 

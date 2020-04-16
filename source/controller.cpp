@@ -37,6 +37,7 @@ void Controller::mainLoop()
     Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
     Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
     Shader normalColoringShader("source/shaders/normal_coloring_shader.vs", "source/shaders/normal_coloring_shader.fs");
+    Shader subdivisionShader("source/shaders/subdivision_shader.vs", "source/shaders/subdivision_shader.fs");
 
     glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
     glm::mat4 viewMatrix = view.getViewMatrix();
@@ -59,6 +60,8 @@ void Controller::mainLoop()
 
         if(this->normalColoring)
             normalColoringShader.use();
+        else if(settings.currentScene == SCENE_3)
+            subdivisionShader.use();
         else
             shader.use();
 
@@ -66,6 +69,7 @@ void Controller::mainLoop()
             shader.setBool("noTextures", 1);
         else
             shader.setBool("noTextures", 0);
+
 
         shader.setMat4("projection", proj);
         shader.setMat4("view", viewMatrix);
