@@ -61,6 +61,11 @@ void Controller::mainLoop()
         else
             shader.use();
 
+        if(settings.textureRenderingStyle == NO_TEXTURES)
+            shader.setBool("noTextures", 1);
+        else
+            shader.setBool("noTextures", 0);
+
         shader.setMat4("projection", proj);
         shader.setMat4("view", viewMatrix);
         shader.setVec3("viewPos", view.getViewPos());
@@ -157,6 +162,10 @@ void Controller::reactToCallback(int ret)
             settings.textureRenderingStyle = SPHERICAL_PROJECT;
             model.refresh();
             break;
+        case NO_TEXTURES:
+            settings.textureRenderingStyle = NO_TEXTURES;
+            model.refresh();
+            break;
     }
 }
 
@@ -175,7 +184,7 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
                               std::vector<std::string> &texturePaths,
                               int scene)
 {
-    std::string texturePath = "data/checkerboard_large.png";
+    std::string texturePath = "data/rainbow.png";
     filepaths.clear();
     meshPos.clear();
     texturePaths.clear();
