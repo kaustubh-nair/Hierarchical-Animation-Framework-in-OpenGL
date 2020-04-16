@@ -241,9 +241,9 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
                 texturePaths.push_back(texturePath);
                 texturePaths.push_back(texturePath);
 
-                meshPos.push_back(glm::vec3(1.0f, 0.0f, -1.0f));
-                meshPos.push_back(glm::vec3(1.0f, 1.0f, -1.0f));
-                meshPos.push_back(glm::vec3(0.0f, 1.0f, -1.0f));
+                meshPos.push_back(glm::vec3(1.0f, 0.0f, -6.0f));
+                meshPos.push_back(glm::vec3(1.0f, 1.0f, -6.0f));
+                meshPos.push_back(glm::vec3(0.0f, 1.0f, -6.0f));
                 break;
             }
                 
