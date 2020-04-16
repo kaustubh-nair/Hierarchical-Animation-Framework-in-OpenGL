@@ -2,6 +2,7 @@
 #define print(a) std::cout<< a << std::endl;
 #define print_array(a,size) for(int i = 0; i < size; i++){print(a[i]);}
 
+/* return values / codes used in the program */
 
 // picking objects
 #define SELECT_OBJECT_1 1
@@ -9,12 +10,9 @@
 #define SELECT_OBJECT_3 3
 #define SELECT_OBJECT_4 4
 #define SELECT_OBJECT_5 5
-
 #define UNSELECT_OBJECT 6
 
 #define TRANSLATE_OBJECT 7
-
-#define OBJECT_SELECTED 8
 
 // translation
 #define RIGHT 11
@@ -45,9 +43,11 @@
 #define SPHERICAL_PROJECT 29
 #define SPHERICAL_NORMAL 30
 #define SPHERICAL_NORMAL_FROM_OBJECT 31
+#define NO_TEXTURES 36
 
 #define SUBDIVIDE 32
 
 #define SCENE_1 33
 #define SCENE_2 34
 #define SCENE_3 35
+

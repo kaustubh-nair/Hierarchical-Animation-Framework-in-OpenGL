@@ -52,11 +52,10 @@ int View::listenToCallbacks(GLFWwindow *window)
 
     std::map<int,int> key_mappings = {
         {GLFW_KEY_ESCAPE, UNSELECT_OBJECT},
-        {GLFW_KEY_1, SELECT_OBJECT_1},
-        {GLFW_KEY_2, SELECT_OBJECT_2},
-        {GLFW_KEY_3, SELECT_OBJECT_3},
-        {GLFW_KEY_4, SELECT_OBJECT_4},
-        {GLFW_KEY_5, SELECT_OBJECT_5},
+        {GLFW_KEY_0, SELECT_OBJECT_1},
+        {GLFW_KEY_9, SELECT_OBJECT_2},
+        {GLFW_KEY_8, SELECT_OBJECT_3},
+        {GLFW_KEY_7, SELECT_OBJECT_4},
         {GLFW_KEY_MINUS, SCALE_OBJECT_DOWN},
         {GLFW_KEY_S, TOGGLE_SPLATS},
         {GLFW_KEY_W, TOGGLE_WIREFRAME},
@@ -67,10 +66,11 @@ int View::listenToCallbacks(GLFWwindow *window)
         {GLFW_KEY_Z, SCENE_1},
         {GLFW_KEY_X, SCENE_2},
         {GLFW_KEY_C, SCENE_3},
-        {GLFW_KEY_0, CYLINDER_PROJECT},
-        {GLFW_KEY_9, CYLINDER_NORMAL_FROM_OBJECT},
-        {GLFW_KEY_8, SPHERICAL_NORMAL_FROM_OBJECT},
-        {GLFW_KEY_7, SPHERICAL_PROJECT},
+        {GLFW_KEY_6, CYLINDER_PROJECT},
+        {GLFW_KEY_5, CYLINDER_NORMAL_FROM_OBJECT},
+        {GLFW_KEY_2, SPHERICAL_NORMAL_FROM_OBJECT},
+        {GLFW_KEY_3, SPHERICAL_PROJECT},
+        {GLFW_KEY_SPACE, NO_TEXTURES},
     };
 
     static std::vector<int> oldStates(key_mappings.size(), GLFW_RELEASE);
@@ -100,36 +100,6 @@ int View::listenToCallbacks(GLFWwindow *window)
     }
     oldState12 = newState;
     
-    /* object picking */
-    /*
-    static int oldState13 = GLFW_RELEASE;
-    newState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
-    if( oldState13 == GLFW_PRESS && newState == GLFW_RELEASE)
-    {
-        oldState13 = newState;
-        double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-        float x = xpos / (WIDTH * 0.5f) ;
-        float y = ypos / (HEIGHT * 0.5f) ;
-
-        glm::vec4 ray = glm::vec4(x,-y,0.0f,1.0f);
-
-        glm::mat4 proj = glm::ortho(-(WIDTH / 2.0f), WIDTH / 2.0f,
-                                                              -(HEIGHT / 2.0f),HEIGHT / 2.0f,
-                                                              -100.0f, 100.0f);
-        glm::mat4 view = camera.getViewMatrix();
-        glm::mat4 worldInv = glm::inverse(proj * view);
-        glm::vec4 worldPos = worldInv * ray;
-
-        objPosition = glm::vec3(worldPos.x, worldPos.y, 0.0f);
-        //objPosition = glm::normalize(objPosition);
-        print(objPosition.x);
-        print(objPosition.y);
-        return OBJECT_SELECTED;
-    }
-    oldState13 = newState;
-    */
-
     /* translation and rotation callbacks */
     int leftState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
     int rightState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);

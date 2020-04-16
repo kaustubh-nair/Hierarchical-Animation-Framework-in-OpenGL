@@ -2,8 +2,6 @@
 
 float PI = 3.14159265;
 
-
-
 void Vertex::updateNeighbours(std::vector<Vertex> &vertices,
                               std::vector<unsigned int> &indices)
 {
@@ -144,7 +142,7 @@ glm::vec2 findCylMapping(glm::vec3 position)
 glm::vec2 findSphMapping(glm::vec3 position)
 {
     float u = 0.5 + (atan2(position.z, position.x)/(2*PI));
-    float v = 0.5 + (position.y * 0.5);
+    float v = 0.5 - (asin(position.y)/PI);
     return glm::vec2(u, v);
 }
 

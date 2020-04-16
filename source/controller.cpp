@@ -175,6 +175,7 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
                               std::vector<std::string> &texturePaths,
                               int scene)
 {
+    std::string texturePath = "data/checkerboard_large.png";
     filepaths.clear();
     meshPos.clear();
     texturePaths.clear();
@@ -189,7 +190,7 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
                     for(int j = -1; j < 2; j++)
                     {
                         filepaths.push_back("data/sphere.ply");
-                        texturePaths.push_back("data/rainbow.png");
+                        texturePaths.push_back(texturePath);
                         meshPos.push_back(glm::vec3(dist * i, dist * j, -5.0f));
                     }
                 }
@@ -203,10 +204,10 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
                 filepaths.push_back("data/cylinder.ply");
                 filepaths.push_back("data/sphere.ply");
 
-                texturePaths.push_back("data/rainbow.png");
-                texturePaths.push_back("data/rainbow.png");
-                texturePaths.push_back("data/rainbow.png");
-                texturePaths.push_back("data/rainbow.png");
+                texturePaths.push_back(texturePath);
+                texturePaths.push_back(texturePath);
+                texturePaths.push_back(texturePath);
+                texturePaths.push_back(texturePath);
 
                 meshPos.push_back(glm::vec3(1.0f, 1.0f, -1.0f));
                 meshPos.push_back(glm::vec3(1.0f, 0.0f, -1.0f));
@@ -222,9 +223,9 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
                 filepaths.push_back("data/tetrahedron.ply");
                 filepaths.push_back("data/sphere.ply");
 
-                texturePaths.push_back("data/rainbow.png");
-                texturePaths.push_back("data/rainbow.png");
-                texturePaths.push_back("data/rainbow.png");
+                texturePaths.push_back(texturePath);
+                texturePaths.push_back(texturePath);
+                texturePaths.push_back(texturePath);
 
                 meshPos.push_back(glm::vec3(1.0f, 0.0f, -1.0f));
                 meshPos.push_back(glm::vec3(1.0f, 1.0f, -1.0f));
