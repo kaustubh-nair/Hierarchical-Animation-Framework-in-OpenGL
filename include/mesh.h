@@ -51,6 +51,7 @@ class Mesh {
     void computeTextureMapping();
     void setTextureBufferAttribute();
     void subdivide();
+    void subdivideEdges();
 
     std::string texturePath;
     unsigned int VAO, VBO, EBO;

@@ -13,6 +13,7 @@
 
 extern struct Settings settings;
 
+
 class Controller {
   public:
     View view;
