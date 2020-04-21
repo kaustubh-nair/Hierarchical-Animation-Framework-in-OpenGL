@@ -71,11 +71,9 @@ void Controller::mainLoop()
         shader.setMat4("projection", proj);
         shader.setMat4("view", viewMatrix);
         shader.setVec3("viewPos", view.getViewPos());
-        shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-        glm::vec3 lightPos = glm::vec3(3.2f, 3.2f, -4.0f);
-        shader.setVec3("lightPos",lightPos.x, lightPos.y, lightPos.z);
 
-        model.draw(shader, lightingShader, lightPos);
+        model.draw(shader);
+        model.drawLighting(shader, lightingShader);
 
         lightingShader.use();
         lightingShader.setMat4("projection", proj);

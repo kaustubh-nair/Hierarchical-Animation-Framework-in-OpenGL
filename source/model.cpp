@@ -42,7 +42,7 @@ void Model::refresh()
     }
 }
 
-void Model::draw(Shader shader, Shader lightingShader, glm::vec3 lightPos)
+void Model::draw(Shader shader)
 {
     int currentScene = settings.currentScene;
     std::vector<Mesh>::iterator mesh;
@@ -54,9 +54,20 @@ void Model::draw(Shader shader, Shader lightingShader, glm::vec3 lightPos)
         else
             mesh->draw(shader);
     }
+}
+
+
+void Model::drawLighting(Shader shader, Shader lightingShader)
+{
+    glm::vec3 lightPos = glm::vec3(3.2f, 3.2f, -4.0f);
+
+    shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+    shader.setVec3("lightPos",lightPos.x, lightPos.y, lightPos.z);
+
     Lighting lighting;
     lighting.draw(lightingShader, lightPos);
 }
+
 
 void Model::unselect()
 {
