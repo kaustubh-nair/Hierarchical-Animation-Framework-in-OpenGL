@@ -39,6 +39,7 @@ class Controller {
 
     /* helpers */
     void toggleTextures(Shader *shader);
+    void setShader(Shader *shader, Shader *subdivisionShader, Shader *normalColoringShader);
 };
 
 

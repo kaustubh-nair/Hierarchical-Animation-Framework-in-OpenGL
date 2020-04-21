@@ -58,14 +58,9 @@ void Controller::mainLoop()
 
         viewMatrix = view.getViewMatrix();
 
-        if(this->normalColoring)
-            normalColoringShader.use();
-        else if(settings.currentScene == SCENE_3)
-            subdivisionShader.use();
-        else
-            shader.use();
 
 
+        setShader(&shader, &subdivisionShader, &normalColoringShader);
         toggleTextures(&shader);
 
         shader.setMat4("projection", proj);
@@ -252,4 +247,14 @@ void Controller::toggleTextures(Shader *shader)
         shader->setBool("noTextures", 1);
     else
         shader->setBool("noTextures", 0);
+}
+
+void Controller::setShader(Shader *shader, Shader *subdivisionShader, Shader *normalColoringShader)
+{
+    if(this->normalColoring)
+        normalColoringShader->use();
+    else if(settings.currentScene == SCENE_3)
+        subdivisionShader->use();
+    else
+        shader->use();
 }
