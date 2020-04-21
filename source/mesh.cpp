@@ -32,6 +32,7 @@ void Mesh::subdivide()
     Vertex::updateNeighbours(vertices, indices);
     Edge::computeEdges(indices, edges);
     subdivideEdges();
+    Vertex::computeNormals(vertices);
 }
 
 
@@ -303,6 +304,7 @@ void Mesh::subdivideEdges()
         newIndices.push_back(v); newIndices.push_back(a); newIndices.push_back(c);  //triangle 2
         newIndices.push_back(w); newIndices.push_back(c); newIndices.push_back(b);  //triangle 3
         newIndices.push_back(a); newIndices.push_back(c); newIndices.push_back(b);  //triangle 4
+
     }
     indices = newIndices;
     //cleanup??

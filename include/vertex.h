@@ -39,6 +39,7 @@ class Vertex
 
         void computeTextureCoords();
         static void updateNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
+        static void computeNormals(std::vector<Vertex> &vertices);
 
 };
 

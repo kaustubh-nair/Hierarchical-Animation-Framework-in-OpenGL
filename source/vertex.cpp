@@ -126,3 +126,19 @@ void Vertex::computeTextureCoords()
     sphTexCoords2 = findSphPointFromObjectNormal(position, normal);
     sphTexCoords3 = findSphMapping(position);
 }
+
+void Vertex::computeNormals(std::vector<Vertex> &vertices)
+{
+  auto vertex = vertices.begin();
+  std::vector<glm::vec3>::iterator normal;
+
+  for(; vertex < vertices.end(); vertex++)
+  {
+    glm::vec3 vec_normal = glm::vec3(0.0, 0.0, 0.0);
+
+    for(normal = vertex->face_normals.begin(); normal < vertex->face_normals.end(); normal++)
+      vec_normal = vec_normal + *normal;
+
+    vertex->normal = glm::normalize(vec_normal);
+  }
+}
