@@ -65,11 +65,8 @@ void Controller::mainLoop()
         else
             shader.use();
 
-        if(settings.textureRenderingStyle == NO_TEXTURES)
-            shader.setBool("noTextures", 1);
-        else
-            shader.setBool("noTextures", 0);
 
+        toggleTextures(&shader);
 
         shader.setMat4("projection", proj);
         shader.setMat4("view", viewMatrix);
@@ -249,4 +246,12 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
                 
     }
 
+}
+
+void Controller::toggleTextures(Shader *shader)
+{
+    if(settings.textureRenderingStyle == NO_TEXTURES)
+        shader->setBool("noTextures", 1);
+    else
+        shader->setBool("noTextures", 0);
 }
