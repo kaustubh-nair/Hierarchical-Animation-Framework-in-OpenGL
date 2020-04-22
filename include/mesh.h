@@ -9,7 +9,6 @@
 
 #include "../include/ply_parser.h"
 #include "../include/vertex.h"
-#include "../include/edge.h"
 #include "../include/in_circle.h"
 #include "../include/shader.h"
 #include "../include/stb_image.h"
@@ -26,7 +25,6 @@ class Mesh {
     bool selected;
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
-    std::map<std::pair<unsigned int, unsigned int>, Edge> edges;
 
     /* splat related info */
     std::vector<InCircle> inCircles;
@@ -51,7 +49,6 @@ class Mesh {
     void computeTextureMapping();
     void setTextureBufferAttribute();
     void subdivide();
-    void subdivideEdges();
 
     std::string texturePath;
     unsigned int VAO, VBO, EBO;

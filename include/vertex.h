@@ -12,7 +12,6 @@
 #include <set>
 #include <iostream>
 #include "../include/definitions.h"
-#include "../include/edge.h"
 
 
 
@@ -31,7 +30,6 @@ class Vertex
         glm::vec2 cylTexCoords3;  //vertex to cylinder
 
         glm::vec3 newPosition;
-        bool isNew;   //flag to check if newly split edge vertex
         std::vector<glm::vec3> face_normals;
         std::set<unsigned int> neighbours;  //indices of neighbouring vertices
 

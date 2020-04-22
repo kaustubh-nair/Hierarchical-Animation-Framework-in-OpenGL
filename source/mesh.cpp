@@ -28,10 +28,7 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
 
 void Mesh::subdivide()
 {
-    edges.clear();
     Vertex::updateNeighbours(vertices, indices);
-    Edge::computeEdges(indices, edges);
-    subdivideEdges();
     Vertex::computeNormals(vertices);
 }
 
@@ -250,102 +247,4 @@ void Mesh::setTextureBufferAttribute()
         case NO_TEXTURES:
             break;
     }
-}
-
-void Mesh::subdivideEdges()
-{
-    /*split edges*/
-    std::map<std::pair<unsigned int, unsigned int>, Edge>::iterator itr;
-    int index = vertices.size();
-    for(itr = edges.begin(); itr != edges.end(); itr++)
-    {
-        Edge edge = itr->second;
-        edge.split(vertices[edge.u].position,
-                   vertices[edge.v].position,
-                   vertices[edge.sharedPoint1].position,
-                   vertices[edge.sharedPoint2].position);
-
-
-        //insert new point
-        Vertex vertex;
-        vertex.position = edge.newPoint;
-        vertex.isNew = true;
-        vertices.push_back(vertex);
-        (itr->second).newPointIndex = index;
-        index++;
-    }
-
-    //update new vertex normals
-    /* update indices - save new triangle */
-    int n = indices.size();
-    unsigned int u,v,w;  //old vertices of each triangle
-    unsigned int a,b,c;  //new vertices
-    std::pair <unsigned int, unsigned int> key;
-    std::vector<unsigned int> newIndices;
-
-    for(int i = n-1; i >= 0; i-=3)
-    {
-        u = indices[i];
-        v = indices[i-1];
-        w = indices[i-2];
-
-        indices.pop_back(); indices.pop_back(); indices.pop_back();
-
-        Edge *edge = Edge::find_edge(u,v,edges);
-        a = edge->newPointIndex;
-
-        edge = Edge::find_edge(v,w,edges);
-        c = edge->newPointIndex;
-
-        edge = Edge::find_edge(u,w,edges);
-        b = edge->newPointIndex;
-
-        newIndices.push_back(u); newIndices.push_back(a); newIndices.push_back(b);  //triangle 1
-        newIndices.push_back(v); newIndices.push_back(a); newIndices.push_back(c);  //triangle 2
-        newIndices.push_back(w); newIndices.push_back(c); newIndices.push_back(b);  //triangle 3
-        newIndices.push_back(a); newIndices.push_back(c); newIndices.push_back(b);  //triangle 4
-
-    }
-    indices = newIndices;
-    //cleanup??
-    //update edges
-
-    // move old vertices
-    n = vertices.size();
-    int degree, k;
-    float multiplier;
-    glm::vec3 neighboursPos;
-    std::set <unsigned int>neighbours;
-    for(int i = 0; i < n; i++)
-    {
-        if(not vertices[i].isNew)
-        {
-            neighboursPos = glm::vec3(0.0f, 0.0f, 0.0f);
-            neighbours = vertices[i].neighbours;
-            degree = neighbours.size();
-            if(degree == 3)
-                multiplier = 3.0f/16;
-            else
-                multiplier = 3.0f/(8*degree);
-
-            std::set<unsigned int>::iterator neighbour;
-
-            for(neighbour = neighbours.begin(); neighbour != neighbours.end(); neighbour++)
-            {
-                neighboursPos = neighboursPos + vertices[*neighbour].position;
-            }
-            //neighboursPos = glm::normalize(neighboursPos);
-            vertices[i].newPosition = glm::normalize(((1-(degree*multiplier))*vertices[i].position) + (multiplier*neighboursPos));
-        }
-    }
-
-    for(int i = 0; i < n; i++)
-    {
-        if(not vertices[i].isNew)
-            vertices[i].position = vertices[i].newPosition;
-    }
-
-    //cleanup
-    for(int i = 0;i < n;i++)
-        vertices[i].isNew = false;
 }
