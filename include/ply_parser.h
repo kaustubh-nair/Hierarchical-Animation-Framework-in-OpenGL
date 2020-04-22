@@ -72,7 +72,8 @@ class PlyParser
             min = std::min(min, std::min(x, std::min(y, z)));
             max = std::max(max, std::max(x, std::max(y, z)));
 
-            Vertex vertex = {glm::vec3(x,y,z)};
+            Vertex vertex;
+            vertex.position = glm::vec3(x,y,z);
             vertices.push_back(vertex);
             i--;
           }
@@ -91,21 +92,6 @@ class PlyParser
             int v1 = std::stoi(split_line[1].c_str());
             int v2 = std::stoi(split_line[2].c_str());
             int v3 = std::stoi(split_line[3].c_str());
-
-            Vertex a = vertices.at(v1);
-            Vertex b = vertices.at(v2);
-            Vertex c = vertices.at(v3);
-
-            glm::vec3 normal = glm::normalize( glm::cross(b.position - a.position, c.position - a.position) );
-
-
-            a.face_normals.push_back(normal);
-            b.face_normals.push_back(normal);
-            c.face_normals.push_back(normal);
-
-            vertices.at(v1) = a;
-            vertices.at(v2) = b;
-            vertices.at(v3) = c;
 
             indices.push_back(v1);
             indices.push_back(v2);
@@ -126,7 +112,6 @@ class PlyParser
         print("Could not open file " + filepath);
       }
       normalize_vertices(vertices, min, max);
-      compute_vertex_normals(vertices);
       compute_incircle(vertices, indices);
       //compute_inellipses(vertices, indices);
     }
@@ -152,23 +137,6 @@ class PlyParser
         vertex->position = glm::vec3(x,y,z);
       }
     }
-
-    void compute_vertex_normals(std::vector<Vertex> &vertices)
-    {
-      std::vector<Vertex>::iterator vertex;
-      std::vector<glm::vec3>::iterator normal;
-
-      for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
-      {
-        glm::vec3 vec_normal = glm::vec3(0.0, 0.0, 0.0);
-
-        for(normal = vertex->face_normals.begin(); normal < vertex->face_normals.end(); normal++)
-          vec_normal = vec_normal + *normal;
-
-        vertex->normal = glm::normalize(vec_normal);
-      }
-    }
-
 
     void compute_inellipses(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
     {

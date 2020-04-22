@@ -127,18 +127,47 @@ void Vertex::computeTextureCoords()
     sphTexCoords3 = findSphMapping(position);
 }
 
-void Vertex::computeNormals(std::vector<Vertex> &vertices)
+// TODO check efficiency
+void Vertex::computeNormals(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices)
 {
-  auto vertex = vertices.begin();
-  std::vector<glm::vec3>::iterator normal;
+    auto itr = vertices.begin();
+    for(; itr != vertices.end(); itr++)
+    {
+        itr->face_normals.clear();
+    }
 
-  for(; vertex < vertices.end(); vertex++)
-  {
-    glm::vec3 vec_normal = glm::vec3(0.0, 0.0, 0.0);
+    // TODO check if declaring inside decreases performace
+    Vertex a,b,c;
+    unsigned int x,y,z;
+    for(int i = 0; i < indices.size(); i+=3)
+    {
+        x = indices[i];     a = vertices[x];
+        y = indices[i+1];   b = vertices[y];
+        z = indices[i+2];   c = vertices[z];
 
-    for(normal = vertex->face_normals.begin(); normal < vertex->face_normals.end(); normal++)
-      vec_normal = vec_normal + *normal;
 
-    vertex->normal = glm::normalize(vec_normal);
-  }
+        glm::vec3 normal = glm::normalize( glm::cross(b.position - a.position, c.position - a.position) );
+
+        a.face_normals.push_back(normal);
+        b.face_normals.push_back(normal);
+        c.face_normals.push_back(normal);
+
+        vertices[x] = a;
+        vertices[y] = b;
+        vertices[z] = c;
+    }
+
+
+    auto vertex = vertices.begin();
+    std::vector<glm::vec3>::iterator normal;
+
+    for(; vertex < vertices.end(); vertex++)
+    {
+        glm::vec3 vec_normal = glm::vec3(0.0f, 0.0f, 0.0f);
+
+        for(normal = vertex->face_normals.begin(); normal < vertex->face_normals.end(); normal++)
+            vec_normal = vec_normal + *normal;
+
+        vertex->normal = glm::normalize(vec_normal);
+    }
 }

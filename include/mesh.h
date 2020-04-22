@@ -49,6 +49,7 @@ class Mesh {
     void computeTextureMapping();
     void setTextureBufferAttribute();
     void subdivide();
+    Vertex computeNewVertexPosition(Vertex vertex);
 
     std::string texturePath;
     unsigned int VAO, VBO, EBO;

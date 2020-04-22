@@ -19,17 +19,71 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     texturePath = texture;
 
     // compute and save texture map coordinates
-    std::vector<Vertex>::iterator vertex;
-    for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
-        vertex->computeTextureCoords();
+    //std::vector<Vertex>::iterator vertex;
+    //for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
+        //vertex->computeTextureCoords();
+
+    Vertex::computeNormals(vertices, indices);
 
 }
 
+Vertex Mesh::computeNewVertexPosition(Vertex vertex)
+{
+    float piTimesTwo = 6.28318530718;
+    glm::vec3 neighboursPos = glm::vec3(0.0f, 0.0f, 0.0f);
+    auto neighbour = vertex.neighbours.begin();
+    int n = vertex.neighbours.size();
+
+    for(; neighbour != vertex.neighbours.end(); neighbour++)
+    {
+        neighboursPos += vertices[*neighbour].position;
+    }
+    float beta = (4 - (2*cos(piTimesTwo/n)))/(9*n);
+
+    Vertex newVertex;
+    newVertex.position = ((1-(n*beta))*vertex.position) + (beta*neighboursPos);
+    newVertex.position = glm::normalize(newVertex.position);
+    return newVertex;
+}
 
 void Mesh::subdivide()
 {
     Vertex::updateNeighbours(vertices, indices);
-    Vertex::computeNormals(vertices);
+
+
+    int n = indices.size();
+    int m = vertices.size();
+    Vertex newVertex;
+    std::vector<unsigned int> newIndices;
+    unsigned int u_index, v_index, w_index;
+    Vertex u, v, w;
+
+    int vertexCounter = vertices.size();
+    for(int i = 0; i < n; i+=3)
+    {
+        u_index = indices[i];  v_index = indices[i+1];  w_index = indices[i+2];
+        u = vertices[u_index];  v = vertices[v_index];  w = vertices[w_index];
+
+
+        newVertex.position = glm::normalize((u.position + v.position + w.position)/3.0f);
+
+        newIndices.push_back(vertexCounter);  newIndices.push_back(u_index);  newIndices.push_back(v_index);
+        newIndices.push_back(vertexCounter);  newIndices.push_back(u_index);  newIndices.push_back(w_index);
+        newIndices.push_back(vertexCounter);  newIndices.push_back(w_index);  newIndices.push_back(v_index);
+
+        vertices.push_back(newVertex);
+        vertexCounter++;
+    }
+
+    indices = newIndices;
+
+    // cleanup
+    for(int i = 0; i < m; i++)
+    {
+        vertices[i] = computeNewVertexPosition(vertices[i]);
+    }
+
+    Vertex::computeNormals(vertices, indices);
 }
 
 
