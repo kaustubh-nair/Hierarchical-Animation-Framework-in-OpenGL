@@ -13,6 +13,7 @@
 
 #include "../include/definitions.h"
 #include "../include/vertex.h"
+#include "../include/triangle.h"
 #include "../include/in_circle.h"
 #include "../include/in_ellipse.h"
 
@@ -20,10 +21,9 @@ class PlyParser
 {
   public:
     std::vector<InCircle> inCircles;
-    std::vector<InCircle> inEllipses;
 
-    // store vertices and indices
-    void parse(std::string filepath, std::vector<Vertex> &vertices, std::vector<unsigned int> &indices)
+    // store vertices and triangles
+    void parse(std::string filepath, std::vector<Vertex> &vertices, std::vector<Triangle> &triangles)
     {
       std::ifstream ply_file;
       ply_file.open(filepath, std::ios::in);
@@ -93,9 +93,8 @@ class PlyParser
             int v2 = std::stoi(split_line[2].c_str());
             int v3 = std::stoi(split_line[3].c_str());
 
-            indices.push_back(v1);
-            indices.push_back(v2);
-            indices.push_back(v3);
+            Triangle triangle(v1, v2, v3);
+            triangles.push_back(triangle);
 
 
             j--;
@@ -112,8 +111,7 @@ class PlyParser
         print("Could not open file " + filepath);
       }
       normalize_vertices(vertices, min, max);
-      compute_incircle(vertices, indices);
-      //compute_inellipses(vertices, indices);
+      //compute_incircle(vertices, indices);
     }
 
 
@@ -138,22 +136,7 @@ class PlyParser
       }
     }
 
-    void compute_inellipses(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
-    {
-      for(int i = 0; i < indices.size(); i+=3)
-      {
-        Vertex a = vertices[indices[i]];
-        Vertex b = vertices[indices[i+1]];
-        Vertex c = vertices[indices[i+2]];
-        /*float x = (a.x + b.x + c.x)/3.0f;
-        float y = (a.y + b.y + c.y)/3.0f;
-        float z = (a.z + b.z + c.z)/3.0f;
-        glm::vec3 centroid = glm::vec3(x,y,z);
-        InEllipse inellipse;
-        inellipse.centroid = centroid;
-        inEllipses.push_back(inellipse);*/
-      }
-    }
+    /*
     void compute_incircle(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
     {
       for(int i = 0; i < indices.size(); i+=3)
@@ -186,6 +169,7 @@ class PlyParser
         inCircles.push_back(incircle);
       }
     }
+    */
 
   private:
     // split string by spaces

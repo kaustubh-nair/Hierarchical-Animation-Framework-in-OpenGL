@@ -9,7 +9,7 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     selected = false;
     ID++;
     PlyParser parser;
-    parser.parse(filepath, vertices, indices); 
+    parser.parse(filepath, vertices, triangles); 
     position = position;
     inCircles = parser.inCircles;
     translationMatrix = glm::translate(glm::mat4(1.0f), position);
@@ -23,7 +23,7 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     //for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
         //vertex->computeTextureCoords();
 
-    Vertex::computeNormals(vertices, indices);
+    Vertex::computeNormals(vertices, triangles);
 
 }
 
@@ -48,7 +48,8 @@ Vertex Mesh::computeNewVertexPosition(Vertex vertex)
 
 void Mesh::subdivide()
 {
-    Vertex::updateNeighbours(vertices, indices);
+/*
+    Vertex::updateNeighbours(vertices, triangles);
 
 
     int n = indices.size();
@@ -84,6 +85,7 @@ void Mesh::subdivide()
     }
 
     Vertex::computeNormals(vertices, indices);
+*/
 }
 
 
@@ -142,7 +144,7 @@ void Mesh::setup()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangles.size() * sizeof(Triangle), &triangles[0], GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
 
@@ -184,7 +186,7 @@ void Mesh::draw(Shader shader)
 
     glBindVertexArray(VAO); 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
 
     glBindTexture(GL_TEXTURE_2D, texture);
 }

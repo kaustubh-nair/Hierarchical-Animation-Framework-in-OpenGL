@@ -3,16 +3,23 @@
 float PI = 3.14159265;
 
 void Vertex::updateNeighbours(std::vector<Vertex> &vertices,
-                              std::vector<unsigned int> &indices)
+                              std::vector<Triangle> &triangles)
 {
-    int n = indices.size();
+    int n = triangles.size();
 
+    //TODO check this works
     for(int i = 0; i < vertices.size(); i++)
-        vertices[i].neighbours.clear();
-
-    for(int i = 0; i < n; i+=3)
     {
-        int x = indices[i]; int y = indices[i+1]; int z = indices[i+2];
+        vertices[i].neighbours.clear();
+        std::cout<<vertices[i].neighbours.size()<<std::endl;
+    }
+
+    // TODO
+    Triangle triangle;
+    for(int i = 0; i < n; i++)
+    {
+        triangle = triangles[i];
+        int x = triangle.vertices[0]; int y = triangle.vertices[1]; int z = triangle.vertices[2];
 
         Vertex a = vertices[x];
         Vertex b = vertices[y];
@@ -128,7 +135,7 @@ void Vertex::computeTextureCoords()
 }
 
 // TODO check efficiency
-void Vertex::computeNormals(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices)
+void Vertex::computeNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles)
 {
     auto itr = vertices.begin();
     for(; itr != vertices.end(); itr++)
@@ -139,11 +146,13 @@ void Vertex::computeNormals(std::vector<Vertex> &vertices, std::vector<unsigned 
     // TODO check if declaring inside decreases performace
     Vertex a,b,c;
     unsigned int x,y,z;
-    for(int i = 0; i < indices.size(); i+=3)
+    Triangle triangle;
+    for(int i = 0; i < triangles.size(); i++)
     {
-        x = indices[i];     a = vertices[x];
-        y = indices[i+1];   b = vertices[y];
-        z = indices[i+2];   c = vertices[z];
+        triangle = triangles[i];
+        x = triangle.vertices[0];   a = vertices[x];
+        y = triangle.vertices[1];   b = vertices[y];
+        z = triangle.vertices[2];   c = vertices[z];
 
 
         glm::vec3 normal = glm::normalize( glm::cross(b.position - a.position, c.position - a.position) );

@@ -9,6 +9,7 @@
 
 #include "../include/ply_parser.h"
 #include "../include/vertex.h"
+#include "../include/triangle.h"
 #include "../include/in_circle.h"
 #include "../include/shader.h"
 #include "../include/stb_image.h"
@@ -24,7 +25,7 @@ class Mesh {
     int id;
     bool selected;
     std::vector<Vertex> vertices;
-    std::vector<unsigned int> indices;
+    std::vector<Triangle> triangles;
 
     /* splat related info */
     std::vector<InCircle> inCircles;

@@ -12,6 +12,7 @@
 #include <set>
 #include <iostream>
 #include "../include/definitions.h"
+#include "../include/triangle.h"
 
 
 
@@ -35,8 +36,8 @@ class Vertex
 
 
         void computeTextureCoords();
-        static void updateNeighbours(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
-        static void computeNormals(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices);
+        static void updateNeighbours(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles);
+        static void computeNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles);
 
 };
 
