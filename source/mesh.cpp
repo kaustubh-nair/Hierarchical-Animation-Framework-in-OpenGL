@@ -48,6 +48,10 @@ Vertex Mesh::computeNewVertexPosition(Vertex vertex)
 
 void Mesh::subdivide()
 {
+    // Triangles with a shared old edge. Makes edge flipping faster.
+    // Map from edge to pair of triangle indices.
+    // TODO: change vector to pair?
+    std::map<std::pair<unsigned int, unsigned int>, std::vector<unsigned int> > oldEdges;
 
     Vertex::updateNeighbours(vertices, triangles);
 
@@ -75,13 +79,16 @@ void Mesh::subdivide()
         // vertex counter = index of new vertex
         Triangle newTriangle1(vertexCounter, u_index, v_index);
         newTriangles.push_back(newTriangle1);
+        oldEdges[std::minmax(u_index, v_index)].push_back(triangle_index);
 
 
         Triangle newTriangle2(vertexCounter, u_index, w_index);
         newTriangles.push_back(newTriangle2);
+        oldEdges[std::minmax(u_index, w_index)].push_back(triangle_index+1);
 
         Triangle newTriangle3(vertexCounter, w_index, v_index);
         newTriangles.push_back(newTriangle3);
+        oldEdges[std::minmax(w_index, v_index)].push_back(triangle_index+2);
 
         vertices.push_back(newVertex);
         vertexCounter++;
@@ -90,12 +97,60 @@ void Mesh::subdivide()
     // TODO: change triangles to pointer so you can copy in constant time
     triangles = newTriangles;
 
-
-    // cleanup
     for(int i = 0; i < m; i++)
     {
         vertices[i] = computeNewVertexPosition(vertices[i]);
     }
+
+    // flip edges
+    auto itr = oldEdges.begin();
+    unsigned int t1_index, t2_index;
+    Triangle t1, t2;
+    int shared_edge_vertex1, shared_edge_vertex2;
+    unsigned int non_shared_vertex_1, non_shared_vertex_2;
+    for(; itr != oldEdges.end(); itr++)
+    {
+        shared_edge_vertex1 = -1;
+        shared_edge_vertex2 = -1;
+        t1_index = (itr->second)[0];
+        t2_index = (itr->second)[1];
+
+        t1 = triangles[t1_index];
+        t2 = triangles[t2_index];
+
+        for(int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                if(t1.vertices[i] == t2.vertices[j])
+                {
+                    if(shared_edge_vertex1 == -1)
+                    {
+                        shared_edge_vertex1 = t1.vertices[i];
+                    }
+                    else if(shared_edge_vertex2 == -1)
+                    {
+                        if(shared_edge_vertex1 != t1.vertices[i])
+                            shared_edge_vertex2 = t1.vertices[i];
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < 3; i++)
+        {
+            if((t1.vertices[i] != shared_edge_vertex1) and (t1.vertices[i] != shared_edge_vertex2))
+                non_shared_vertex_1 = t1.vertices[i];
+
+            if((t2.vertices[i] != shared_edge_vertex1) and (t2.vertices[i] != shared_edge_vertex2))
+                non_shared_vertex_2 = t2.vertices[i];
+        }
+        Triangle newTriangle1(non_shared_vertex_1, non_shared_vertex_2, (unsigned int)shared_edge_vertex1);
+        Triangle newTriangle2(non_shared_vertex_1, non_shared_vertex_2, (unsigned int)shared_edge_vertex2);
+
+        triangles[t1_index] = newTriangle1;
+        triangles[t2_index] = newTriangle2;
+    }
+
 
     Vertex::computeNormals(vertices, triangles);
 }
