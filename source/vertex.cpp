@@ -7,12 +7,9 @@ void Vertex::updateNeighbours(std::vector<Vertex> &vertices,
 {
     int n = triangles.size();
 
-    //TODO check this works
     for(int i = 0; i < vertices.size(); i++)
-    {
         vertices[i].neighbours.clear();
-        std::cout<<vertices[i].neighbours.size()<<std::endl;
-    }
+
 
     // TODO
     Triangle triangle;

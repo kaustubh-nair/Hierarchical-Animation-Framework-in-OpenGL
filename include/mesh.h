@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <cmath>
+#include <algorithm>
 
 #include "../include/ply_parser.h"
 #include "../include/vertex.h"
@@ -26,6 +27,7 @@ class Mesh {
     bool selected;
     std::vector<Vertex> vertices;
     std::vector<Triangle> triangles;
+
 
     /* splat related info */
     std::vector<InCircle> inCircles;

@@ -48,35 +48,48 @@ Vertex Mesh::computeNewVertexPosition(Vertex vertex)
 
 void Mesh::subdivide()
 {
-/*
+
     Vertex::updateNeighbours(vertices, triangles);
 
 
-    int n = indices.size();
+    int n = triangles.size();
     int m = vertices.size();
+    // TODO
     Vertex newVertex;
-    std::vector<unsigned int> newIndices;
-    unsigned int u_index, v_index, w_index;
+    std::vector<Triangle> newTriangles;
+    unsigned int u_index, v_index, w_index, triangle_index;
     Vertex u, v, w;
+    Triangle triangle;
 
     int vertexCounter = vertices.size();
-    for(int i = 0; i < n; i+=3)
+    for(int i = 0; i < n; i++)
     {
-        u_index = indices[i];  v_index = indices[i+1];  w_index = indices[i+2];
+        triangle_index = newTriangles.size();
+        triangle = triangles[i];
+        u_index = triangle.vertices[0];  v_index = triangle.vertices[1];  w_index = triangle.vertices[2];
         u = vertices[u_index];  v = vertices[v_index];  w = vertices[w_index];
 
 
         newVertex.position = glm::normalize((u.position + v.position + w.position)/3.0f);
 
-        newIndices.push_back(vertexCounter);  newIndices.push_back(u_index);  newIndices.push_back(v_index);
-        newIndices.push_back(vertexCounter);  newIndices.push_back(u_index);  newIndices.push_back(w_index);
-        newIndices.push_back(vertexCounter);  newIndices.push_back(w_index);  newIndices.push_back(v_index);
+        // vertex counter = index of new vertex
+        Triangle newTriangle1(vertexCounter, u_index, v_index);
+        newTriangles.push_back(newTriangle1);
+
+
+        Triangle newTriangle2(vertexCounter, u_index, w_index);
+        newTriangles.push_back(newTriangle2);
+
+        Triangle newTriangle3(vertexCounter, w_index, v_index);
+        newTriangles.push_back(newTriangle3);
 
         vertices.push_back(newVertex);
         vertexCounter++;
     }
 
-    indices = newIndices;
+    // TODO: change triangles to pointer so you can copy in constant time
+    triangles = newTriangles;
+
 
     // cleanup
     for(int i = 0; i < m; i++)
@@ -84,8 +97,7 @@ void Mesh::subdivide()
         vertices[i] = computeNewVertexPosition(vertices[i]);
     }
 
-    Vertex::computeNormals(vertices, indices);
-*/
+    Vertex::computeNormals(vertices, triangles);
 }
 
 
