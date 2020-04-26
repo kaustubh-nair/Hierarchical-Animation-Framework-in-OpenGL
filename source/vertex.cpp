@@ -180,11 +180,18 @@ void Vertex::computeAvgNormals(std::vector<Vertex> &vertices, std::vector<Triang
 void Vertex::computeNormals(std::vector<Vertex> &vertices)
 {
     Vertex a, b, c;
+    float dot1, dot2;
     for(int i = 0; i < vertices.size(); i+=3)
     {
         a = vertices[i];    b = vertices[i+1];    c = vertices[i+2];
 
         glm::vec3 normal = glm::normalize( glm::cross(b.position - a.position, c.position - a.position) );
+
+        // pick correct outer facing normal - hacky?
+        dot1 = glm::dot(a.position, normal);
+        dot2 = glm::dot(a.position, -normal);
+        if(dot1 < dot2)
+            normal = -normal;
 
         a.normal = normal;
         b.normal = normal;
