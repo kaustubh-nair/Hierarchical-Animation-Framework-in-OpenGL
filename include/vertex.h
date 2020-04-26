@@ -37,7 +37,8 @@ class Vertex
 
         void computeTextureCoords();
         static void updateNeighbours(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles);
-        static void computeNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles);
+        static void computeAvgNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles);
+        static void computeNormals(std::vector<Vertex> &vertices);
 
 };
 

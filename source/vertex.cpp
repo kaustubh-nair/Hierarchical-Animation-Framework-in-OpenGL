@@ -131,8 +131,7 @@ void Vertex::computeTextureCoords()
     sphTexCoords3 = findSphMapping(position);
 }
 
-// TODO check efficiency
-void Vertex::computeNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles)
+void Vertex::computeAvgNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles)
 {
     auto itr = vertices.begin();
     for(; itr != vertices.end(); itr++)
@@ -175,5 +174,22 @@ void Vertex::computeNormals(std::vector<Vertex> &vertices, std::vector<Triangle>
             vec_normal = vec_normal + *normal;
 
         vertex->normal = glm::normalize(vec_normal);
+    }
+}
+
+void Vertex::computeNormals(std::vector<Vertex> &vertices)
+{
+    Vertex a, b, c;
+    for(int i = 0; i < vertices.size(); i+=3)
+    {
+        a = vertices[i];    b = vertices[i+1];    c = vertices[i+2];
+
+        glm::vec3 normal = glm::normalize( glm::cross(b.position - a.position, c.position - a.position) );
+
+        a.normal = normal;
+        b.normal = normal;
+        c.normal = normal;
+
+        vertices[i] = a;    vertices[i+1] = b;    vertices[i+2] = c;
     }
 }

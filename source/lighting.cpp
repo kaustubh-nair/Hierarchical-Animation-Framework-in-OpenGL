@@ -4,7 +4,7 @@
 
 void Lighting::setup()
 {
-  float vertices[] = { 0.5f, 1.5f, 10.0f};
+  float vertices[] = { 0.0f, 0.0f, 0.0f};
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
 

@@ -26,6 +26,7 @@ class Mesh {
     int id;
     bool selected;
     std::vector<Vertex> vertices;
+    std::vector<Vertex> nonIndexedVertices;
     std::vector<Triangle> triangles;
 
 
@@ -53,6 +54,7 @@ class Mesh {
     void setTextureBufferAttribute();
     void subdivide();
     Vertex computeNewVertexPosition(Vertex vertex);
+    void setNonIndexedVertices();
 
     std::string texturePath;
     unsigned int VAO, VBO, EBO;

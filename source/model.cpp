@@ -59,7 +59,7 @@ void Model::draw(Shader shader)
 
 void Model::drawLighting(Shader shader, Shader lightingShader)
 {
-    glm::vec3 lightPos = glm::vec3(3.2f, 3.2f, -4.0f);
+    glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 1.0f);
 
     shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
     shader.setVec3("lightPos",lightPos.x, lightPos.y, lightPos.z);

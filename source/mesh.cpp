@@ -23,7 +23,11 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     //for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
         //vertex->computeTextureCoords();
 
-    Vertex::computeNormals(vertices, triangles);
+
+    /* flat shading in scene 3 */
+    /* TODO: probably move this into a scene class attribute*/
+        setNonIndexedVertices();
+        Vertex::computeAvgNormals(vertices, triangles);
 
 }
 
@@ -82,11 +86,11 @@ void Mesh::subdivide()
         oldEdges[std::minmax(u_index, v_index)].push_back(triangle_index);
 
 
-        Triangle newTriangle2(vertexCounter, u_index, w_index);
+        Triangle newTriangle2(vertexCounter, w_index, u_index);
         newTriangles.push_back(newTriangle2);
         oldEdges[std::minmax(u_index, w_index)].push_back(triangle_index+1);
 
-        Triangle newTriangle3(vertexCounter, w_index, v_index);
+        Triangle newTriangle3(vertexCounter, v_index, w_index);
         newTriangles.push_back(newTriangle3);
         oldEdges[std::minmax(w_index, v_index)].push_back(triangle_index+2);
 
@@ -144,15 +148,16 @@ void Mesh::subdivide()
             if((t2.vertices[i] != shared_edge_vertex1) and (t2.vertices[i] != shared_edge_vertex2))
                 non_shared_vertex_2 = t2.vertices[i];
         }
-        Triangle newTriangle1(non_shared_vertex_1, non_shared_vertex_2, (unsigned int)shared_edge_vertex1);
-        Triangle newTriangle2(non_shared_vertex_1, non_shared_vertex_2, (unsigned int)shared_edge_vertex2);
 
+        Triangle newTriangle1(non_shared_vertex_1, non_shared_vertex_2, (unsigned int)shared_edge_vertex1);
+        Triangle newTriangle2(non_shared_vertex_2, non_shared_vertex_1, (unsigned int)shared_edge_vertex2);
         triangles[t1_index] = newTriangle1;
         triangles[t2_index] = newTriangle2;
+
     }
 
 
-    Vertex::computeNormals(vertices, triangles);
+    setNonIndexedVertices();
 }
 
 
@@ -206,12 +211,19 @@ void Mesh::setup()
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangles.size() * sizeof(Triangle), &triangles[0], GL_STATIC_DRAW);
+    if(settings.currentScene == SCENE_3)
+    {
+        glBufferData(GL_ARRAY_BUFFER, nonIndexedVertices.size() * sizeof(Vertex), &nonIndexedVertices[0], GL_STATIC_DRAW);
+    }
+    else
+    {
+        glGenBuffers(1, &EBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangles.size() * sizeof(Triangle), &triangles[0], GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+    }
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
 
@@ -252,10 +264,16 @@ void Mesh::draw(Shader shader)
         shader.setVec3("objectColor", 0.3f, 0.6f, 0.3f);
 
     glBindVertexArray(VAO); 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
-
-    glBindTexture(GL_TEXTURE_2D, texture);
+    if(settings.currentScene == SCENE_3)
+    {
+        glDrawArrays(GL_TRIANGLES, 0, nonIndexedVertices.size());
+    }
+    else
+    {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
+        glBindTexture(GL_TEXTURE_2D, texture);
+    }
 }
 
 
@@ -370,4 +388,16 @@ void Mesh::setTextureBufferAttribute()
         case NO_TEXTURES:
             break;
     }
+}
+
+void Mesh::setNonIndexedVertices()
+{
+    nonIndexedVertices.clear();
+    for(int i = 0; i < triangles.size(); i++)
+    {
+        nonIndexedVertices.push_back(vertices[triangles[i].vertices[0]]);
+        nonIndexedVertices.push_back(vertices[triangles[i].vertices[1]]);
+        nonIndexedVertices.push_back(vertices[triangles[i].vertices[2]]);
+    }
+    Vertex::computeNormals(nonIndexedVertices);
 }
