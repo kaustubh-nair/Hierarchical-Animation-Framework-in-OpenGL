@@ -6,34 +6,28 @@ Model::Model()
 }
 
 void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,
-                  std::vector<std::string> texturePaths, int sceneID)
+                  std::string texturePath)
 {
     std::vector<std::string>::iterator filepath;
     std::vector<glm::vec3>::iterator position = meshPos.begin();
-    std::vector<std::string>::iterator texturePath = texturePaths.begin();
-    Scene scene;
 
     for (filepath = filepaths.begin(); filepath < filepaths.end(); filepath++)
     {
-        Mesh mesh(*filepath, *position, *texturePath);
+        Mesh mesh(*filepath, *position, texturePath);
         mesh.setup();
-        scene.add_mesh(mesh);
+        meshes.push_back(mesh);
 
         position++;
-        texturePath++;
     }
-
-    scenes[sceneID] = scene;
 
 }
 
-/* refresh for rendering splats */
 void Model::refresh()
 {
     int currentScene = settings.currentScene;
     std::vector<Mesh>::iterator mesh;
 
-    for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
+    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
     {
         if(this->renderSplats)
             mesh->setupSplats();
@@ -44,10 +38,9 @@ void Model::refresh()
 
 void Model::draw(Shader shader)
 {
-    int currentScene = settings.currentScene;
     std::vector<Mesh>::iterator mesh;
 
-    for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
+    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
     {
         if(this->renderSplats)
             mesh->drawSplats(shader);
@@ -74,7 +67,7 @@ void Model::unselect()
     int currentScene = settings.currentScene;
     std::vector<Mesh>::iterator mesh;
 
-    for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
+    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
     {
         if(mesh->id == settings.selectedMesh)
         {
@@ -93,7 +86,7 @@ void Model::select(int id)
     settings.selectedMesh = id;
 
     std::vector<Mesh>::iterator mesh;
-    for (mesh = scenes[currentScene].meshes.begin(); mesh < scenes[currentScene].meshes.end(); mesh++)
+    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
     {
         if(mesh->id == id)
         {
@@ -108,7 +101,7 @@ void Model::translate(glm::vec2 direction)
     int currentScene = settings.currentScene;
     if(settings.selectedMesh == -1)
         return;
-    scenes[currentScene].meshes[settings.selectedMesh - 1].translate(direction);
+    meshes[settings.selectedMesh - 1].translate(direction);
 }
 
 void Model::scale(int direction)
@@ -117,7 +110,7 @@ void Model::scale(int direction)
     if(settings.selectedMesh == -1)
         return;
 
-    scenes[currentScene].meshes[settings.selectedMesh - 1].scale(direction);
+    meshes[settings.selectedMesh - 1].scale(direction);
 }
 
 void Model::rotate(glm::vec2 direction)
@@ -125,7 +118,7 @@ void Model::rotate(glm::vec2 direction)
     int currentScene = settings.currentScene;
     if(settings.selectedMesh == -1)
         return;
-    scenes[currentScene].meshes[settings.selectedMesh - 1].rotate(direction);
+    meshes[settings.selectedMesh - 1].rotate(direction);
 
 }
 
@@ -134,7 +127,7 @@ void Model::changeSplatRadius(int direction)
     int currentScene = settings.currentScene;
     if(settings.selectedMesh == -1)
         return;
-    scenes[currentScene].meshes[settings.selectedMesh - 1].changeSplatRadius(direction);
+    meshes[settings.selectedMesh - 1].changeSplatRadius(direction);
 }
 
 void Model::subdivide()
@@ -142,6 +135,6 @@ void Model::subdivide()
     int currentScene = settings.currentScene;
     if(settings.selectedMesh == -1)
         return;
-    scenes[currentScene].meshes[settings.selectedMesh - 1].subdivide();
+    meshes[settings.selectedMesh - 1].subdivide();
 
 }

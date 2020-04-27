@@ -17,7 +17,7 @@ extern struct Settings settings;
 class Controller {
   public:
     View view;
-    Model model;
+    std::vector<Model> models;  //multiple scenes each containing multiple meshes
     GLFWwindow* mainWindow = nullptr;
     bool normalColoring;
 
@@ -35,7 +35,9 @@ class Controller {
     void reactToCallback(int ret);
     void toggleWireframe();
     void loadPlyFiles(std::vector<std::string> &filepaths, std::vector<glm::vec3> &meshPos, std::vector<std::string> &texturePaths, int scene);
-    void setupMeshes();
+    void setupScene(std::vector<std::string> &filepaths,
+                              std::vector<glm::vec3> &meshPos,
+                              std::string &texturePath);
 
     /* helpers */
     void toggleTextures(Shader *shader);

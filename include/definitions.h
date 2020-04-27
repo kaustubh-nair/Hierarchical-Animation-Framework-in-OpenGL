@@ -4,13 +4,20 @@
 
 /* return values / codes used in the program */
 
+// make sure this is 0 indexed
+#define SCENE_1 0
+#define SCENE_2 1
+#define SCENE_3 2
+#define SCENE_4 3
+#define SCENE_5 4
+
 // picking objects
-#define SELECT_OBJECT_1 1
-#define SELECT_OBJECT_2 2
-#define SELECT_OBJECT_3 3
-#define SELECT_OBJECT_4 4
-#define SELECT_OBJECT_5 5
-#define UNSELECT_OBJECT 6
+#define SELECT_OBJECT_1 41
+#define SELECT_OBJECT_2 42
+#define SELECT_OBJECT_3 43
+#define SELECT_OBJECT_4 44
+#define SELECT_OBJECT_5 45
+#define UNSELECT_OBJECT 46
 
 #define TRANSLATE_OBJECT 7
 
@@ -47,7 +54,4 @@
 
 #define SUBDIVIDE 32
 
-#define SCENE_1 33
-#define SCENE_2 34
-#define SCENE_3 35
 

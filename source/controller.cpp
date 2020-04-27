@@ -5,20 +5,14 @@ Settings settings;
 
 
 /* load and save meshes for the three scenes */
-void Controller::setupMeshes()
+/* TODO: Add support for multiple textures */
+void Controller::setupScene(std::vector<std::string> &filepaths,
+                              std::vector<glm::vec3> &meshPos,
+                              std::string &texturePath)
 {
-    std::vector<std::string> filepaths;
-    std::vector<glm::vec3> meshPos;
-    std::vector<std::string> texturePaths;
-
-    loadPlyFiles(filepaths, meshPos, texturePaths, SCENE_1);
-    model.setup(filepaths, meshPos, texturePaths, SCENE_1);
-
-    loadPlyFiles(filepaths, meshPos, texturePaths, SCENE_2);
-    model.setup(filepaths, meshPos, texturePaths, SCENE_2);
-
-    loadPlyFiles(filepaths, meshPos, texturePaths, SCENE_3);
-    model.setup(filepaths, meshPos, texturePaths, SCENE_3);
+    Model model;
+    model.setup(filepaths, meshPos, texturePath);
+    models.push_back(model);
 }
 
 
@@ -30,8 +24,6 @@ void Controller::mainLoop()
 
 
     GLFWwindow* window = this->mainWindow;
-
-    setupMeshes();
 
     /* setup shaders */
     Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
@@ -46,8 +38,10 @@ void Controller::mainLoop()
 
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 
+
     while(!glfwWindowShouldClose(window))
     {
+        Model model = models[settings.currentScene];
 
         int ret = view.listenToCallbacks(window);
 
@@ -57,8 +51,6 @@ void Controller::mainLoop()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         viewMatrix = view.getViewMatrix();
-
-
 
         setShader(&shader, &subdivisionShader, &normalColoringShader);
         toggleTextures(&shader);
@@ -83,6 +75,7 @@ void Controller::mainLoop()
 
 void Controller::reactToCallback(int ret)
 {
+    Model model = models[settings.currentScene];
     switch(ret)
     {
         case UNSELECT_OBJECT:
@@ -174,69 +167,6 @@ void Controller::toggleWireframe()
         glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 }
 
-void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
-                              std::vector<glm::vec3> &meshPos,
-                              std::vector<std::string> &texturePaths,
-                              int scene)
-{
-    std::string texturePath = "data/checkerboard.jpg";
-    filepaths.clear();
-    meshPos.clear();
-    texturePaths.clear();
-    switch(scene)
-    {
-        case SCENE_1:
-            {
-                // loading 9 spheres
-                float dist = 1.2f;
-                for(int i = -1; i < 2; i++)
-                {
-                    for(int j = -1; j < 2; j++)
-                    {
-                        filepaths.push_back("data/sphere.ply");
-                        texturePaths.push_back(texturePath);
-                        meshPos.push_back(glm::vec3(dist * i, dist * j, -5.0f));
-                    }
-                }
-                break;
-            }
-
-        case SCENE_2:
-            {
-                filepaths.push_back("data/bun_zipper.ply");
-                filepaths.push_back("data/teapot.ply");
-                filepaths.push_back("data/cylinder.ply");
-                filepaths.push_back("data/octahedron.ply");
-
-                texturePaths.push_back(texturePath);
-                texturePaths.push_back(texturePath);
-                texturePaths.push_back(texturePath);
-                texturePaths.push_back(texturePath);
-
-                meshPos.push_back(glm::vec3(1.0f, 1.0f, -1.0f));
-                meshPos.push_back(glm::vec3(1.0f, 0.0f, -1.0f));
-                meshPos.push_back(glm::vec3(0.0f, 1.0f, -1.0f));
-                meshPos.push_back(glm::vec3(0.0f, 0.0f, -1.0f));
-
-                break;
-            }
-
-        case SCENE_3:
-            {
-                filepaths.push_back("data/octahedron.ply");
-                filepaths.push_back("data/tetrahedron.ply");
-
-                texturePaths.push_back(texturePath);
-                texturePaths.push_back(texturePath);
-
-                meshPos.push_back(glm::vec3(1.0f, 0.0f, -6.0f));
-                meshPos.push_back(glm::vec3(1.0f, 1.0f, -6.0f));
-                break;
-            }
-                
-    }
-
-}
 
 void Controller::toggleTextures(Shader *shader)
 {

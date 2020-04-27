@@ -6,16 +6,16 @@
 
 #include "../include/mesh.h"
 #include "../include/lighting.h"
-#include "../include/scene.h"
 
 class Model
 {
     public:
         bool renderSplats;
+        std::vector<Mesh> meshes;
 
         Model();
         void setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,
-                   std::vector<std::string> texturePaths, int sceneID);
+                   std::string texturePath);
         void draw(Shader shader);
         void drawLighting(Shader shader, Shader lightingShader);
         void refresh();
@@ -30,7 +30,6 @@ class Model
 
         void drawLighting( Shader shader);
         void subdivide();
-        std::map<int, Scene> scenes;
 
 };
 

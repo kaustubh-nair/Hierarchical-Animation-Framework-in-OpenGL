@@ -8,8 +8,6 @@
 class Scene
 {
     public:
-        std::vector<Mesh> meshes;
-        void add_mesh(Mesh mesh);
 };
 
 #endif
