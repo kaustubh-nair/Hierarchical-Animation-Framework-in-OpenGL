@@ -179,7 +179,7 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
                               std::vector<std::string> &texturePaths,
                               int scene)
 {
-    std::string texturePath = "data/rainbow.png";
+    std::string texturePath = "data/checkerboard.jpg";
     filepaths.clear();
     meshPos.clear();
     texturePaths.clear();
@@ -206,7 +206,7 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
                 filepaths.push_back("data/bun_zipper.ply");
                 filepaths.push_back("data/teapot.ply");
                 filepaths.push_back("data/cylinder.ply");
-                filepaths.push_back("data/sphere.ply");
+                filepaths.push_back("data/octahedron.ply");
 
                 texturePaths.push_back(texturePath);
                 texturePaths.push_back(texturePath);
@@ -225,15 +225,12 @@ void Controller::loadPlyFiles(std::vector<std::string> &filepaths,
             {
                 filepaths.push_back("data/octahedron.ply");
                 filepaths.push_back("data/tetrahedron.ply");
-                filepaths.push_back("data/sphere.ply");
 
-                texturePaths.push_back(texturePath);
                 texturePaths.push_back(texturePath);
                 texturePaths.push_back(texturePath);
 
                 meshPos.push_back(glm::vec3(1.0f, 0.0f, -6.0f));
                 meshPos.push_back(glm::vec3(1.0f, 1.0f, -6.0f));
-                meshPos.push_back(glm::vec3(0.0f, 1.0f, -6.0f));
                 break;
             }
                 

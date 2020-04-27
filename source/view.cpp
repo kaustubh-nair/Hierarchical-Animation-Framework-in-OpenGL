@@ -66,10 +66,10 @@ int View::listenToCallbacks(GLFWwindow *window)
         {GLFW_KEY_Z, SCENE_1},
         {GLFW_KEY_X, SCENE_2},
         {GLFW_KEY_C, SCENE_3},
-        {GLFW_KEY_6, CYLINDER_PROJECT},
-        {GLFW_KEY_5, CYLINDER_NORMAL_FROM_OBJECT},
+        {GLFW_KEY_1, CYLINDER_PROJECT},
         {GLFW_KEY_2, SPHERICAL_NORMAL_FROM_OBJECT},
         {GLFW_KEY_3, SPHERICAL_PROJECT},
+        {GLFW_KEY_4, CYLINDER_NORMAL_FROM_OBJECT},
         {GLFW_KEY_SPACE, NO_TEXTURES},
     };
 

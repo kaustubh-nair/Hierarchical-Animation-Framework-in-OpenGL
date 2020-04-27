@@ -18,17 +18,15 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     splatMultipler = 1.0f;
     texturePath = texture;
 
-    // compute and save texture map coordinates
-    //std::vector<Vertex>::iterator vertex;
-    //for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
-        //vertex->computeTextureCoords();
-
-
     /* flat shading in scene 3 */
     /* TODO: probably move this into a scene class attribute*/
-        setNonIndexedVertices();
-        Vertex::computeAvgNormals(vertices, triangles);
+    setNonIndexedVertices();
+    Vertex::computeAvgNormals(vertices, triangles);
 
+    // compute and save texture map coordinates
+    std::vector<Vertex>::iterator vertex;
+    for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
+        vertex->computeTextureCoords();
 }
 
 Vertex Mesh::computeNewVertexPosition(Vertex vertex)
