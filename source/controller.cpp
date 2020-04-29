@@ -9,9 +9,7 @@ void Controller::setupScene(std::vector<std::string> &filepaths,
                               std::vector<glm::vec3> &meshPos,
                               std::string &texturePath)
 {
-    Model model;
     model.setup(filepaths, meshPos, texturePath);
-    models.push_back(model);
 }
 
 
@@ -37,7 +35,6 @@ void Controller::mainLoop()
 
     while(!glfwWindowShouldClose(window))
     {
-        Model model = models[settings.currentScene];
 
         int ret = view.listenToCallbacks(window);
 
@@ -71,7 +68,6 @@ void Controller::mainLoop()
 
 void Controller::reactToCallback(int ret)
 {
-    Model model = models[settings.currentScene];
     switch(ret)
     {
         /*

@@ -73,7 +73,8 @@ void Mesh::setup()
 
 void Mesh::draw(Shader shader)
 {
-    glm::mat4 model = translationMatrix * rotationMatrix * scalingMatrix;
+    //glm::mat4 model = translationMatrix * rotationMatrix * scalingMatrix;
+    glm::mat4 model = translationMatrix;
     shader.setMat4("model", model);
     shader.setVec3("objectColor", 0.5f, 0.1f, 0.1f);
     if(selected)

@@ -17,6 +17,7 @@ extern struct Settings settings;
 class Controller {
   public:
     View view;
+    Model model;
     GLFWwindow* window = nullptr;
     bool normalColoring;
 
