@@ -1,10 +1,14 @@
 Translation - Left mouse button + drag
 Rotation - Right mouse button + drag
-Selecting object - Number keys
+Selecting object - Number keys ( 7-0 )
 Unselecting object - Escape
 Scaling - Plus / Minus keys
 Toggle wireframe - w key
 Toggle normal coloring - n key
-Toggle splats - s key
-Increase splat radius - k key
-Decrease splat radius - j key
+
+Cylinderical texture mapping strategy 2 - 1 key
+Cylinderical texture mapping strategy 3 - 2 key
+Spherical texture mapping strategy 2 - 3 key
+Spherical texture mapping strategy 3 - 4 key
+
+Subdivision - q key

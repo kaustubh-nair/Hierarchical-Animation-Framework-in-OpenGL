@@ -27,7 +27,6 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     std::vector<Vertex>::iterator vertex;
     for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
         vertex->computeTextureCoords();
-    print(vertices.size());
 }
 
 Vertex Mesh::computeNewVertexPosition(Vertex vertex)

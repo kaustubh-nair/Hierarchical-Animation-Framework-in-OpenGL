@@ -52,10 +52,17 @@ void Model::draw(Shader shader)
 
 void Model::drawLighting(Shader shader, Shader lightingShader)
 {
-    glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 1.0f);
+    glm::vec3 lightPos = glm::vec3(15.0f, 0.0f, -2.0f);
+
+    shader.setVec3("lights[0].Pos",lightPos.x, lightPos.y, lightPos.z);
+    shader.setFloat("lights[0].diffuseStrength",0.0f);
+    shader.setFloat("lights[0].specularStrength",4.0f);
+    lightPos = glm::vec3(-1.2f, 1.2f, -2.0f);
+    shader.setVec3("lights[1].Pos",lightPos.x, lightPos.y, lightPos.z);
+    shader.setFloat("lights[1].diffuseStrength",0.5f);
+    shader.setFloat("lights[1].specularStrength",0.0f);
 
     shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-    shader.setVec3("lightPos",lightPos.x, lightPos.y, lightPos.z);
 
     Lighting lighting;
     lighting.draw(lightingShader, lightPos);
