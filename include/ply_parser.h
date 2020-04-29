@@ -14,13 +14,10 @@
 #include "../include/definitions.h"
 #include "../include/vertex.h"
 #include "../include/triangle.h"
-#include "../include/in_circle.h"
-#include "../include/in_ellipse.h"
 
 class PlyParser
 {
   public:
-    std::vector<InCircle> inCircles;
 
     // store vertices and triangles
     void parse(std::string filepath, std::vector<Vertex> &vertices, std::vector<Triangle> &triangles)
@@ -111,7 +108,6 @@ class PlyParser
         print("Could not open file " + filepath);
       }
       normalize_vertices(vertices, min, max);
-      //compute_incircle(vertices, indices);
     }
 
 
@@ -135,41 +131,6 @@ class PlyParser
         vertex->position = glm::vec3(x,y,z);
       }
     }
-
-    /*
-    void compute_incircle(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
-    {
-      for(int i = 0; i < indices.size(); i+=3)
-      {
-        Vertex a = vertices[indices[i]];
-        Vertex b = vertices[indices[i+1]];
-        Vertex c = vertices[indices[i+2]];
-        glm::vec3 normal = glm::normalize( glm::cross(b.position - a.position, c.position - a.position) );
-
-        float area = 0.5 * glm::length( glm::cross(a.position - c.position, b.position - c.position) );
-        float faceA = glm::length(b.position - c.position);
-        float faceB = glm::length(a.position - c.position);
-        float faceC = glm::length(a.position - b.position);
-
-        float incenterX = (faceA*a.position.x) + (faceB * b.position.x) + (faceC * c.position.x);
-        float incenterY = (faceA*a.position.y) + (faceB * b.position.y) + (faceC * c.position.y);
-        float incenterZ = (faceA*a.position.z) + (faceB * b.position.z) + (faceC * c.position.z);
-
-        glm::vec3 incenter = glm::vec3( incenterX, incenterY, incenterZ);
-        incenter = incenter/(faceA + faceB + faceC);
-
-        float semiPerimeter = 0.5 * (faceA + faceB + faceC);
-        float inRadius = area/semiPerimeter;
-
-        InCircle incircle;
-        incircle.center = incenter;
-        incircle.radius = inRadius;
-        incircle.normal = normal;
-
-        inCircles.push_back(incircle);
-      }
-    }
-    */
 
   private:
     // split string by spaces

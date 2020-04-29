@@ -9,8 +9,6 @@ struct Settings
     int currentScene = SCENE_1;
     int selectedMesh = -1;
     bool normalColoring;
-    bool splats;
-    int splatMultipler;
 };
 
 #endif

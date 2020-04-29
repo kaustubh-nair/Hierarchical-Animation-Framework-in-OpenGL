@@ -10,16 +10,13 @@
 class Model
 {
     public:
-        bool renderSplats;
         std::vector<Mesh> meshes;
 
-        Model();
         void setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,
                    std::string texturePath);
         void draw(Shader shader);
         void drawLighting(Shader shader, Shader lightingShader);
         void refresh();
-        void changeSplatRadius(int direction);
 
         void unselect();
         void select(int direction);

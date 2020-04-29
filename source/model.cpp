@@ -1,9 +1,5 @@
 #include "../include/model.h"
 
-Model::Model()
-{
-    renderSplats = false;
-}
 
 void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,
                   std::string texturePath)
@@ -25,28 +21,15 @@ void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> mes
 void Model::refresh()
 {
     int currentScene = settings.currentScene;
-    std::vector<Mesh>::iterator mesh;
 
-    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
-    {
-        if(this->renderSplats)
-            mesh->setupSplats();
-        else
-            mesh->setup();
-    }
+    for(auto mesh = meshes.begin(); mesh < meshes.end(); mesh++)
+        mesh->setup();
 }
 
 void Model::draw(Shader shader)
 {
-    std::vector<Mesh>::iterator mesh;
-
-    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
-    {
-        if(this->renderSplats)
-            mesh->drawSplats(shader);
-        else
-            mesh->draw(shader);
-    }
+    for(auto mesh = meshes.begin(); mesh < meshes.end(); mesh++)
+        mesh->draw(shader);
 }
 
 
@@ -127,14 +110,6 @@ void Model::rotate(glm::vec2 direction)
         return;
     meshes[settings.selectedMesh - 1].rotate(direction);
 
-}
-
-void Model::changeSplatRadius(int direction)
-{
-    int currentScene = settings.currentScene;
-    if(settings.selectedMesh == -1)
-        return;
-    meshes[settings.selectedMesh - 1].changeSplatRadius(direction);
 }
 
 void Model::subdivide()

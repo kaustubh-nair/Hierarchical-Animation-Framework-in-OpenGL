@@ -99,18 +99,8 @@ void Controller::reactToCallback(int ret)
         case SCALE_OBJECT_UP:
             model.scale(UP);
             break;
-        case TOGGLE_SPLATS:
-            model.renderSplats = !model.renderSplats;
-            model.refresh();
-            break;
         case TOGGLE_WIREFRAME:
             this->toggleWireframe();
-            break;
-        case INCREASE_SPLAT_RADIUS:
-            model.changeSplatRadius(UP);
-            break;
-        case DECREASE_SPLAT_RADIUS:
-            model.changeSplatRadius(DOWN);
             break;
         case TOGGLE_NORMAL_COLORING:
             this->normalColoring = !this->normalColoring;
