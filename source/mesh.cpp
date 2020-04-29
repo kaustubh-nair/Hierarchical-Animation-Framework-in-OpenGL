@@ -61,11 +61,11 @@ void Mesh::setup()
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(2*sizeof(glm::vec3)));
 
-    setTextureBufferAttribute();
-
-    glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
@@ -89,29 +89,5 @@ void Mesh::draw(Shader shader)
 void Mesh::translate(glm::vec2 direction)
 {
     translationMatrix = glm::translate(translationMatrix, glm::vec3(0.0004f * direction.x, 0.0006f*direction.y, 0.0f));
-}
-
-void Mesh::setTextureBufferAttribute()
-{
-    switch(settings.textureRenderingStyle)
-    {
-        case CYLINDER_PROJECT:
-            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)((2*sizeof(glm::vec3)) + (5*sizeof(glm::vec2))));
-            glEnableVertexAttribArray(2);
-            break;
-        case CYLINDER_NORMAL_FROM_OBJECT:
-            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)((2*sizeof(glm::vec3)) + (4*sizeof(glm::vec2))));
-            glEnableVertexAttribArray(2);
-            break;
-        case SPHERICAL_PROJECT:
-            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)((2*sizeof(glm::vec3)) + (2*sizeof(glm::vec2))));
-            glEnableVertexAttribArray(2);
-            break;
-        case SPHERICAL_NORMAL_FROM_OBJECT:
-            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)((2*sizeof(glm::vec3)) + (sizeof(glm::vec2))));
-            glEnableVertexAttribArray(2);
-            break;
-        case NO_TEXTURES:
-            break;
-    }
+    translationMatrix = glm::rotate(translationMatrix, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 1.0f));
 }

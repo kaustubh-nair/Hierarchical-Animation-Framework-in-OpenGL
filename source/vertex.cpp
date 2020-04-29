@@ -2,41 +2,6 @@
 
 float PI = 3.14159265;
 
-void Vertex::updateNeighbours(std::vector<Vertex> &vertices,
-                              std::vector<Triangle> &triangles)
-{
-    int n = triangles.size();
-
-    for(int i = 0; i < vertices.size(); i++)
-        vertices[i].neighbours.clear();
-
-
-    // TODO
-    Triangle triangle;
-    for(int i = 0; i < n; i++)
-    {
-        triangle = triangles[i];
-        int x = triangle.vertices[0]; int y = triangle.vertices[1]; int z = triangle.vertices[2];
-
-        Vertex a = vertices[x];
-        Vertex b = vertices[y];
-        Vertex c = vertices[z];
-
-        a.neighbours.insert(y);
-        a.neighbours.insert(z);
-
-        b.neighbours.insert(x);
-        b.neighbours.insert(z);
-
-        c.neighbours.insert(y);
-        c.neighbours.insert(x);
-
-        vertices[x] = a;
-        vertices[y] = b;
-        vertices[z] = c;
-    }
-}
-
 
 glm::vec2 findCylMapping(glm::vec3 position)
 {
@@ -124,11 +89,11 @@ glm::vec2 findSphPointFromObjectNormal(glm::vec3 position, glm::vec3 normal)
 
 void Vertex::computeTextureCoords()
 {
-    cylTexCoords2 = findCylPointFromObjectNormal(position, normal);
-    cylTexCoords3 = findCylMapping(position);
+    TexCoords = findCylPointFromObjectNormal(position, normal);
+    //cylTexCoords3 = findCylMapping(position);
 
-    sphTexCoords2 = findSphPointFromObjectNormal(position, normal);
-    sphTexCoords3 = findSphMapping(position);
+    //sphTexCoords2 = findSphPointFromObjectNormal(position, normal);
+    //sphTexCoords3 = findSphMapping(position);
 }
 
 void Vertex::computeAvgNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles)
@@ -174,29 +139,5 @@ void Vertex::computeAvgNormals(std::vector<Vertex> &vertices, std::vector<Triang
             vec_normal = vec_normal + *normal;
 
         vertex->normal = glm::normalize(vec_normal);
-    }
-}
-
-void Vertex::computeNormals(std::vector<Vertex> &vertices)
-{
-    Vertex a, b, c;
-    float dot1, dot2;
-    for(int i = 0; i < vertices.size(); i+=3)
-    {
-        a = vertices[i];    b = vertices[i+1];    c = vertices[i+2];
-
-        glm::vec3 normal = glm::normalize( glm::cross(b.position - a.position, c.position - a.position) );
-
-        // pick correct outer facing normal - hacky?
-        dot1 = glm::dot(a.position, normal);
-        dot2 = glm::dot(a.position, -normal);
-        if(dot1 < dot2)
-            normal = -normal;
-
-        a.normal = normal;
-        b.normal = normal;
-        c.normal = normal;
-
-        vertices[i] = a;    vertices[i+1] = b;    vertices[i+2] = c;
     }
 }

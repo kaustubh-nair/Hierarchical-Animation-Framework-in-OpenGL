@@ -59,12 +59,6 @@ int View::listenToCallbacks(GLFWwindow *window)
         {GLFW_KEY_MINUS, SCALE_OBJECT_DOWN},
         {GLFW_KEY_W, TOGGLE_WIREFRAME},
         {GLFW_KEY_N, TOGGLE_NORMAL_COLORING},
-        {GLFW_KEY_Q, SUBDIVIDE},
-        {GLFW_KEY_1, CYLINDER_NORMAL_FROM_OBJECT},
-        {GLFW_KEY_2, CYLINDER_PROJECT},
-        {GLFW_KEY_3, SPHERICAL_NORMAL_FROM_OBJECT},
-        {GLFW_KEY_4, SPHERICAL_PROJECT},
-        {GLFW_KEY_SPACE, NO_TEXTURES},
     };
 
     static std::vector<int> oldStates(key_mappings.size(), GLFW_RELEASE);

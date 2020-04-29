@@ -11,7 +11,6 @@ uniform vec3 lightColor;
 uniform vec3 objectColor;
 uniform sampler2D Texture;
 uniform vec3 viewPos;
-uniform bool noTextures;
 
 struct Light {
     vec3 Pos;
@@ -57,16 +56,5 @@ vec3 calculateLightStrength()
 void main()
 {
 
-    if(noTextures)
-    {
-
-        vec3 result = calculateLightStrength();
-        FragColor = vec4(result, 1.0);
-    }
-    else
-    {
-        FragColor = texture(Texture, TexCoord);
-    }
-  
-
+    FragColor = texture(Texture, TexCoord);
 } 

@@ -5,7 +5,6 @@
 
 struct Settings
 {
-    int textureRenderingStyle = NO_TEXTURES;
     int selectedMesh = -1;
     bool normalColoring;
 };

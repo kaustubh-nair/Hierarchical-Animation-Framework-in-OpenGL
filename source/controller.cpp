@@ -46,7 +46,6 @@ void Controller::mainLoop()
         viewMatrix = view.getViewMatrix();
 
         setShader(&shader, &normalColoringShader);
-        toggleTextures(&shader);
 
         shader.setMat4("projection", proj);
         shader.setMat4("view", viewMatrix);
@@ -70,7 +69,6 @@ void Controller::reactToCallback(int ret)
 {
     switch(ret)
     {
-        /*
         case UNSELECT_OBJECT:
             model.unselect();
             break;
@@ -85,7 +83,7 @@ void Controller::reactToCallback(int ret)
             break;
         case SELECT_OBJECT_4:
             model.select(4);
-            break;*/
+            break;
         case TOGGLE_WIREFRAME:
             this->toggleWireframe();
             break;
@@ -106,15 +104,6 @@ void Controller::toggleWireframe()
         glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
     else
         glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-}
-
-
-void Controller::toggleTextures(Shader *shader)
-{
-    if(settings.textureRenderingStyle == NO_TEXTURES)
-        shader->setBool("noTextures", 1);
-    else
-        shader->setBool("noTextures", 0);
 }
 
 void Controller::setShader(Shader *shader, Shader *normalColoringShader)
