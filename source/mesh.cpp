@@ -11,8 +11,9 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     PlyParser parser;
     parser.parse(filepath, vertices, triangles); 
     position = position;
-    translationMatrix = glm::translate(glm::mat4(1.0f), position);
     texturePath = texture;
+    translationMatrix = glm::translate(glm::mat4(1.0f), position);
+    rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), position);
 
     Vertex::computeAvgNormals(vertices, triangles);
 
@@ -89,5 +90,17 @@ void Mesh::draw(Shader shader)
 void Mesh::translate(glm::vec2 direction)
 {
     translationMatrix = glm::translate(translationMatrix, glm::vec3(0.0004f * direction.x, 0.0006f*direction.y, 0.0f));
-    translationMatrix = glm::rotate(translationMatrix, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 1.0f));
+}
+
+void Mesh::rotate(glm::vec2 direction)
+{
+    glm::vec3 dir = glm::normalize(glm::vec3(direction,1.0f));
+    float angle = glm::radians(5.0f);
+    float x = dir.x * sin(angle/2);
+    float y = dir.y * sin(angle/2);
+    float z = dir.z * sin(angle/2);
+    float w = cos(angle/2);
+    glm::quat q = glm::quat(w,x,y,z);
+    glm::mat4 matrix = glm::mat4_cast(q);
+    rotationMatrix = matrix * rotationMatrix;
 }

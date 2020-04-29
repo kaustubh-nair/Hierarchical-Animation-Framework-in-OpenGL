@@ -27,6 +27,7 @@ class Mesh {
     std::vector<Vertex> vertices;
     std::vector<Triangle> triangles;
     glm::mat4 translationMatrix;
+    glm::mat4 rotationMatrix;
     std::string texturePath;
     unsigned int VAO, VBO, EBO;
     unsigned int texture;
@@ -35,11 +36,12 @@ class Mesh {
     Mesh(std::string filepath, glm::vec3 position, std::string texturePath);
     void setup();
     void draw(Shader shader);
-    void translate(glm::vec2 direction);
     void generateTextureObject();
     void computeTextureMapping();
     void setTextureBufferAttribute();
     Vertex computeNewVertexPosition(Vertex vertex);
+    void translate(glm::vec2 direction);
+    void rotate(glm::vec2 direction);
 
 };
 
