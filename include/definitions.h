@@ -4,13 +4,6 @@
 
 /* return values / codes used in the program */
 
-// make sure this is 0 indexed
-#define SCENE_1 0
-#define SCENE_2 1
-#define SCENE_3 2
-#define SCENE_4 3
-#define SCENE_5 4
-
 // picking objects
 #define SELECT_OBJECT_1 41
 #define SELECT_OBJECT_2 42

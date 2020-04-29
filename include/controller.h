@@ -17,7 +17,6 @@ extern struct Settings settings;
 class Controller {
   public:
     View view;
-    std::vector<Model> models;  //multiple scenes each containing multiple meshes
     GLFWwindow* window = nullptr;
     bool normalColoring;
 
@@ -41,7 +40,7 @@ class Controller {
 
     /* helpers */
     void toggleTextures(Shader *shader);
-    void setShader(Shader *shader, Shader *subdivisionShader, Shader *normalColoringShader);
+    void setShader(Shader *shader, Shader *normalColoringShader);
 };
 
 

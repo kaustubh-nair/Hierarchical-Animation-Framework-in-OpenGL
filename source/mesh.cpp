@@ -12,150 +12,14 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     parser.parse(filepath, vertices, triangles); 
     position = position;
     translationMatrix = glm::translate(glm::mat4(1.0f), position);
-    scalingMatrix = glm::mat4(1.0f);
-    rotationMatrix = glm::mat4(1.0f);
     texturePath = texture;
 
-    /* flat shading in scene 3 */
-    /* TODO: probably move this into a scene class attribute*/
-    setNonIndexedVertices();
     Vertex::computeAvgNormals(vertices, triangles);
 
     // compute and save texture map coordinates
-    std::vector<Vertex>::iterator vertex;
-    for(vertex = vertices.begin(); vertex < vertices.end(); vertex++)
+    for(auto vertex = vertices.begin(); vertex < vertices.end(); vertex++)
         vertex->computeTextureCoords();
 }
-
-Vertex Mesh::computeNewVertexPosition(Vertex vertex)
-{
-    float piTimesTwo = 6.28318530718;
-    glm::vec3 neighboursPos = glm::vec3(0.0f, 0.0f, 0.0f);
-    auto neighbour = vertex.neighbours.begin();
-    int n = vertex.neighbours.size();
-
-    for(; neighbour != vertex.neighbours.end(); neighbour++)
-    {
-        neighboursPos += vertices[*neighbour].position;
-    }
-    float beta = (4 - (2*cos(piTimesTwo/n)))/(9*n);
-
-    Vertex newVertex;
-    newVertex.position = ((1-(n*beta))*vertex.position) + (beta*neighboursPos);
-    newVertex.position = glm::normalize(newVertex.position);
-    return newVertex;
-}
-
-void Mesh::subdivide()
-{
-    // Triangles with a shared old edge. Makes edge flipping faster.
-    // Map from edge to pair of triangle indices.
-    // TODO: change vector to pair?
-    std::map<std::pair<unsigned int, unsigned int>, std::vector<unsigned int> > oldEdges;
-
-    Vertex::updateNeighbours(vertices, triangles);
-
-
-    int n = triangles.size();
-    int m = vertices.size();
-    // TODO
-    Vertex newVertex;
-    std::vector<Triangle> newTriangles;
-    unsigned int u_index, v_index, w_index, triangle_index;
-    Vertex u, v, w;
-    Triangle triangle;
-
-    int vertexCounter = vertices.size();
-    for(int i = 0; i < n; i++)
-    {
-        triangle_index = newTriangles.size();
-        triangle = triangles[i];
-        u_index = triangle.vertices[0];  v_index = triangle.vertices[1];  w_index = triangle.vertices[2];
-        u = vertices[u_index];  v = vertices[v_index];  w = vertices[w_index];
-
-
-        newVertex.position = glm::normalize((u.position + v.position + w.position)/3.0f);
-
-        // vertex counter = index of new vertex
-        Triangle newTriangle1(vertexCounter, u_index, v_index);
-        newTriangles.push_back(newTriangle1);
-        oldEdges[std::minmax(u_index, v_index)].push_back(triangle_index);
-
-
-        Triangle newTriangle2(vertexCounter, w_index, u_index);
-        newTriangles.push_back(newTriangle2);
-        oldEdges[std::minmax(u_index, w_index)].push_back(triangle_index+1);
-
-        Triangle newTriangle3(vertexCounter, v_index, w_index);
-        newTriangles.push_back(newTriangle3);
-        oldEdges[std::minmax(w_index, v_index)].push_back(triangle_index+2);
-
-        vertices.push_back(newVertex);
-        vertexCounter++;
-    }
-
-    // TODO: change triangles to pointer so you can copy in constant time
-    triangles = newTriangles;
-
-    for(int i = 0; i < m; i++)
-    {
-        vertices[i] = computeNewVertexPosition(vertices[i]);
-    }
-
-    // flip edges
-    auto itr = oldEdges.begin();
-    unsigned int t1_index, t2_index;
-    Triangle t1, t2;
-    int shared_edge_vertex1, shared_edge_vertex2;
-    unsigned int non_shared_vertex_1, non_shared_vertex_2;
-    for(; itr != oldEdges.end(); itr++)
-    {
-        shared_edge_vertex1 = -1;
-        shared_edge_vertex2 = -1;
-        t1_index = (itr->second)[0];
-        t2_index = (itr->second)[1];
-
-        t1 = triangles[t1_index];
-        t2 = triangles[t2_index];
-
-        for(int i = 0; i < 3; i++)
-        {
-            for(int j = 0; j < 3; j++)
-            {
-                if(t1.vertices[i] == t2.vertices[j])
-                {
-                    if(shared_edge_vertex1 == -1)
-                    {
-                        shared_edge_vertex1 = t1.vertices[i];
-                    }
-                    else if(shared_edge_vertex2 == -1)
-                    {
-                        if(shared_edge_vertex1 != t1.vertices[i])
-                            shared_edge_vertex2 = t1.vertices[i];
-                    }
-                }
-            }
-        }
-        for(int i = 0; i < 3; i++)
-        {
-            if((t1.vertices[i] != shared_edge_vertex1) and (t1.vertices[i] != shared_edge_vertex2))
-                non_shared_vertex_1 = t1.vertices[i];
-
-            if((t2.vertices[i] != shared_edge_vertex1) and (t2.vertices[i] != shared_edge_vertex2))
-                non_shared_vertex_2 = t2.vertices[i];
-        }
-
-        Triangle newTriangle1(non_shared_vertex_1, non_shared_vertex_2, (unsigned int)shared_edge_vertex1);
-        Triangle newTriangle2(non_shared_vertex_2, non_shared_vertex_1, (unsigned int)shared_edge_vertex2);
-        triangles[t1_index] = newTriangle1;
-        triangles[t2_index] = newTriangle2;
-
-    }
-
-
-    setNonIndexedVertices();
-}
-
 
 void Mesh::generateTextureObject()
 {
@@ -191,17 +55,10 @@ void Mesh::setup()
     glGenBuffers(1, &VBO);
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    if(settings.currentScene == SCENE_3)
-    {
-        glBufferData(GL_ARRAY_BUFFER, nonIndexedVertices.size() * sizeof(Vertex), &nonIndexedVertices[0], GL_STATIC_DRAW);
-    }
-    else
-    {
-        glGenBuffers(1, &EBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangles.size() * sizeof(Triangle), &triangles[0], GL_STATIC_DRAW);
-        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-    }
+    glGenBuffers(1, &EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangles.size() * sizeof(Triangle), &triangles[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
 
@@ -223,42 +80,14 @@ void Mesh::draw(Shader shader)
         shader.setVec3("objectColor", 0.3f, 0.6f, 0.3f);
 
     glBindVertexArray(VAO); 
-    if(settings.currentScene == SCENE_3)
-    {
-        glDrawArrays(GL_TRIANGLES, 0, nonIndexedVertices.size());
-    }
-    else
-    {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
-        glBindTexture(GL_TEXTURE_2D, texture);
-    }
-}
-
-void Mesh::rotate(glm::vec2 direction)
-{
-    glm::vec3 dir = glm::normalize(glm::vec3(direction,1.0f));
-    float angle = glm::radians(5.0f);
-    float x = dir.x * sin(angle/2);
-    float y = dir.y * sin(angle/2);
-    float z = dir.z * sin(angle/2);
-    float w = cos(angle/2);
-    glm::quat q = glm::quat(w,x,y,z);
-    glm::mat4 matrix = glm::mat4_cast(q);
-    rotationMatrix = matrix * rotationMatrix;
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
+    glBindTexture(GL_TEXTURE_2D, texture);
 }
 
 void Mesh::translate(glm::vec2 direction)
 {
     translationMatrix = glm::translate(translationMatrix, glm::vec3(0.0004f * direction.x, 0.0006f*direction.y, 0.0f));
-}
-
-void Mesh::scale(int direction)
-{
-    if(direction == UP)
-        scalingMatrix = glm::scale(scalingMatrix, glm::vec3(1.1,1.1,1.1));
-    else if(direction == DOWN)
-        scalingMatrix = glm::scale(scalingMatrix, glm::vec3(0.9,0.9,0.9));
 }
 
 void Mesh::setTextureBufferAttribute()
@@ -284,16 +113,4 @@ void Mesh::setTextureBufferAttribute()
         case NO_TEXTURES:
             break;
     }
-}
-
-void Mesh::setNonIndexedVertices()
-{
-    nonIndexedVertices.clear();
-    for(int i = 0; i < triangles.size(); i++)
-    {
-        nonIndexedVertices.push_back(vertices[triangles[i].vertices[0]]);
-        nonIndexedVertices.push_back(vertices[triangles[i].vertices[1]]);
-        nonIndexedVertices.push_back(vertices[triangles[i].vertices[2]]);
-    }
-    Vertex::computeNormals(nonIndexedVertices);
 }

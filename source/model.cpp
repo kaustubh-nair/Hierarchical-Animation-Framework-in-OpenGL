@@ -20,8 +20,6 @@ void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> mes
 
 void Model::refresh()
 {
-    int currentScene = settings.currentScene;
-
     for(auto mesh = meshes.begin(); mesh < meshes.end(); mesh++)
         mesh->setup();
 }
@@ -54,7 +52,6 @@ void Model::drawLighting(Shader shader, Shader lightingShader)
 
 void Model::unselect()
 {
-    int currentScene = settings.currentScene;
     std::vector<Mesh>::iterator mesh;
 
     for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
@@ -70,7 +67,6 @@ void Model::unselect()
 
 void Model::select(int id)
 {
-    int currentScene = settings.currentScene;
     if(settings.selectedMesh != -1)
         return;
     settings.selectedMesh = id;
@@ -88,35 +84,7 @@ void Model::select(int id)
 
 void Model::translate(glm::vec2 direction)
 {
-    int currentScene = settings.currentScene;
     if(settings.selectedMesh == -1)
         return;
     meshes[settings.selectedMesh - 1].translate(direction);
-}
-
-void Model::scale(int direction)
-{
-    int currentScene = settings.currentScene;
-    if(settings.selectedMesh == -1)
-        return;
-
-    meshes[settings.selectedMesh - 1].scale(direction);
-}
-
-void Model::rotate(glm::vec2 direction)
-{
-    int currentScene = settings.currentScene;
-    if(settings.selectedMesh == -1)
-        return;
-    meshes[settings.selectedMesh - 1].rotate(direction);
-
-}
-
-void Model::subdivide()
-{
-    int currentScene = settings.currentScene;
-    if(settings.selectedMesh == -1)
-        return;
-    meshes[settings.selectedMesh - 1].subdivide();
-
 }

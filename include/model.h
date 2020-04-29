@@ -22,11 +22,8 @@ class Model
         void select(int direction);
 
         void translate(glm::vec2 direction);
-        void scale(int direction);
-        void rotate(glm::vec2 direction);
 
         void drawLighting( Shader shader);
-        void subdivide();
 
 };
 
