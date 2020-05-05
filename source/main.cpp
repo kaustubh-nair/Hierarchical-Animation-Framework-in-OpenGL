@@ -8,21 +8,24 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../include/stb_image.h"
 
-void setupMeshes(std::vector<std::string> &filepaths,
-                 std::vector<glm::vec3> &meshPos,
-                 std::string &texturePath);
+void setupMeshes(std::vector<std::string> &meshPaths,
+                 std::vector<std::string> &texturePaths,
+                 std::vector<glm::vec3> &initialPos);
 
 int main()
 {
 
     Controller controller;
 
-    std::vector<std::string> filepaths;
-    std::vector<glm::vec3> meshPos;
-    std::string texturePath;
+    std::vector<std::string> meshPaths;
+    std::vector<std::string> texturePaths;
+    std::vector<glm::vec3> initialPos;
 
-    setupMeshes(filepaths, meshPos, texturePath);
-    controller.setupScene(filepaths, meshPos, texturePath);
+    setupMeshes(meshPaths, texturePaths, initialPos);
+
+    //for(int i = 0; i < meshPaths.size(); i++)
+    for(int i = 0; i < 1; i++)
+        controller.addSceneNode(i, meshPaths[i], texturePaths[i], initialPos[i]);
 
     controller.mainLoop();
 
@@ -30,21 +33,28 @@ int main()
 }
 
 
-void setupMeshes(std::vector<std::string> &filepaths,
-                 std::vector<glm::vec3> &meshPos,
-                 std::string &texturePath)
+void setupMeshes(std::vector<std::string> &meshPaths,
+                 std::vector<std::string> &texturePaths,
+                 std::vector<glm::vec3> &initialPos)
 {
 
-    texturePath = "data/checkerboard.jpg";
-    filepaths.clear();
-    meshPos.clear();
-    filepaths.push_back("data/bun_zipper.ply");
-    filepaths.push_back("data/teapot.ply");
-    filepaths.push_back("data/cylinder.ply");
-    filepaths.push_back("data/octahedron.ply");
+    meshPaths.clear();
+    initialPos.clear();
+    texturePaths.clear();
 
-    meshPos.push_back(glm::vec3(1.0f, 1.0f, -1.0f));
-    meshPos.push_back(glm::vec3(1.0f, 0.0f, -1.0f));
-    meshPos.push_back(glm::vec3(0.0f, 1.0f, -1.0f));
-    meshPos.push_back(glm::vec3(0.0f, 0.0f, -1.0f));
+    meshPaths.push_back("data/teapot.ply");
+    texturePaths.push_back("data/checkerboard.jpg");
+    initialPos.push_back(glm::vec3(1.0f, 0.0f, -1.0f));
+
+    meshPaths.push_back("data/bun_zipper.ply");
+    texturePaths.push_back("data/checkerboard.jpg");
+    initialPos.push_back(glm::vec3(1.0f, 1.0f, -1.0f));
+
+    meshPaths.push_back("data/cylinder.ply");
+    texturePaths.push_back("data/checkerboard.jpg");
+    initialPos.push_back(glm::vec3(0.0f, 1.0f, -1.0f));
+
+    meshPaths.push_back("data/octahedron.ply");
+    texturePaths.push_back("data/checkerboard.jpg");
+    initialPos.push_back(glm::vec3(0.0f, 0.0f, -1.0f));
 }

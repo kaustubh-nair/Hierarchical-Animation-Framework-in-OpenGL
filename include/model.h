@@ -6,14 +6,16 @@
 
 #include "../include/mesh.h"
 #include "../include/lighting.h"
+#include "../include/scene_node/scene_node.h"
 
 class Model
 {
     public:
         std::vector<Mesh> meshes;
+        SceneNode *sceneGraph = nullptr;
 
-        void setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,
-                   std::string texturePath);
+
+        void addSceneNode(int id, std::string meshPath, std::string texturePath, glm::vec3 initialPos);
         void draw(Shader shader);
         void drawLighting(Shader shader, Shader lightingShader);
         void refresh();

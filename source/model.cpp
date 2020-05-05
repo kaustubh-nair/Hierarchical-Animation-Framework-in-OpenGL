@@ -1,22 +1,15 @@
 #include "../include/model.h"
 
 
-void Model::setup(std::vector<std::string> filepaths, std::vector<glm::vec3> meshPos,
-                  std::string texturePath)
+void Model::addSceneNode(int id, std::string meshPath, std::string texturePath, glm::vec3 initialPos)
 {
-    std::vector<std::string>::iterator filepath;
-    std::vector<glm::vec3>::iterator position = meshPos.begin();
-
-    for (filepath = filepaths.begin(); filepath < filepaths.end(); filepath++)
+    if(sceneGraph == nullptr)
     {
-        Mesh mesh(*filepath, *position, texturePath);
-        mesh.setup();
-        meshes.push_back(mesh);
-
-        position++;
+        sceneGraph = new SceneNode(meshPath, texturePath, initialPos);
     }
 
 }
+
 
 void Model::refresh()
 {
@@ -26,8 +19,13 @@ void Model::refresh()
 
 void Model::draw(Shader shader)
 {
-    for(auto mesh = meshes.begin(); mesh < meshes.end(); mesh++)
-        mesh->draw(shader);
+    if(sceneGraph == nullptr)
+    {
+        print("No objects in scene!\n");
+        exit(0);
+    }
+    else
+        sceneGraph->render(shader);
 }
 
 
