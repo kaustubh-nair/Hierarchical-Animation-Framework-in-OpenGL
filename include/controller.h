@@ -18,12 +18,12 @@ class Controller {
   public:
     View view;
     std::vector<Model> models;  //multiple scenes each containing multiple meshes
-    GLFWwindow* mainWindow = nullptr;
+    GLFWwindow* window = nullptr;
     bool normalColoring;
 
     Controller()
     {
-      mainWindow = view.initialize_window();
+      window = view.initialize_window();
       normalColoring = false;
     };
 

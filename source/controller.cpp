@@ -23,8 +23,6 @@ void Controller::mainLoop()
         print("GLEW initialization failed!");
 
 
-    GLFWwindow* window = this->mainWindow;
-
     /* setup shaders */
     Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
     Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
