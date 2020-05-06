@@ -12,15 +12,19 @@
 #include "../../include/shader.h"
 #include "../../include/ply_parser.h"
 
+#include "../../include/definitions.h"
 
 
 class SceneNode
 {
   public:
-    SceneNode(std::string meshPath, std::string texturePath, glm::vec3 initialPosition);
+    static SceneNode* insertNode(int nodeId, int parentId, std::string meshPath, std::string texturePath, glm::vec3 initialPosition, SceneNode *root);
+
+
     void render(Shader shader);
     void update();
-    std::vector<SceneNode> children;
+    SceneNode *leftChild = nullptr;
+    SceneNode *rightChild = nullptr;
 
     std::vector<Vertex> vertices;
     std::vector<Triangle> triangles;
@@ -28,6 +32,13 @@ class SceneNode
     unsigned int texture;
     glm::vec3 position;
     glm::mat4 translationMatrix;
+
+    // TODO: make private
+    SceneNode(int nodeId, std::string meshPath, std::string texturePath, glm::vec3 initialPosition);
+  protected:
+    int id;
+  private:
+
 };
 
 #endif

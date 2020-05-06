@@ -1,7 +1,8 @@
 #include "../../include/scene_node/scene_node.h"
 
-SceneNode::SceneNode(std::string meshPath, std::string texturePath, glm::vec3 initialPosition)
+SceneNode::SceneNode(int nodeId, std::string meshPath, std::string texturePath, glm::vec3 initialPosition)
 {
+    id = nodeId;
     PlyParser parser;
     parser.parse(meshPath, vertices, triangles); 
 
@@ -28,6 +29,29 @@ SceneNode::SceneNode(std::string meshPath, std::string texturePath, glm::vec3 in
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
+
+
+// TODO: break recursion stack if node inserted. Convert to iteration?
+SceneNode* SceneNode::insertNode(int nodeId, int parentId, std::string meshPath, std::string texturePath, glm::vec3 initialPosition, SceneNode *root )
+{
+    if(root == nullptr)
+        return root;
+
+    if(root->id == parentId)
+    {
+        if(root->leftChild == nullptr)
+            root->leftChild = new SceneNode(nodeId, meshPath, texturePath, initialPosition);
+        else
+            root->rightChild = new SceneNode(nodeId, meshPath, texturePath, initialPosition);
+    }
+    else
+    {
+        root->leftChild = insertNode(nodeId, parentId, meshPath, texturePath, initialPosition, root->leftChild);
+        root->rightChild = insertNode(nodeId, parentId, meshPath, texturePath, initialPosition, root->rightChild);
+    }
+    return root;
+
+}
 void SceneNode::update()
 {
 
@@ -44,4 +68,9 @@ void SceneNode::render(Shader shader)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
     glBindTexture(GL_TEXTURE_2D, texture);
+
+    if(leftChild != nullptr)
+        leftChild->render(shader);
+    if(rightChild != nullptr)
+        rightChild->render(shader);
 }

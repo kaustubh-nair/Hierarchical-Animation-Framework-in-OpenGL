@@ -23,9 +23,10 @@ int main()
 
     setupMeshes(meshPaths, texturePaths, initialPos);
 
-    //for(int i = 0; i < meshPaths.size(); i++)
-    for(int i = 0; i < 1; i++)
-        controller.addSceneNode(i, meshPaths[i], texturePaths[i], initialPos[i]);
+    /* id, parentId */
+    controller.addSceneNode(0, 0, meshPaths[0], texturePaths[0], initialPos[0]);
+    controller.addSceneNode(1, 0, meshPaths[1], texturePaths[1], initialPos[1]);
+    controller.addSceneNode(2, 0, meshPaths[2], texturePaths[2], initialPos[2]);
 
     controller.mainLoop();
 

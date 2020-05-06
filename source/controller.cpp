@@ -5,11 +5,11 @@ Settings settings;
 
 
 /* TODO: Add support for multiple textures */
-void Controller::addSceneNode(int id, std::string &meshPath,
+void Controller::addSceneNode(int id, int parentId, std::string &meshPath,
                               std::string &texturePath,
                               glm::vec3 &initialPos)
 {
-    model.addSceneNode(id, meshPath, texturePath, initialPos);
+    model.addSceneNode(id, parentId, meshPath, texturePath, initialPos);
 }
 
 

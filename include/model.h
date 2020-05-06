@@ -15,7 +15,7 @@ class Model
         SceneNode *sceneGraph = nullptr;
 
 
-        void addSceneNode(int id, std::string meshPath, std::string texturePath, glm::vec3 initialPos);
+        void addSceneNode(int id, int parentId, std::string meshPath, std::string texturePath, glm::vec3 initialPos);
         void draw(Shader shader);
         void drawLighting(Shader shader, Shader lightingShader);
         void refresh();

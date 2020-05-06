@@ -1,13 +1,13 @@
 #include "../include/model.h"
 
 
-void Model::addSceneNode(int id, std::string meshPath, std::string texturePath, glm::vec3 initialPos)
+void Model::addSceneNode(int id, int parentId, std::string meshPath, std::string texturePath, glm::vec3 initialPos)
 {
-    if(sceneGraph == nullptr)
-    {
-        sceneGraph = new SceneNode(meshPath, texturePath, initialPos);
-    }
 
+    if(sceneGraph == nullptr)
+        sceneGraph = new SceneNode(id, meshPath, texturePath, initialPos);
+    else
+        sceneGraph = SceneNode::insertNode(id, parentId, meshPath, texturePath, initialPos, sceneGraph);
 }
 
 

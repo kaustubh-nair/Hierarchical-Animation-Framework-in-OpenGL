@@ -34,7 +34,7 @@ class Controller {
     void mainLoop();
     void reactToCallback(int ret);
     void toggleWireframe();
-    void addSceneNode(int id, std::string &meshPath,
+    void addSceneNode(int id, int parentId, std::string &meshPath,
                       std::string &texturePath,
                       glm::vec3 &initialPos);
 
