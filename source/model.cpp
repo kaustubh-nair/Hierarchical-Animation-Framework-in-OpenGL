@@ -5,9 +5,12 @@ void Model::addSceneNode(int id, int parentId, std::string meshPath, std::string
 {
 
     if(sceneGraph == nullptr)
-        sceneGraph = new SceneNode(id, meshPath, texturePath, initialPos);
+        sceneGraph = new MeshNode(id, meshPath, texturePath, initialPos);
     else
-        sceneGraph = SceneNode::insertNode(id, parentId, meshPath, texturePath, initialPos, sceneGraph);
+    {
+        SceneNode *newNode = new MeshNode(id, meshPath, texturePath, initialPos);
+        sceneGraph = SceneNode::insertNode(id, parentId, newNode, sceneGraph);
+    }
 }
 
 
