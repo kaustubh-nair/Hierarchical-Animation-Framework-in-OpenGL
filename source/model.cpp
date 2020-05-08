@@ -1,7 +1,8 @@
 #include "../include/model.h"
 
 
-void Model::addSceneNode(int id, int parentId, std::string meshPath, std::string texturePath, glm::vec3 initialPos)
+void Model::addMeshNode(int id, int parentId, std::string meshPath,
+                 std::string texturePath, glm::vec3 initialPos)
 {
 
     if(sceneGraph == nullptr)
@@ -13,6 +14,18 @@ void Model::addSceneNode(int id, int parentId, std::string meshPath, std::string
     }
 }
 
+void Model::addCameraNode(int id, int parentId, glm::vec3 position,
+                   glm::vec3 front, glm::vec3 up)
+{
+    SceneNode *newNode = new CameraNode(id, position, front, up);
+    sceneGraph = SceneNode::insertNode(id, parentId, newNode, sceneGraph);
+}
+
+// create groups
+glm::mat4 Model::getCameraLookAt(int camId)
+{
+    return glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+}
 
 void Model::refresh()
 {
@@ -20,7 +33,7 @@ void Model::refresh()
         mesh->setup();
 }
 
-void Model::draw(Shader shader)
+void Model::render(Shader shader)
 {
     if(sceneGraph == nullptr)
     {

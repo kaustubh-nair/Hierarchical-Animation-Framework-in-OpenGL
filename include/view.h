@@ -28,8 +28,6 @@ class View {
     glm::vec2 direction;      //helper variable to store translation direction
     GLFWwindow* initialize_window();
     int listenToCallbacks(GLFWwindow *window);
-    glm::mat4 getViewMatrix();
-    glm::vec3 getViewPos();
   private:
 };
 #endif

@@ -1,7 +1,8 @@
 #include "../include/camera_node.h"
 
-CameraNode::CameraNode(glm::vec3 position, glm::vec3 front, glm::vec3 up)
+CameraNode::CameraNode(int Id, glm::vec3 position, glm::vec3 front, glm::vec3 up)
 {
+    id = Id;
     updateCameraAttributes(position, front, up);
 }
 

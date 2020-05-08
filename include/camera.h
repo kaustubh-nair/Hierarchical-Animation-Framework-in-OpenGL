@@ -2,6 +2,7 @@
 #define CAMERA_H
 
 
+
 //careful: no multiple declarations for glm allowed
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

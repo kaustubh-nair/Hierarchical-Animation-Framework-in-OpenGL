@@ -13,7 +13,7 @@ class CameraNode : public SceneNode
 {
     public:
 
-        CameraNode(glm::vec3 position, glm::vec3 front, glm::vec3 up);
+        CameraNode(int Id, glm::vec3 position, glm::vec3 front, glm::vec3 up);
 
         void render(Shader shader) {};
         void update() {};

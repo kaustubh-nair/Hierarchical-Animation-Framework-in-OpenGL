@@ -2,9 +2,6 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-CameraNode camera(glm::vec3(0.0f, 0.0f, 3.0f),
-                  glm::vec3(0.0f, 0.0f, -1.0f),
-                  glm::vec3(0.0f, 1.0f, 0.0f));
 
 float WIDTH = 3000.0f;
 float HEIGHT = 2250.0f;
@@ -38,16 +35,6 @@ GLFWwindow* View::initialize_window()
 
     glViewport(0, 0, WIDTH, HEIGHT);
     return window;
-}
-
-glm::mat4 View::getViewMatrix()
-{
-    return camera.getViewMatrix();
-}
-
-glm::vec3 View::getViewPos()
-{
-    return camera.getPosition();
 }
 
 int View::listenToCallbacks(GLFWwindow *window)

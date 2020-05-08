@@ -17,7 +17,7 @@ void Controller::mainLoop()
     Shader normalColoringShader("source/shaders/normal_coloring_shader.vs", "source/shaders/normal_coloring_shader.fs");
 
     glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
-    glm::mat4 viewMatrix = view.getViewMatrix();
+    glm::mat4 viewMatrix = model.getCameraLookAt(3);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -34,21 +34,21 @@ void Controller::mainLoop()
         glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        viewMatrix = view.getViewMatrix();
 
         setShader(&shader, &normalColoringShader);
 
         shader.setMat4("projection", proj);
         shader.setMat4("view", viewMatrix);
-        shader.setVec3("viewPos", view.getViewPos());
+        //shader.setVec3("viewPos", view.getViewPos());
 
-        model.draw(shader);
+        model.render(shader);
         model.drawLighting(shader, lightingShader);
 
         lightingShader.use();
         lightingShader.setMat4("projection", proj);
         lightingShader.setMat4("view", viewMatrix);
 
+        viewMatrix = model.getCameraLookAt(3);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
