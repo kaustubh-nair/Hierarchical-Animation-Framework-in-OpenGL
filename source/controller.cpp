@@ -16,7 +16,7 @@ void Controller::mainLoop()
     Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
 
     glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
-    glm::mat4 viewMatrix = model.getCameraLookAt(3);
+    glm::mat4 viewMatrix;
 
     glEnable(GL_DEPTH_TEST);
 
@@ -40,6 +40,7 @@ void Controller::mainLoop()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
+        viewMatrix = model.getCameraLookAt(3);
         shader.use();
         shader.setMat4("view", viewMatrix);
         //shader.setVec3("viewPos", view.getViewPos());
@@ -50,7 +51,6 @@ void Controller::mainLoop()
         lightingShader.use();
         lightingShader.setMat4("view", viewMatrix);
 
-        viewMatrix = model.getCameraLookAt(3);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
