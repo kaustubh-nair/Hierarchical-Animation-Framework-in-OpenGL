@@ -44,15 +44,15 @@ void setupMeshes(std::vector<std::string> &meshPaths,
     texturePaths.clear();
 
     meshPaths.push_back("data/teapot.ply");
-    texturePaths.push_back("data/checkerboard.jpg");
+    texturePaths.push_back("data/awesomeface.png");
     initialPos.push_back(glm::vec3(1.0f, 0.0f, -1.0f));
 
     meshPaths.push_back("data/bun_zipper.ply");
-    texturePaths.push_back("data/checkerboard.jpg");
+    texturePaths.push_back("data/rainbow.png");
     initialPos.push_back(glm::vec3(1.0f, 1.0f, -1.0f));
 
     meshPaths.push_back("data/cylinder.ply");
-    texturePaths.push_back("data/checkerboard.jpg");
+    texturePaths.push_back("data/fur.jpg");
     initialPos.push_back(glm::vec3(0.0f, 1.0f, -1.0f));
 
     meshPaths.push_back("data/octahedron.ply");
