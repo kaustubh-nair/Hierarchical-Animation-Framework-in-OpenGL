@@ -3,6 +3,7 @@
 
 #include "../../include/scene_node/scene_node.h"
 
+#include "../../include/stb_image.h"
 #include "../../include/vertex.h"
 #include "../../include/triangle.h"
 #include "../../include/ply_parser.h"
@@ -24,6 +25,10 @@ class MeshNode : public SceneNode
 
         // TODO: make private
         MeshNode(int nodeId, std::string meshPath, std::string texturePath, glm::vec3 initialPosition);
+
+    private:
+        void generateTextureObject(std::string texturePath);
+        void setupBuffers();
 };
 
 #endif
