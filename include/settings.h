@@ -6,7 +6,6 @@
 struct Settings
 {
     int selectedMesh = -1;
-    bool normalColoring;
 };
 
 #endif

@@ -14,7 +14,6 @@ void Controller::mainLoop()
     /* setup shaders */
     Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
     Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
-    Shader normalColoringShader("source/shaders/normal_coloring_shader.vs", "source/shaders/normal_coloring_shader.fs");
 
     glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
     glm::mat4 viewMatrix = model.getCameraLookAt(3);
@@ -23,6 +22,12 @@ void Controller::mainLoop()
 
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 
+
+    shader.use();
+    shader.setMat4("projection", proj);
+
+    lightingShader.use();
+    lightingShader.setMat4("projection", proj);
 
     while(!glfwWindowShouldClose(window))
     {
@@ -35,9 +40,7 @@ void Controller::mainLoop()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-        setShader(&shader, &normalColoringShader);
-
-        shader.setMat4("projection", proj);
+        shader.use();
         shader.setMat4("view", viewMatrix);
         //shader.setVec3("viewPos", view.getViewPos());
 
@@ -45,7 +48,6 @@ void Controller::mainLoop()
         model.drawLighting(shader, lightingShader);
 
         lightingShader.use();
-        lightingShader.setMat4("projection", proj);
         lightingShader.setMat4("view", viewMatrix);
 
         viewMatrix = model.getCameraLookAt(3);
@@ -78,9 +80,6 @@ void Controller::reactToCallback(int ret)
         case TOGGLE_WIREFRAME:
             this->toggleWireframe();
             break;
-        case TOGGLE_NORMAL_COLORING:
-            this->normalColoring = !this->normalColoring;
-            break;
         case TRANSLATE_OBJECT:
             model.translate(view.direction);
             break;
@@ -97,10 +96,3 @@ void Controller::toggleWireframe()
         glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 }
 
-void Controller::setShader(Shader *shader, Shader *normalColoringShader)
-{
-    if(this->normalColoring)
-        normalColoringShader->use();
-    else
-        shader->use();
-}

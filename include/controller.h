@@ -18,12 +18,10 @@ class Controller {
     View view;
     Model model;
     GLFWwindow* window = nullptr;
-    bool normalColoring;
 
     Controller()
     {
       window = view.initialize_window();
-      normalColoring = false;
     };
 
     ~Controller()

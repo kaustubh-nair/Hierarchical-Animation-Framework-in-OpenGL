@@ -4,7 +4,6 @@ Selecting object - Number keys ( 7-0 )
 Unselecting object - Escape
 Scaling - Plus / Minus keys
 Toggle wireframe - w key
-Toggle normal coloring - n key
 
 Cylinderical texture mapping strategy 2 - 1 key
 Cylinderical texture mapping strategy 3 - 2 key
