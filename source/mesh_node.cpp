@@ -1,4 +1,4 @@
-#include "../../include/scene_node/mesh_node.h"
+#include "../include/mesh_node.h"
 
 MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath, glm::vec3 initialPosition)
 {

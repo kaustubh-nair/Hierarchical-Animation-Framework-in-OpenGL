@@ -5,11 +5,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+// TODO: Remove all occurances of this.
+#define GLM_ENABLE_EXPERIMENTAL 1
+#include <glm/gtx/string_cast.hpp>
+
 #include <vector>
 #include <string>
 
-#include "../../include/definitions.h"
-#include "../../include/shader.h"
+#include "../include/definitions.h"
+#include "../include/shader.h"
 
 
 class SceneNode

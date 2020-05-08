@@ -6,6 +6,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#define GLM_ENABLE_EXPERIMENTAL 1
+#include <glm/gtx/string_cast.hpp>
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -13,8 +16,9 @@
 
 #include "../include/camera.h"
 #include "../include/definitions.h"
+#include "../include/camera_node.h"
 
-extern Camera camera;
+extern CameraNode camera;
 extern float WIDTH;
 extern float HEIGHT;
 

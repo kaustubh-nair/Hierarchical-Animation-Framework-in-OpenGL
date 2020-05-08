@@ -6,8 +6,8 @@
 
 #include "../include/mesh.h"
 #include "../include/lighting.h"
-#include "../include/scene_node/scene_node.h"
-#include "../include/scene_node/mesh_node.h"
+#include "../include/scene_node.h"
+#include "../include/mesh_node.h"
 
 class Model
 {

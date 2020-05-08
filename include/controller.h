@@ -7,7 +7,6 @@
 #include "../include/view.h"
 #include "../include/shader.h"
 #include "../include/model.h"
-#include "../include/camera.h"
 #include "../include/mesh.h"
 #include "../include/ply_parser.h"
 
@@ -34,9 +33,6 @@ class Controller {
     void mainLoop();
     void reactToCallback(int ret);
     void toggleWireframe();
-    void addSceneNode(int id, int parentId, std::string &meshPath,
-                      std::string &texturePath,
-                      glm::vec3 &initialPos);
 
     /* helpers */
     void toggleTextures(Shader *shader);

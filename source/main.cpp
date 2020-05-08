@@ -24,9 +24,13 @@ int main()
     setupMeshes(meshPaths, texturePaths, initialPos);
 
     /* id, parentId */
-    controller.addSceneNode(0, 0, meshPaths[0], texturePaths[0], initialPos[0]);
-    controller.addSceneNode(1, 0, meshPaths[1], texturePaths[1], initialPos[1]);
-    controller.addSceneNode(2, 0, meshPaths[2], texturePaths[2], initialPos[2]);
+    controller.model.addSceneNode(0, 0, meshPaths[0], texturePaths[0], initialPos[0]);
+    controller.model.addSceneNode(1, 0, meshPaths[1], texturePaths[1], initialPos[1]);
+    controller.model.addSceneNode(2, 0, meshPaths[2], texturePaths[2], initialPos[2]);
+
+CameraNode camera(glm::vec3(0.0f, 0.0f, 3.0f),
+                  glm::vec3(0.0f, 0.0f, -1.0f),
+                  glm::vec3(0.0f, 1.0f, 0.0f));
 
     controller.mainLoop();
 
