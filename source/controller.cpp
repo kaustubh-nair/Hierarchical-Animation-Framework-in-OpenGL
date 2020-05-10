@@ -6,7 +6,8 @@ Settings settings;
 
 void Controller::run()
 {
-    model.setup();
+    leftWindow = view.initialize_window("left");
+
     glewExperimental = GL_TRUE;
     if( GLEW_OK !=glewInit())
         print("GLEW initialization failed!");
@@ -32,6 +33,9 @@ void Controller::run()
 
     lightingShader.use();
     lightingShader.setMat4("projection", projMatrix);
+
+    /* generate buffers */
+    model.setup();
 
     while(!glfwWindowShouldClose(leftWindow))
     {

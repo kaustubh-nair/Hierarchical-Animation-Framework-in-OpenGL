@@ -19,14 +19,6 @@ class Controller {
     Model model;
     GLFWwindow* leftWindow = nullptr;
 
-    Controller()
-    {
-      leftWindow = view.initialize_window("left");
-    };
-
-    ~Controller()
-    {
-    };
     glm::mat4 projMatrix;
     glm::mat4 viewMatrix;
     int camId = 0;  //current active camera
