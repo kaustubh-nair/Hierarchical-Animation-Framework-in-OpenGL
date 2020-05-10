@@ -10,15 +10,12 @@ SceneNode* SceneNode::insertNode(int nodeId, int parentId, SceneNode *newNode, S
 
     if(root->id == parentId)
     {
-        if(root->leftChild == nullptr)
-            root->leftChild = newNode;
-        else
-            root->rightChild = newNode;
+        (root->children).push_back(newNode);
     }
     else
     {
-        root->leftChild = insertNode(nodeId, parentId, newNode, root->leftChild);
-        root->rightChild = insertNode(nodeId, parentId, newNode, root->rightChild);
+        for(auto itr = (root->children).begin(); itr != (root->children).end(); itr++)
+            *itr = insertNode(nodeId, parentId, newNode, *itr);
     }
     return root;
 

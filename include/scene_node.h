@@ -18,21 +18,20 @@
 
 class SceneNode
 {
-  public:
-    SceneNode *leftChild = nullptr;
-    SceneNode *rightChild = nullptr;
-    glm::vec3 position;
+    public:
+        std::vector<SceneNode*> children;
+        glm::vec3 position;
 
 
-    virtual void render(Shader shader) = 0;
-    virtual void update() = 0;
-    static SceneNode* insertNode(int nodeId, int parentId, SceneNode *newNode, SceneNode *root);
+        virtual void render(Shader shader) = 0;
+        virtual void update() = 0;
+        static SceneNode* insertNode(int nodeId, int parentId, SceneNode *newNode, SceneNode *root);
 
 
-  protected:
-    int id;
+    protected:
+        int id;
 
-  private:
+    private:
 
 };
 

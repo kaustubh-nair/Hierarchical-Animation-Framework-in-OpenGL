@@ -44,10 +44,8 @@ void MeshNode::render(Shader shader)
     glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    if(leftChild != nullptr)
-        leftChild->render(shader);
-    if(rightChild != nullptr)
-        rightChild->render(shader);
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->render(shader);
 }
 
 
