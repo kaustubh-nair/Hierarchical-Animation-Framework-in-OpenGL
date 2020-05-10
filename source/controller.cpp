@@ -15,8 +15,11 @@ void Controller::mainLoop()
     Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
     Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
 
-    glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
-    glm::mat4 viewMatrix;
+    projMatrix = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+
+    /* set initial ViewMatrix */
+    camId = model.firstCameraId;
+    changeCamera(camId);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -24,10 +27,10 @@ void Controller::mainLoop()
 
 
     shader.use();
-    shader.setMat4("projection", proj);
+    shader.setMat4("projection", projMatrix);
 
     lightingShader.use();
-    lightingShader.setMat4("projection", proj);
+    lightingShader.setMat4("projection", projMatrix);
 
     while(!glfwWindowShouldClose(window))
     {
@@ -40,7 +43,6 @@ void Controller::mainLoop()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-        viewMatrix = model.getCameraLookAt(3);
         shader.use();
         shader.setMat4("view", viewMatrix);
         //shader.setVec3("viewPos", view.getViewPos());
@@ -62,37 +64,16 @@ void Controller::reactToCallback(int ret)
 {
     switch(ret)
     {
-        case UNSELECT_OBJECT:
-            model.unselect();
-            break;
-        case SELECT_OBJECT_1:
-            model.select(1);
-            break;
-        case SELECT_OBJECT_2:
-            model.select(2);
-            break;
-        case SELECT_OBJECT_3:
-            model.select(3);
-            break;
-        case SELECT_OBJECT_4:
-            model.select(4);
-            break;
-        case TOGGLE_WIREFRAME:
-            this->toggleWireframe();
-            break;
-        case TRANSLATE_OBJECT:
-            model.translate(view.direction);
+        case CHANGE_CAMERA:
+            // Might require changes later
+            camId = model.firstCameraId + ((camId + 1) % model.numCameras);
+            changeCamera(camId);
             break;
     }
 }
 
-void Controller::toggleWireframe()
-{
-    GLint polygonMode[2];
-    glGetIntegerv(GL_POLYGON_MODE, polygonMode);
-    if ( polygonMode[0] == GL_LINE )
-        glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-    else
-        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-}
 
+void Controller::changeCamera(int id)
+{
+    viewMatrix = model.getCameraLookAt(id);
+}

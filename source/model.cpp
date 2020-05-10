@@ -35,6 +35,9 @@ void Model::addCameraNode(int id, int parentId, glm::vec3 position,
 {
     SceneNode *newNode = new CameraNode(id, position, front, up);
     sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
+
+    if(!firstCameraId) { firstCameraId = id; }
+    numCameras++;
 }
 
 

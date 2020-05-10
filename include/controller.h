@@ -27,14 +27,13 @@ class Controller {
     ~Controller()
     {
     };
+    glm::mat4 projMatrix;
+    glm::mat4 viewMatrix;
+    int camId = 0;  //current active camera
 
     void mainLoop();
     void reactToCallback(int ret);
-    void toggleWireframe();
-
-    /* helpers */
-    void toggleTextures(Shader *shader);
-    void setShader(Shader *shader, Shader *normalColoringShader);
+    void changeCamera(int id);
 };
 
 

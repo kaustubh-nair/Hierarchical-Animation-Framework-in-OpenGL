@@ -48,6 +48,8 @@ int View::listenToCallbacks(GLFWwindow *window)
         {GLFW_KEY_7, SELECT_OBJECT_4},
         {GLFW_KEY_MINUS, SCALE_OBJECT_DOWN},
         {GLFW_KEY_W, TOGGLE_WIREFRAME},
+        {GLFW_KEY_W, TOGGLE_WIREFRAME},
+        {GLFW_KEY_UP, CHANGE_CAMERA},
     };
 
     static std::vector<int> oldStates(key_mappings.size(), GLFW_RELEASE);

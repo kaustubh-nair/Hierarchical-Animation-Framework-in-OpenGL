@@ -20,6 +20,9 @@ class Model
         std::vector<Mesh> meshes;
         SceneNode *sceneRoot = nullptr;
 
+        int firstCameraId = 0;
+        int numCameras = 0;
+
         Model();
         void addGroupNode(int id, int parentId);
         void addCameraGroupNode(int id, int parentId);
