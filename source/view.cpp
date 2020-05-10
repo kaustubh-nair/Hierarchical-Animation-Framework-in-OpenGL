@@ -34,6 +34,7 @@ GLFWwindow* View::initialize_window(std::string name)
     }
 
     glViewport(0, 0, WIDTH, HEIGHT);
+    glfwMakeContextCurrent(NULL);
     return window;
 }
 

@@ -17,13 +17,17 @@ class Controller {
   public:
     View view;
     Model model;
+    Shader shader, lightingShader;
+
     GLFWwindow* leftWindow = nullptr;
+    GLFWwindow* rightWindow = nullptr;
 
     glm::mat4 projMatrix;
     glm::mat4 viewMatrix;
     int camId = 0;  //current active camera
 
     void run();
+    void setup(GLFWwindow *window);
     void reactToCallback(int ret);
     void changeCamera(int id);
 };

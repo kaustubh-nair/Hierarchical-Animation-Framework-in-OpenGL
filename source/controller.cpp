@@ -7,15 +7,12 @@ Settings settings;
 void Controller::run()
 {
     leftWindow = view.initialize_window("left");
+    //rightWindow = view.initialize_window("right");
 
     glewExperimental = GL_TRUE;
     if( GLEW_OK !=glewInit())
         print("GLEW initialization failed!");
 
-
-    /* setup shaders */
-    Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
-    Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
 
     projMatrix = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
@@ -23,19 +20,7 @@ void Controller::run()
     camId = model.firstCameraId;
     changeCamera(camId);
 
-    glEnable(GL_DEPTH_TEST);
-
-    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-
-
-    shader.use();
-    shader.setMat4("projection", projMatrix);
-
-    lightingShader.use();
-    lightingShader.setMat4("projection", projMatrix);
-
-    /* generate buffers */
-    model.setup();
+    setup(leftWindow);
 
     while(!glfwWindowShouldClose(leftWindow))
     {
@@ -63,6 +48,31 @@ void Controller::run()
         glfwPollEvents();
     }
     glfwTerminate();
+}
+
+void Controller::setup(GLFWwindow *window)
+{
+    glfwMakeContextCurrent(window);
+
+    /* setup shaders */
+    Shader shader1("source/shaders/shader.vs", "source/shaders/shader.fs");
+    Shader shader2("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
+
+    shader = shader1;
+    lightingShader = shader2;
+
+    glEnable(GL_DEPTH_TEST);
+    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+
+    /* generate buffers */
+    model.setup();
+
+    shader.use();
+    shader.setMat4("projection", projMatrix);
+
+    lightingShader.use();
+    lightingShader.setMat4("projection", projMatrix);
+    glfwMakeContextCurrent(NULL);
 }
 
 
