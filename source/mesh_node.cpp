@@ -12,6 +12,7 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath, gl
     Vertex::computeAvgNormals(vertices, triangles);
 
     position = initialPosition;
+    texPath = texturePath;
 
     /* initialize transformation matrices */
     translationMatrix = glm::translate(glm::mat4(1.0f), position);
@@ -20,9 +21,6 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath, gl
     /* compute and save texture map coordinates */
     for(auto vertex = vertices.begin(); vertex < vertices.end(); vertex++)
         vertex->computeTextureCoords();
-
-    generateTextureObject(texturePath);
-    setupBuffers();
 }
 
 
@@ -49,7 +47,7 @@ void MeshNode::render(Shader shader)
 }
 
 
-void MeshNode::generateTextureObject(std::string texturePath)
+void MeshNode::generateTextureObject()
 {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -60,7 +58,7 @@ void MeshNode::generateTextureObject(std::string texturePath)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     // load and generate the texture
     int width, height, nrChannels;
-    const char* path = texturePath.c_str();
+    const char* path = texPath.c_str();
     unsigned char *data = stbi_load(path, &width, &height, &nrChannels, 0);
     if (data)
     {
@@ -75,8 +73,10 @@ void MeshNode::generateTextureObject(std::string texturePath)
 }
 
 
-void MeshNode::setupBuffers()
+void MeshNode::setup()
 {
+    generateTextureObject();
+
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glBindVertexArray(VAO);
@@ -94,4 +94,8 @@ void MeshNode::setupBuffers()
     glEnableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->setup();
+
 }

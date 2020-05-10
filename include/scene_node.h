@@ -25,6 +25,7 @@ class SceneNode
 
         virtual void render(Shader shader) = 0;
         virtual void update() = 0;
+        virtual void setup() = 0;
         static SceneNode* insertNode(int nodeId, int parentId, SceneNode *newNode, SceneNode *root);
 
         int id;

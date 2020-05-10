@@ -9,5 +9,6 @@ class GroupNode : public SceneNode
         GroupNode(int nodeId);
         void render(Shader shader);
         void update() {};
+        void setup();
 };
 #endif

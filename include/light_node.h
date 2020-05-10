@@ -10,6 +10,7 @@ class LightNode : public SceneNode
     public:
         void render(Shader shader);
         void update();
+        void setup() {};
 };
 
 #endif

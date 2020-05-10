@@ -24,6 +24,7 @@ class Model
         int numCameras = 0;
 
         Model();
+        void setup();
         void addGroupNode(int id, int parentId);
         void addCameraGroupNode(int id, int parentId);
 

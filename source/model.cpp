@@ -6,6 +6,10 @@ Model::Model()
     sceneRoot = new GroupNode(0);
 }
 
+void Model::setup()
+{
+    sceneRoot->setup();
+}
 
 void Model::addGroupNode(int id, int parentId)
 {

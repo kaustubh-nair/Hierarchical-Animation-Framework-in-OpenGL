@@ -6,6 +6,7 @@ Settings settings;
 
 void Controller::run()
 {
+    model.setup();
     glewExperimental = GL_TRUE;
     if( GLEW_OK !=glewInit())
         print("GLEW initialization failed!");

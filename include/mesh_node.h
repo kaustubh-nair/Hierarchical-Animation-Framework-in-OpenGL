@@ -21,14 +21,15 @@ class MeshNode : public SceneNode
         
         void render(Shader shader);
         void update();
+        void setup();
 
 
         // TODO: make private
         MeshNode(int nodeId, std::string meshPath, std::string texturePath, glm::vec3 initialPosition);
 
     private:
-        void generateTextureObject(std::string texturePath);
-        void setupBuffers();
+        void generateTextureObject();
+        std::string texPath;
 };
 
 #endif
