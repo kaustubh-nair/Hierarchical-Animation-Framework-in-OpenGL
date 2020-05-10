@@ -1,10 +1,13 @@
-#ifndef GROUP_NODE_H
-#define GROUP_NODE_H
+#include "../include/group_node.h"
 
-class GroupNode
+GroupNode::GroupNode(int nodeId)
 {
-    public:
+    id = nodeId;
+}
 
-};
 
-#endif
+void GroupNode::render(Shader shader)
+{
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->render(shader);
+}

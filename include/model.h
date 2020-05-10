@@ -11,13 +11,18 @@
 #include "../include/mesh_node.h"
 #include "../include/camera_node.h"
 #include "../include/light_node.h"
+#include "../include/group_node.h"
+#include "../include/camera_group_node.h"
 
 class Model
 {
     public:
         std::vector<Mesh> meshes;
-        SceneNode *sceneGraph = nullptr;
+        SceneNode *sceneRoot = nullptr;
 
+        Model();
+        void addGroupNode(int id, int parentId);
+        void addCameraGroupNode(int id, int parentId);
 
         void addMeshNode(int id, int parentId, std::string meshPath,
                          std::string texturePath, glm::vec3 initialPos);

@@ -1,30 +1,47 @@
 #include "../include/model.h"
 
 
-void Model::addMeshNode(int id, int parentId, std::string meshPath,
-                 std::string texturePath, glm::vec3 initialPos)
+Model::Model()
 {
-
-    if(sceneGraph == nullptr)
-        sceneGraph = new MeshNode(id, meshPath, texturePath, initialPos);
-    else
-    {
-        SceneNode *newNode = new MeshNode(id, meshPath, texturePath, initialPos);
-        sceneGraph = SceneNode::insertNode(id, parentId, newNode, sceneGraph);
-    }
+    sceneRoot = new GroupNode(0);
 }
+
+
+void Model::addGroupNode(int id, int parentId)
+{
+    SceneNode *newNode = new GroupNode(id);
+    sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
+}
+
+
+void Model::addCameraGroupNode(int id, int parentId)
+{
+    SceneNode *newNode = new CameraGroupNode(id);
+    sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
+}
+
+
+void Model::addMeshNode(int id, int parentId, std::string meshPath,
+                        std::string texturePath, glm::vec3 initialPos)
+{
+    SceneNode *newNode = new MeshNode(id, meshPath, texturePath, initialPos);
+    sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
+}
+
 
 void Model::addCameraNode(int id, int parentId, glm::vec3 position,
-                   glm::vec3 front, glm::vec3 up)
+                          glm::vec3 front, glm::vec3 up)
 {
     SceneNode *newNode = new CameraNode(id, position, front, up);
-    sceneGraph = SceneNode::insertNode(id, parentId, newNode, sceneGraph);
+    sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
 }
 
-// create groups
+
 glm::mat4 Model::getCameraLookAt(int camId)
 {
-    return glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    /* Note: this assumes camera group node is always the second child of root */
+    CameraGroupNode *cameraGroup = (CameraGroupNode *)(sceneRoot->children).at(1);
+    return cameraGroup->getCameraLookAt(camId);
 }
 
 void Model::refresh()
@@ -35,13 +52,13 @@ void Model::refresh()
 
 void Model::render(Shader shader)
 {
-    if(sceneGraph == nullptr)
+    if(sceneRoot == nullptr)
     {
         print("No objects in scene!\n");
         exit(0);
     }
     else
-        sceneGraph->render(shader);
+        sceneRoot->render(shader);
 }
 
 
