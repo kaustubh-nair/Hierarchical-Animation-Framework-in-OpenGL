@@ -27,8 +27,6 @@ class SceneNode
         virtual void update() = 0;
         static SceneNode* insertNode(int nodeId, int parentId, SceneNode *newNode, SceneNode *root);
 
-
-    protected:
         int id;
 
     private:

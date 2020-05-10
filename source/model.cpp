@@ -14,6 +14,7 @@ void Model::addGroupNode(int id, int parentId)
 }
 
 
+// REMOVE?
 void Model::addCameraGroupNode(int id, int parentId)
 {
     SceneNode *newNode = new CameraGroupNode(id);

@@ -14,7 +14,6 @@
 #include <iostream>
 #include <map>
 
-#include "../include/camera.h"
 #include "../include/definitions.h"
 #include "../include/camera_node.h"
 
