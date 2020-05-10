@@ -27,6 +27,7 @@ class Controller {
     int camId = 0;  //current active camera
 
     void run();
+    void mainLoop(GLFWwindow *window);
     void setup(GLFWwindow *window);
     void reactToCallback(int ret);
     void changeCamera(int id);

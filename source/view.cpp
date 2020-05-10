@@ -34,6 +34,11 @@ GLFWwindow* View::initialize_window(std::string name)
     }
 
     glViewport(0, 0, WIDTH, HEIGHT);
+
+    glewExperimental = GL_TRUE;
+    if( GLEW_OK !=glewInit())
+        print("GLEW initialization failed!");
+
     glfwMakeContextCurrent(NULL);
     return window;
 }

@@ -6,13 +6,8 @@ Settings settings;
 
 void Controller::run()
 {
+    rightWindow = view.initialize_window("right");
     leftWindow = view.initialize_window("left");
-    //rightWindow = view.initialize_window("right");
-
-    glewExperimental = GL_TRUE;
-    if( GLEW_OK !=glewInit())
-        print("GLEW initialization failed!");
-
 
     projMatrix = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
@@ -20,35 +15,43 @@ void Controller::run()
     camId = model.firstCameraId;
     changeCamera(camId);
 
+    setup(rightWindow);
     setup(leftWindow);
 
-    while(!glfwWindowShouldClose(leftWindow))
+    while((!glfwWindowShouldClose(leftWindow)) && (!glfwWindowShouldClose(rightWindow)))
     {
-
-        glfwMakeContextCurrent(leftWindow);
-        int ret = view.listenToCallbacks(leftWindow);
-
-        reactToCallback(ret);
-
-        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-        shader.use();
-        shader.setMat4("view", viewMatrix);
-        //shader.setVec3("viewPos", view.getViewPos());
-
-        model.render(shader);
-        model.drawLighting(shader, lightingShader);
-
-        lightingShader.use();
-        lightingShader.setMat4("view", viewMatrix);
-
-        glfwSwapBuffers(leftWindow);
-        glfwPollEvents();
+        mainLoop(rightWindow);
+        mainLoop(leftWindow);
     }
     glfwTerminate();
 }
+
+
+void Controller::mainLoop(GLFWwindow *window)
+{
+    glfwMakeContextCurrent(window);
+    int ret = view.listenToCallbacks(window);
+
+    reactToCallback(ret);
+
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    shader.use();
+    shader.setMat4("view", viewMatrix);
+    //shader.setVec3("viewPos", view.getViewPos());
+
+    model.render(shader);
+    model.drawLighting(shader, lightingShader);
+
+    lightingShader.use();
+    lightingShader.setMat4("view", viewMatrix);
+
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+    glfwMakeContextCurrent(NULL);
+}
+
 
 void Controller::setup(GLFWwindow *window)
 {
