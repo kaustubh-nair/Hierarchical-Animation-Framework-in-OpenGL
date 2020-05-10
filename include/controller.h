@@ -17,11 +17,11 @@ class Controller {
   public:
     View view;
     Model model;
-    GLFWwindow* window = nullptr;
+    GLFWwindow* leftWindow = nullptr;
 
     Controller()
     {
-      window = view.initialize_window();
+      leftWindow = view.initialize_window("left");
     };
 
     ~Controller()
@@ -31,7 +31,7 @@ class Controller {
     glm::mat4 viewMatrix;
     int camId = 0;  //current active camera
 
-    void mainLoop();
+    void run();
     void reactToCallback(int ret);
     void changeCamera(int id);
 };

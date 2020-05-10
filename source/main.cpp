@@ -32,7 +32,7 @@ int main()
     controller.model.addMeshNode(9, 3, "data/octahedron.ply", "data/checkerboard.jpg", glm::vec3(1.0f, 1.0f, -1.0f));
 
 
-    controller.mainLoop();
+    controller.run();
 
     return 0;
 }

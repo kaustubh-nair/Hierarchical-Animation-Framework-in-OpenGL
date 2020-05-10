@@ -4,7 +4,7 @@
 Settings settings;
 
 
-void Controller::mainLoop()
+void Controller::run()
 {
     glewExperimental = GL_TRUE;
     if( GLEW_OK !=glewInit())
@@ -32,10 +32,11 @@ void Controller::mainLoop()
     lightingShader.use();
     lightingShader.setMat4("projection", projMatrix);
 
-    while(!glfwWindowShouldClose(window))
+    while(!glfwWindowShouldClose(leftWindow))
     {
 
-        int ret = view.listenToCallbacks(window);
+        glfwMakeContextCurrent(leftWindow);
+        int ret = view.listenToCallbacks(leftWindow);
 
         reactToCallback(ret);
 
@@ -53,7 +54,7 @@ void Controller::mainLoop()
         lightingShader.use();
         lightingShader.setMat4("view", viewMatrix);
 
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(leftWindow);
         glfwPollEvents();
     }
     glfwTerminate();
