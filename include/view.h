@@ -25,7 +25,7 @@ class View {
   public:
     glm::vec3 objPosition;      //temporary variable to store selected object position
     glm::vec2 direction;      //helper variable to store translation direction
-    GLFWwindow* initialize_window(std::string name);
+    GLFWwindow* initialize_window(std::string name, GLFWwindow *window);
     int listenToCallbacks(GLFWwindow *window);
   private:
 };

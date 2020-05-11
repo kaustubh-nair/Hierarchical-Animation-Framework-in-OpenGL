@@ -6,8 +6,8 @@ Settings settings;
 
 void Controller::run()
 {
-    rightWindow = view.initialize_window("right");
-    leftWindow = view.initialize_window("left");
+    rightWindow = view.initialize_window("right", NULL);
+    leftWindow = view.initialize_window("left", rightWindow);
 
     projMatrix = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
