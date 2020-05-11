@@ -18,9 +18,6 @@ class Controller {
     View view;
     Model model;
 
-    GLFWwindow* rightWindow = nullptr;
-    GLFWwindow* leftWindow = nullptr;
-
     glm::mat4 projMatrix;
     glm::mat4 leftViewMatrix;
     glm::mat4 rightViewMatrix;

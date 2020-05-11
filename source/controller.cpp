@@ -6,11 +6,10 @@ Settings settings;
 
 void Controller::run()
 {
-    leftWindow = view.initialize_window("left", NULL);
-    rightWindow = view.initialize_window("right", leftWindow);
+    view.initializeWindows();
 
 
-    glfwMakeContextCurrent(leftWindow);
+    glfwMakeContextCurrent(view.leftWindow);
 
     glewExperimental = GL_TRUE; 
     if( GLEW_OK != glewInit())
@@ -38,14 +37,14 @@ void Controller::run()
 
 
     /* load buffers */
-    setup(leftWindow);
-    setup(rightWindow);
+    setup(view.leftWindow);
+    setup(view.rightWindow);
 
-    while((!glfwWindowShouldClose(leftWindow)) && (!glfwWindowShouldClose(rightWindow)))
+    while((!glfwWindowShouldClose(view.leftWindow)) && (!glfwWindowShouldClose(view.rightWindow)))
     {
 
-        render(leftWindow, shader, leftViewMatrix);
-        render(rightWindow, shader, rightViewMatrix);
+        render(view.leftWindow, shader, leftViewMatrix);
+        render(view.rightWindow, shader, rightViewMatrix);
 
         glfwPollEvents();
 
@@ -95,7 +94,6 @@ void Controller::setup(GLFWwindow *window)
 
 void Controller::reactToCallback(int ret)
 {
-
     switch(ret)
     {
         case CHANGE_CAMERA:
@@ -109,8 +107,8 @@ void Controller::reactToCallback(int ret)
 
 void Controller::changeCamera(int id)
 {
-    if(view.windowIsActive(leftWindow))
+    if(view.windowIsActive(view.leftWindow))
         leftViewMatrix = model.getCameraLookAt(id);
-    else if(view.windowIsActive(rightWindow))
+    else if(view.windowIsActive(view.rightWindow))
         rightViewMatrix = model.getCameraLookAt(id);
 }

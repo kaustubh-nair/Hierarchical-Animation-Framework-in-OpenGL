@@ -7,6 +7,14 @@ float WIDTH = 800.0f;
 float HEIGHT = 600.0f;
 bool firstMouse;    //first mouse click
 
+
+void View::initializeWindows()
+{
+    leftWindow = initialize_window("left", NULL);
+    rightWindow = initialize_window("right", leftWindow);
+}
+
+
 GLFWwindow* View::initialize_window(std::string name, GLFWwindow *sharedWindow)
 {
     glfwInit();

@@ -23,12 +23,16 @@ extern float HEIGHT;
 
 class View {
   public:
+    GLFWwindow* rightWindow = nullptr;
+    GLFWwindow* leftWindow = nullptr;
+
     glm::vec3 objPosition;      //temporary variable to store selected object position
     glm::vec2 direction;      //helper variable to store translation direction
-    GLFWwindow* initialize_window(std::string name, GLFWwindow *window);
+    void initializeWindows();
     int listenToCallbacks(GLFWwindow *window);
     bool windowIsActive(GLFWwindow *window);
   private:
+    GLFWwindow* initialize_window(std::string name, GLFWwindow *window);
 };
 #endif
 
