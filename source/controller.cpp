@@ -11,6 +11,7 @@ void Controller::run()
 
     glfwMakeContextCurrent(leftWindow);
 
+    glewExperimental = GL_TRUE; 
     if( GLEW_OK !=glewInit())
         print("GLEW initialization failed!");
 
@@ -27,6 +28,14 @@ void Controller::run()
     shader = s1;
     lightingShader = s2;
 
+    shader.use();
+    shader.setMat4("view", viewMatrix);
+    shader.setMat4("projection", projMatrix);
+
+    lightingShader.use();
+    lightingShader.setMat4("view", viewMatrix);
+    lightingShader.setMat4("projection", projMatrix);
+
     setup(leftWindow);
     setup(rightWindow);
 
@@ -34,6 +43,8 @@ void Controller::run()
     {
         mainLoop(leftWindow);
         mainLoop(rightWindow);
+
+        glfwPollEvents();
     }
     glfwTerminate();
 }
@@ -42,25 +53,20 @@ void Controller::run()
 void Controller::mainLoop(GLFWwindow *window)
 {
     glfwMakeContextCurrent(window);
-    int ret = view.listenToCallbacks(window);
+    //int ret = view.listenToCallbacks(window);
 
-    reactToCallback(ret);
+    //reactToCallback(ret);
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader.use();
-    shader.setMat4("view", viewMatrix);
     //shader.setVec3("viewPos", view.getViewPos());
 
     model.render(shader);
-    model.drawLighting(shader, lightingShader);
-
-    lightingShader.use();
-    lightingShader.setMat4("view", viewMatrix);
+    //model.drawLighting(shader, lightingShader);
 
     glfwSwapBuffers(window);
-    glfwPollEvents();
     glfwMakeContextCurrent(NULL);
 }
 
@@ -74,12 +80,6 @@ void Controller::setup(GLFWwindow *window)
 
     /* generate buffers */
     model.setup();
-
-    shader.use();
-    shader.setMat4("projection", projMatrix);
-
-    lightingShader.use();
-    lightingShader.setMat4("projection", projMatrix);
     glfwMakeContextCurrent(NULL);
 }
 

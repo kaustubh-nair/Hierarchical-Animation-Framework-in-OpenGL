@@ -3,8 +3,8 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 
-float WIDTH = 3000.0f;
-float HEIGHT = 2250.0f;
+float WIDTH = 800.0f;
+float HEIGHT = 600.0f;
 bool firstMouse;    //first mouse click
 
 GLFWwindow* View::initialize_window(std::string name, GLFWwindow *sharedWindow)
@@ -24,20 +24,8 @@ GLFWwindow* View::initialize_window(std::string name, GLFWwindow *sharedWindow)
 
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    glewExperimental = GL_TRUE; 
-    if ( GLEW_OK != glewInit() )
-    {
-        std::cout << "Glew failed" << std::endl;
-        glfwTerminate();
-        exit(0);
-    }
-
-    glViewport(0, 0, WIDTH, HEIGHT);
-
-    glewExperimental = GL_TRUE;
-
     glfwMakeContextCurrent(NULL);
+
     return window;
 }
 
