@@ -17,9 +17,11 @@ void Controller::run()
 
     projMatrix = glm::perspective(glm::radians(45.0f), WIDTH/HEIGHT, 0.1f, 100.0f);
 
-    /* set initial CamLookAt */
-    camId = model.firstCameraId;
-    changeCamera(camId);
+    /* set initial camera information */
+    view.leftCamId = model.firstCameraId;
+    view.rightCamId = model.firstCameraId;
+    view.leftCamLookAt = model.getCameraLookAt(view.leftCamId);
+    view.rightCamLookAt = model.getCameraLookAt(view.rightCamId);
 
     /* setup shaders */
     Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
@@ -97,18 +99,22 @@ void Controller::reactToCallback(int ret)
     switch(ret)
     {
         case CHANGE_CAMERA:
-            // Might require changes later
-            camId = model.firstCameraId + ((camId + 1) % model.numCameras);
-            changeCamera(camId);
+                changeCamera();
             break;
     }
 }
 
 
-void Controller::changeCamera(int id)
+void Controller::changeCamera()
 {
     if(view.windowIsActive(view.leftWindow))
-        view.leftCamLookAt = model.getCameraLookAt(id);
+    {
+        view.leftCamId = model.firstCameraId + ((view.leftCamId + 1) % model.numCameras);
+        view.leftCamLookAt = model.getCameraLookAt(view.leftCamId);
+    }
     else if(view.windowIsActive(view.rightWindow))
-        view.rightCamLookAt = model.getCameraLookAt(id);
+    {
+        view.rightCamId = model.firstCameraId + ((view.rightCamId + 1) % model.numCameras);
+        view.rightCamLookAt = model.getCameraLookAt(view.rightCamId);
+    }
 }

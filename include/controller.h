@@ -19,13 +19,12 @@ class Controller {
     Model model;
 
     glm::mat4 projMatrix;
-    int camId = 0;  //current active camera
 
     void run();
     void render(GLFWwindow *window, Shader shader, glm::mat4 viewMatrix);
     void setup(GLFWwindow *window);
     void reactToCallback(int ret);
-    void changeCamera(int id);
+    void changeCamera();
 };
 
 

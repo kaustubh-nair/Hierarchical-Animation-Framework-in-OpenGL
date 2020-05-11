@@ -28,7 +28,7 @@ class View {
     glm::mat4 leftCamLookAt;
     glm::mat4 rightCamLookAt;
     int leftCamId;
-    int rightCamtId;
+    int rightCamId;
 
     glm::vec3 objPosition;      //temporary variable to store selected object position
     glm::vec2 direction;      //helper variable to store translation direction
