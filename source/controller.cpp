@@ -6,10 +6,10 @@ Settings settings;
 
 void Controller::run()
 {
-    rightWindow = view.initialize_window("right", NULL);
-    leftWindow = view.initialize_window("left", rightWindow);
+    leftWindow = view.initialize_window("left", NULL);
+    rightWindow = view.initialize_window("right", leftWindow);
 
-    glfwMakeContextCurrent(rightWindow);
+    glfwMakeContextCurrent(leftWindow);
 
     if( GLEW_OK !=glewInit())
         print("GLEW initialization failed!");
@@ -27,13 +27,13 @@ void Controller::run()
     shader = s1;
     lightingShader = s2;
 
-    setup(rightWindow);
     setup(leftWindow);
+    setup(rightWindow);
 
     while((!glfwWindowShouldClose(leftWindow)) && (!glfwWindowShouldClose(rightWindow)))
     {
-        mainLoop(rightWindow);
         mainLoop(leftWindow);
+        mainLoop(rightWindow);
     }
     glfwTerminate();
 }
