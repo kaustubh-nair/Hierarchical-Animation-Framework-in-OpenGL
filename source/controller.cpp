@@ -6,8 +6,8 @@ Settings settings;
 
 void Controller::run()
 {
-    rightWindow = view.initialize_window("right");
-    leftWindow = view.initialize_window("left");
+    rightWindow = view.initialize_window("right", NULL);
+    leftWindow = view.initialize_window("left", rightWindow);
 
     projMatrix = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
@@ -22,6 +22,8 @@ void Controller::run()
     {
         mainLoop(rightWindow);
         mainLoop(leftWindow);
+
+        glfwPollEvents();
     }
     glfwTerminate();
 }
@@ -48,8 +50,6 @@ void Controller::mainLoop(GLFWwindow *window)
     lightingShader.setMat4("view", viewMatrix);
 
     glfwSwapBuffers(window);
-    glfwPollEvents();
-    glfwMakeContextCurrent(NULL);
 }
 
 

@@ -19,8 +19,8 @@ class Controller {
     Model model;
     Shader shader, lightingShader;
 
-    GLFWwindow* leftWindow = nullptr;
     GLFWwindow* rightWindow = nullptr;
+    GLFWwindow* leftWindow = nullptr;
 
     glm::mat4 projMatrix;
     glm::mat4 viewMatrix;
