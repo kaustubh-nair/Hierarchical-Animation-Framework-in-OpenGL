@@ -6,22 +6,42 @@ Settings settings;
 
 void Controller::run()
 {
-    rightWindow = view.initialize_window("right", NULL);
-    leftWindow = view.initialize_window("left", rightWindow);
+    leftWindow = view.initialize_window("left", NULL);
+    rightWindow = view.initialize_window("right", leftWindow);
 
-    projMatrix = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+    glfwMakeContextCurrent(leftWindow);
+
+    glewExperimental = GL_TRUE; 
+    if( GLEW_OK !=glewInit())
+        print("GLEW initialization failed!");
+
+    projMatrix = glm::perspective(glm::radians(45.0f), WIDTH/HEIGHT, 0.1f, 100.0f);
 
     /* set initial ViewMatrix */
     camId = model.firstCameraId;
     changeCamera(camId);
 
-    setup(rightWindow);
+    /* setup shaders */
+    Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
+    Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
+
+    shader.use();
+    shader.setMat4("view", viewMatrix);
+    shader.setMat4("projection", projMatrix);
+
+    lightingShader.use();
+    lightingShader.setMat4("view", viewMatrix);
+    lightingShader.setMat4("projection", projMatrix);
+
+    glfwMakeContextCurrent(NULL);
+
     setup(leftWindow);
+    setup(rightWindow);
 
     while((!glfwWindowShouldClose(leftWindow)) && (!glfwWindowShouldClose(rightWindow)))
     {
-        mainLoop(rightWindow);
-        mainLoop(leftWindow);
+        render(leftWindow, shader);
+        render(rightWindow, shader);
 
         glfwPollEvents();
     }
@@ -29,27 +49,25 @@ void Controller::run()
 }
 
 
-void Controller::mainLoop(GLFWwindow *window)
+void Controller::render(GLFWwindow *window, Shader shader)
 {
     glfwMakeContextCurrent(window);
-    int ret = view.listenToCallbacks(window);
+    //int ret = view.listenToCallbacks(window);
 
-    reactToCallback(ret);
+    //reactToCallback(ret);
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader.use();
-    shader.setMat4("view", viewMatrix);
     //shader.setVec3("viewPos", view.getViewPos());
 
     model.render(shader);
-    model.drawLighting(shader, lightingShader);
-
-    lightingShader.use();
-    lightingShader.setMat4("view", viewMatrix);
+    //model.drawLighting(shader, lightingShader);
 
     glfwSwapBuffers(window);
+
+    glfwMakeContextCurrent(NULL);
 }
 
 
@@ -57,24 +75,11 @@ void Controller::setup(GLFWwindow *window)
 {
     glfwMakeContextCurrent(window);
 
-    /* setup shaders */
-    Shader shader1("source/shaders/shader.vs", "source/shaders/shader.fs");
-    Shader shader2("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
-
-    shader = shader1;
-    lightingShader = shader2;
-
     glEnable(GL_DEPTH_TEST);
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 
     /* generate buffers */
     model.setup();
-
-    shader.use();
-    shader.setMat4("projection", projMatrix);
-
-    lightingShader.use();
-    lightingShader.setMat4("projection", projMatrix);
     glfwMakeContextCurrent(NULL);
 }
 
