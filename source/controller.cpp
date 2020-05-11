@@ -15,18 +15,15 @@ void Controller::run()
     if( GLEW_OK !=glewInit())
         print("GLEW initialization failed!");
 
-    projMatrix = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+    projMatrix = glm::perspective(glm::radians(45.0f), WIDTH/HEIGHT, 0.1f, 100.0f);
 
     /* set initial ViewMatrix */
     camId = model.firstCameraId;
     changeCamera(camId);
 
     /* setup shaders */
-    Shader s1("source/shaders/shader.vs", "source/shaders/shader.fs");
-    Shader s2("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
-
-    shader = s1;
-    lightingShader = s2;
+    Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
+    Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
 
     shader.use();
     shader.setMat4("view", viewMatrix);
@@ -36,13 +33,15 @@ void Controller::run()
     lightingShader.setMat4("view", viewMatrix);
     lightingShader.setMat4("projection", projMatrix);
 
+    glfwMakeContextCurrent(NULL);
+
     setup(leftWindow);
     setup(rightWindow);
 
     while((!glfwWindowShouldClose(leftWindow)) && (!glfwWindowShouldClose(rightWindow)))
     {
-        mainLoop(leftWindow);
-        mainLoop(rightWindow);
+        render(leftWindow, shader);
+        render(rightWindow, shader);
 
         glfwPollEvents();
     }
@@ -50,7 +49,7 @@ void Controller::run()
 }
 
 
-void Controller::mainLoop(GLFWwindow *window)
+void Controller::render(GLFWwindow *window, Shader shader)
 {
     glfwMakeContextCurrent(window);
     //int ret = view.listenToCallbacks(window);
