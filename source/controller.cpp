@@ -9,10 +9,11 @@ void Controller::run()
     leftWindow = view.initialize_window("left", NULL);
     rightWindow = view.initialize_window("right", leftWindow);
 
+
     glfwMakeContextCurrent(leftWindow);
 
     glewExperimental = GL_TRUE; 
-    if( GLEW_OK !=glewInit())
+    if( GLEW_OK != glewInit())
         print("GLEW initialization failed!");
 
     projMatrix = glm::perspective(glm::radians(45.0f), WIDTH/HEIGHT, 0.1f, 100.0f);
@@ -28,13 +29,14 @@ void Controller::run()
     shader.use();
     shader.setMat4("view", viewMatrix);
     shader.setMat4("projection", projMatrix);
-
     lightingShader.use();
     lightingShader.setMat4("view", viewMatrix);
     lightingShader.setMat4("projection", projMatrix);
 
     glfwMakeContextCurrent(NULL);
 
+
+    /* load buffers */
     setup(leftWindow);
     setup(rightWindow);
 
