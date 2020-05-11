@@ -8,17 +8,25 @@
 GLFWwindow* setupWindow(std::string name, GLFWwindow *sharedWindow);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void render(GLFWwindow *window, Shader shader, unsigned int VAO);
-void setup(unsigned int *VBO, unsigned int *VAO, unsigned int *EBO);
+void setup(GLFWwindow *window, unsigned int *VBO, unsigned int *VAO, unsigned int *EBO);
 
 float vertices[] = {
-     0.5f,  0.5f, 0.0f,  
-     0.5f, -0.5f, 0.0f,  
-    -0.5f, -0.5f, 0.0f,  
-    -0.5f,  0.5f, 0.0f   
+0.5, 0, 0 ,
+0, -0.5, 0 ,
+-0.5, 0, 0 ,
+0, 0.5, 0 ,
+0, 0, 0.5 ,
+0, 0, -0.5 
 };
 unsigned int indices[] = {  
-    0, 1, 3,  
-    1, 2, 3   
+ 4,0,1 ,
+ 4,1,2 ,
+ 4,2,3 ,
+ 4,3,0 ,
+ 5,1,0 ,
+ 5,2,1 ,
+ 5,3,2 ,
+ 5,0,3 
 };
 
 int main()
@@ -33,23 +41,16 @@ int main()
     unsigned int VAO1, VBO1, EBO1;
     unsigned int VAO2, VBO2, EBO2;
 
-    setup(&VBO1, &VAO1, &EBO1);
-
-    glfwMakeContextCurrent(rightWindow);
-    setup(&VBO2, &VAO2, &EBO2);
+    setup(leftWindow, &VBO1, &VAO1, &EBO1);
+    setup(rightWindow, &VBO2, &VAO2, &EBO2);
 
     Shader shader("./source/shaders/minimal_shader.vs", "./source/shaders/minimal_shader.fs");
 
     
     while (!glfwWindowShouldClose(leftWindow))
     {
-        glfwMakeContextCurrent(rightWindow);
-        render(rightWindow,shader,VAO1);
-
-        glfwMakeContextCurrent(leftWindow);
+        render(rightWindow,shader,VAO2);
         render(leftWindow,shader,VAO2);
-
-
         glfwPollEvents();
     }
 
@@ -73,15 +74,16 @@ void render(GLFWwindow *window, Shader shader, unsigned int VAO)
         shader.use();
         glBindVertexArray(VAO); 
         
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, 0);
         
         glfwSwapBuffers(window);
         glBindVertexArray(0); 
         
 
 }
-void setup(unsigned int *VBO, unsigned int *VAO, unsigned int *EBO)
+void setup(GLFWwindow *window, unsigned int *VBO, unsigned int *VAO, unsigned int *EBO)
 {
+    glfwMakeContextCurrent(window);
     glGenVertexArrays(1, VAO);
     glGenBuffers(1, VBO);
     glGenBuffers(1, EBO);

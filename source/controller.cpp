@@ -9,11 +9,23 @@ void Controller::run()
     rightWindow = view.initialize_window("right", NULL);
     leftWindow = view.initialize_window("left", rightWindow);
 
+    glfwMakeContextCurrent(rightWindow);
+
+    if( GLEW_OK !=glewInit())
+        print("GLEW initialization failed!");
+
     projMatrix = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
     /* set initial ViewMatrix */
     camId = model.firstCameraId;
     changeCamera(camId);
+
+    /* setup shaders */
+    Shader s1("source/shaders/shader.vs", "source/shaders/shader.fs");
+    Shader s2("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
+
+    shader = s1;
+    lightingShader = s2;
 
     setup(rightWindow);
     setup(leftWindow);
@@ -56,13 +68,6 @@ void Controller::mainLoop(GLFWwindow *window)
 void Controller::setup(GLFWwindow *window)
 {
     glfwMakeContextCurrent(window);
-
-    /* setup shaders */
-    Shader shader1("source/shaders/shader.vs", "source/shaders/shader.fs");
-    Shader shader2("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
-
-    shader = shader1;
-    lightingShader = shader2;
 
     glEnable(GL_DEPTH_TEST);
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
