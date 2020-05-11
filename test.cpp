@@ -37,20 +37,19 @@ int main()
 
     glfwMakeContextCurrent(leftWindow);
     glewInit();
+    Shader shader("./source/shaders/minimal_shader.vs", "./source/shaders/minimal_shader.fs");
 
     unsigned int VAO1, VBO1, EBO1;
-    unsigned int VAO2, VBO2, EBO2;
 
     setup(leftWindow, &VBO1, &VAO1, &EBO1);
-    setup(rightWindow, &VBO2, &VAO2, &EBO2);
+    setup(rightWindow, &VBO1, &VAO1, &EBO1);
 
-    Shader shader("./source/shaders/minimal_shader.vs", "./source/shaders/minimal_shader.fs");
 
     
     while (!glfwWindowShouldClose(leftWindow))
     {
-        render(rightWindow,shader,VAO2);
-        render(leftWindow,shader,VAO2);
+        render(leftWindow,shader,VAO1);
+        render(rightWindow,shader,VAO1);
         glfwPollEvents();
     }
 
@@ -78,6 +77,7 @@ void render(GLFWwindow *window, Shader shader, unsigned int VAO)
         
         glfwSwapBuffers(window);
         glBindVertexArray(0); 
+        glfwMakeContextCurrent(NULL);
         
 
 }
@@ -103,6 +103,7 @@ void setup(GLFWwindow *window, unsigned int *VBO, unsigned int *VAO, unsigned in
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindVertexArray(0);
+    glfwMakeContextCurrent(NULL);
 }
 
 GLFWwindow* setupWindow(std::string name, GLFWwindow *sharedWindow)
