@@ -17,7 +17,7 @@ void Controller::run()
 
     projMatrix = glm::perspective(glm::radians(45.0f), WIDTH/HEIGHT, 0.1f, 100.0f);
 
-    /* set initial ViewMatrix */
+    /* set initial CamLookAt */
     camId = model.firstCameraId;
     changeCamera(camId);
 
@@ -43,8 +43,8 @@ void Controller::run()
     while((!glfwWindowShouldClose(view.leftWindow)) && (!glfwWindowShouldClose(view.rightWindow)))
     {
 
-        render(view.leftWindow, shader, leftViewMatrix);
-        render(view.rightWindow, shader, rightViewMatrix);
+        render(view.leftWindow, shader, view.leftCamLookAt);
+        render(view.rightWindow, shader, view.rightCamLookAt);
 
         glfwPollEvents();
 
@@ -108,7 +108,7 @@ void Controller::reactToCallback(int ret)
 void Controller::changeCamera(int id)
 {
     if(view.windowIsActive(view.leftWindow))
-        leftViewMatrix = model.getCameraLookAt(id);
+        view.leftCamLookAt = model.getCameraLookAt(id);
     else if(view.windowIsActive(view.rightWindow))
-        rightViewMatrix = model.getCameraLookAt(id);
+        view.rightCamLookAt = model.getCameraLookAt(id);
 }

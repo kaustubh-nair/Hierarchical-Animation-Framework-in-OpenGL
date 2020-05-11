@@ -17,7 +17,6 @@
 #include "../include/definitions.h"
 #include "../include/camera_node.h"
 
-extern CameraNode camera;
 extern float WIDTH;
 extern float HEIGHT;
 
@@ -25,6 +24,11 @@ class View {
   public:
     GLFWwindow* rightWindow = nullptr;
     GLFWwindow* leftWindow = nullptr;
+
+    glm::mat4 leftCamLookAt;
+    glm::mat4 rightCamLookAt;
+    int leftCamId;
+    int rightCamtId;
 
     glm::vec3 objPosition;      //temporary variable to store selected object position
     glm::vec2 direction;      //helper variable to store translation direction

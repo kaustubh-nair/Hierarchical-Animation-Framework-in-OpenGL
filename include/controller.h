@@ -19,8 +19,6 @@ class Controller {
     Model model;
 
     glm::mat4 projMatrix;
-    glm::mat4 leftViewMatrix;
-    glm::mat4 rightViewMatrix;
     int camId = 0;  //current active camera
 
     void run();
