@@ -38,9 +38,9 @@ void MeshNode::render(Shader shader)
     shader.setVec3("objectColor", 0.5f, 0.1f, 0.1f);
 
     glBindVertexArray(VAO); 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
     glBindTexture(GL_TEXTURE_2D, texture);
+    glBindVertexArray(0); 
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->render(shader);
