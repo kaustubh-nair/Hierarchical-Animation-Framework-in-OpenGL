@@ -27,11 +27,12 @@ void Controller::run()
     Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
 
     shader.use();
-    shader.setMat4("view", viewMatrix);
     shader.setMat4("projection", projMatrix);
+    /*
     lightingShader.use();
     lightingShader.setMat4("view", viewMatrix);
     lightingShader.setMat4("projection", projMatrix);
+    */
 
     glfwMakeContextCurrent(NULL);
 
@@ -42,26 +43,29 @@ void Controller::run()
 
     while((!glfwWindowShouldClose(leftWindow)) && (!glfwWindowShouldClose(rightWindow)))
     {
-        render(leftWindow, shader);
-        render(rightWindow, shader);
+
+        render(leftWindow, shader, leftViewMatrix);
+        render(rightWindow, shader, rightViewMatrix);
 
         glfwPollEvents();
+
     }
     glfwTerminate();
 }
 
 
-void Controller::render(GLFWwindow *window, Shader shader)
+void Controller::render(GLFWwindow *window, Shader shader, glm::mat4 viewMatrix)
 {
     glfwMakeContextCurrent(window);
-    //int ret = view.listenToCallbacks(window);
+    int ret = view.listenToCallbacks(window);
 
-    //reactToCallback(ret);
+    reactToCallback(ret);
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader.use();
+    shader.setMat4("view", viewMatrix);
     //shader.setVec3("viewPos", view.getViewPos());
 
     model.render(shader);
@@ -88,6 +92,7 @@ void Controller::setup(GLFWwindow *window)
 
 void Controller::reactToCallback(int ret)
 {
+
     switch(ret)
     {
         case CHANGE_CAMERA:
@@ -101,5 +106,6 @@ void Controller::reactToCallback(int ret)
 
 void Controller::changeCamera(int id)
 {
-    viewMatrix = model.getCameraLookAt(id);
+    leftViewMatrix = model.getCameraLookAt(id);
+    rightViewMatrix = model.getCameraLookAt(id);
 }

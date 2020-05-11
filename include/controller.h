@@ -22,11 +22,12 @@ class Controller {
     GLFWwindow* leftWindow = nullptr;
 
     glm::mat4 projMatrix;
-    glm::mat4 viewMatrix;
+    glm::mat4 leftViewMatrix;
+    glm::mat4 rightViewMatrix;
     int camId = 0;  //current active camera
 
     void run();
-    void render(GLFWwindow *window, Shader shader);
+    void render(GLFWwindow *window, Shader shader, glm::mat4 viewMatrix);
     void setup(GLFWwindow *window);
     void reactToCallback(int ret);
     void changeCamera(int id);
