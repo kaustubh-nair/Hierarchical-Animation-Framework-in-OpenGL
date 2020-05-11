@@ -28,6 +28,10 @@
 #define CLOCKWISE 19
 #define ANTICLOCKWISE 20
 
-#define TOGGLE_WIREFRAME 21
 
 #define CHANGE_CAMERA 22
+
+#define MOVE_FORWARD 23
+#define MOVE_LEFT 24
+#define MOVE_BACKWARD 25
+#define MOVE_RIGHT 26

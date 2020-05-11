@@ -99,7 +99,7 @@ void Controller::reactToCallback(int ret)
     switch(ret)
     {
         case CHANGE_CAMERA:
-                changeCamera();
+            changeCamera();
             break;
     }
 }

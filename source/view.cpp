@@ -45,6 +45,7 @@ bool View::windowIsActive(GLFWwindow *window)
 int View::listenToCallbacks(GLFWwindow *window)
 {
 
+    // todo change moving to press only
     std::map<int,int> key_mappings = {
         {GLFW_KEY_ESCAPE, UNSELECT_OBJECT},
         {GLFW_KEY_0, SELECT_OBJECT_1},
@@ -52,7 +53,10 @@ int View::listenToCallbacks(GLFWwindow *window)
         {GLFW_KEY_8, SELECT_OBJECT_3},
         {GLFW_KEY_7, SELECT_OBJECT_4},
         {GLFW_KEY_MINUS, SCALE_OBJECT_DOWN},
-        {GLFW_KEY_W, TOGGLE_WIREFRAME},
+        {GLFW_KEY_W, MOVE_FORWARD},
+        {GLFW_KEY_A, MOVE_LEFT},
+        {GLFW_KEY_S, MOVE_BACKWARD},
+        {GLFW_KEY_D, MOVE_RIGHT},
         {GLFW_KEY_UP, CHANGE_CAMERA},
     };
 
