@@ -57,9 +57,12 @@ void Controller::run()
 void Controller::render(GLFWwindow *window, Shader shader, glm::mat4 viewMatrix)
 {
     glfwMakeContextCurrent(window);
-    int ret = view.listenToCallbacks(window);
 
-    reactToCallback(ret);
+    if(view.windowIsActive(window))
+    {
+        int ret = view.listenToCallbacks(window);
+        reactToCallback(ret);
+    }
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -106,6 +109,8 @@ void Controller::reactToCallback(int ret)
 
 void Controller::changeCamera(int id)
 {
-    leftViewMatrix = model.getCameraLookAt(id);
-    rightViewMatrix = model.getCameraLookAt(id);
+    if(view.windowIsActive(leftWindow))
+        leftViewMatrix = model.getCameraLookAt(id);
+    else if(view.windowIsActive(rightWindow))
+        rightViewMatrix = model.getCameraLookAt(id);
 }

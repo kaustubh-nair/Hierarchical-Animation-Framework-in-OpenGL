@@ -29,6 +29,11 @@ GLFWwindow* View::initialize_window(std::string name, GLFWwindow *sharedWindow)
     return window;
 }
 
+bool View::windowIsActive(GLFWwindow *window)
+{
+    return glfwGetWindowAttrib(window, GLFW_FOCUSED);
+}
+
 int View::listenToCallbacks(GLFWwindow *window)
 {
 
@@ -39,7 +44,6 @@ int View::listenToCallbacks(GLFWwindow *window)
         {GLFW_KEY_8, SELECT_OBJECT_3},
         {GLFW_KEY_7, SELECT_OBJECT_4},
         {GLFW_KEY_MINUS, SCALE_OBJECT_DOWN},
-        {GLFW_KEY_W, TOGGLE_WIREFRAME},
         {GLFW_KEY_W, TOGGLE_WIREFRAME},
         {GLFW_KEY_UP, CHANGE_CAMERA},
     };
@@ -61,16 +65,6 @@ int View::listenToCallbacks(GLFWwindow *window)
         i++;
     }
 
-    /* scaling up */
-    static int oldState12 = GLFW_RELEASE;
-    newState = glfwGetKey(window, GLFW_KEY_EQUAL);
-    if(oldState12 == GLFW_PRESS && newState == GLFW_RELEASE &&    glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-    {
-          oldState12 = newState;
-          return SCALE_OBJECT_UP;
-    }
-    oldState12 = newState;
-    
     /* translation and rotation callbacks */
     int leftState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
     int rightState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);
