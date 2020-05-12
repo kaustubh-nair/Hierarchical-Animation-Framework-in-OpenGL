@@ -1,7 +1,7 @@
 #include "../include/mesh_node.h"
 
 MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
-                   glm::mat4 initialPosition, glm::mat4 translationMatrix)
+                   glm::mat4 translationMatrix)
 {
     id = nodeId;
 
@@ -12,7 +12,6 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
     /* normals*/
     Vertex::computeAvgNormals(vertices, triangles);
 
-    positionMat = initialPosition;
     texPath = texturePath;
 
     /* initialize transformation matrix */
@@ -31,10 +30,14 @@ void MeshNode::update()
 }
 
 
-void MeshNode::render(Shader shader)
+void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 {
     glm::mat4 model = glm::mat4(1.0f);
-    for(auto i =
+    stack->push_back(translationMat);
+
+    for(auto i = stack->begin(); i != stack->end(); i++)
+        model = model * (*i);
+
     shader.setMat4("model", model);
     shader.setVec3("objectColor", 0.5f, 0.1f, 0.1f);
 
@@ -44,7 +47,9 @@ void MeshNode::render(Shader shader)
     glBindVertexArray(0); 
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->render(shader);
+        (*itr)->render(shader, stack);
+
+    stack->pop_back();
 }
 
 

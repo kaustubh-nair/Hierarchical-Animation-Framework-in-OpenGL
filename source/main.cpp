@@ -34,32 +34,25 @@ int main()
 
 
     controller.model.addMeshNode(6, 3, "data/sphere.ply", "data/black.png",
-                                 glm::translate(mat, origin),
                                  glm::translate(mat, -z));
 
 
-    controller.model.addMeshNode(7, 3, "data/sphere.ply", "data/checkerboard.jpg",
-                                 glm::translate(mat, origin),
-                                 glm::translate(mat, z));
+    controller.model.addMeshNode(7, 6, "data/sphere.ply", "data/checkerboard.jpg",
+                                 glm::translate(mat, -z));
 
-    controller.model.addMeshNode(8, 3, "data/sphere.ply", "data/rainbow.png",
-                                 glm::translate(mat, origin),
-                                 glm::translate(mat, origin));
+    controller.model.addMeshNode(8, 7, "data/sphere.ply", "data/rainbow.png",
+                                 glm::translate(mat, -z));
     /*
     controller.model.addMeshNode(9, 3, "data/sphere.ply", "data/black.png",
-                                 glm::translate(mat, origin),
                                  glm::translate(mat, x));
 
     controller.model.addMeshNode(10, 3, "data/sphere.ply", "data/checkerboard.jpg",
-                                 glm::translate(mat, origin),
                                  glm::translate(mat, z));
 
     controller.model.addMeshNode(11, 3, "data/sphere.ply", "data/checkerboard.jpg",
-                                 glm::translate(mat, origin),
                                  glm::translate(mat, -z));
 
     controller.model.addMeshNode(12, 3, "data/sphere.ply", "data/fur.jpg",
-                                 glm::translate(mat, origin),
                                  glm::translate(mat, origin));
                                  */
     controller.run();

@@ -18,14 +18,14 @@ class MeshNode : public SceneNode
         unsigned int VAO, VBO, EBO;
         unsigned int texture;
         
-        void render(Shader shader);
+        void render(Shader shader, std::vector<glm::mat4> *stack);
         void update();
         void setup();
 
 
         // TODO: make private
         MeshNode(int nodeId, std::string meshPath, std::string texturePath,
-                 glm::mat4 initialPosition, glm::mat4 translationMatrix);
+                 glm::mat4 translationMatrix);
 
     private:
         glm::mat4 translationMat;

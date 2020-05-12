@@ -11,7 +11,6 @@
 
 #include <vector>
 #include <string>
-#include <stack>
 
 #include "../include/definitions.h"
 #include "../include/shader.h"
@@ -21,10 +20,8 @@ class SceneNode
 {
     public:
         std::vector<SceneNode*> children;
-        glm::mat4 positionMat;
 
-
-        virtual void render(Shader shader) = 0;
+        virtual void render(Shader shader, std::vector<glm::mat4> *stack) = 0;
         virtual void update() = 0;
         virtual void setup() = 0;
         static SceneNode* insertNode(int nodeId, int parentId, SceneNode *newNode, SceneNode *root);

@@ -27,11 +27,10 @@ void Model::addCameraGroupNode(int id, int parentId)
 
 
 void Model::addMeshNode(int id, int parentId, std::string meshPath,
-                           std::string texturePath, glm::mat4 initialPos,
-                           glm::mat4 translationMat)
+                           std::string texturePath, glm::mat4 translationMat)
 {
     SceneNode *newNode = new MeshNode(id, meshPath, texturePath,
-                                      initialPos, translationMat);
+                                      translationMat);
     sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
 }
 
@@ -68,7 +67,10 @@ void Model::render(Shader shader)
         exit(0);
     }
     else
-        sceneRoot->render(shader);
+    {
+        std::vector <glm::mat4> stack;
+        sceneRoot->render(shader, &stack);
+    }
 }
 
 
