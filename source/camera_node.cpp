@@ -9,7 +9,7 @@ CameraNode::CameraNode(int Id, glm::vec3 position, glm::vec3 front, glm::vec3 up
 
 glm::mat4 CameraNode::getLookat()
 {
-  return glm::lookAt(position, position + front, up);
+  return glm::lookAt(position, front, up);
 }
 
 

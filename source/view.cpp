@@ -3,8 +3,8 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 
-float WIDTH = 800.0f;
-float HEIGHT = 600.0f;
+float WIDTH = 1360.0f;
+float HEIGHT = 768.0f;
 bool firstMouse;    //first mouse click
 
 
@@ -32,6 +32,7 @@ GLFWwindow* View::initialize_window(std::string name, GLFWwindow *sharedWindow)
 
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glViewport(0,0, WIDTH, HEIGHT);
     glfwMakeContextCurrent(NULL);
 
     return window;
@@ -112,5 +113,5 @@ int View::listenToCallbacks(GLFWwindow *window)
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-        glViewport(0,0,width,height);
+        glViewport(0,0,WIDTH,HEIGHT);
 }

@@ -11,6 +11,11 @@
 
 int main()
 {
+    glm::vec3 origin = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 x = glm::vec3(1.0f, 0.0f, 0.0f);
+    glm::vec3 y = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 z = glm::vec3(0.0f, 0.0f, 1.0f);
+    glm::mat4 mat = glm::mat4(1.0f);
 
     Controller controller;
 
@@ -23,16 +28,40 @@ int main()
     controller.model.addGroupNode(2, 0);   //cameras
     controller.model.addGroupNode(3, 0);   //meshes
 
-    controller.model.addCameraNode(4, 2, glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    controller.model.addCameraNode(5, 2, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-    controller.model.addMeshNode(6, 3, "data/teapot.ply", "data/awesomeface.png", glm::vec3(1.0f, 0.0f, -1.0f));
-    controller.model.addMeshNode(7, 3, "data/cylinder.ply", "data/fur.jpg", glm::vec3(0.0f, 1.0f, -1.0f));
-    controller.model.addMeshNode(8, 3, "data/octahedron.ply", "data/checkerboard.jpg", glm::vec3(0.0f, 0.0f, -1.0f));
-    controller.model.addMeshNode(9, 3, "data/octahedron.ply", "data/checkerboard.jpg", glm::vec3(1.0f, 1.0f, -1.0f));
+    controller.model.addCameraNode(4, 2, origin + (10.0f*z), -z, y);
+    controller.model.addCameraNode(5, 2, origin - (10.0f*x), x, y);
 
 
+
+    controller.model.addMeshNode(6, 3, "data/sphere.ply", "data/black.png",
+                                 glm::translate(mat, origin),
+                                 glm::translate(mat, -z));
+
+
+    controller.model.addMeshNode(7, 3, "data/sphere.ply", "data/checkerboard.jpg",
+                                 glm::translate(mat, origin),
+                                 glm::translate(mat, z));
+
+    controller.model.addMeshNode(8, 3, "data/sphere.ply", "data/rainbow.png",
+                                 glm::translate(mat, origin),
+                                 glm::translate(mat, origin));
+    /*
+    controller.model.addMeshNode(9, 3, "data/sphere.ply", "data/black.png",
+                                 glm::translate(mat, origin),
+                                 glm::translate(mat, x));
+
+    controller.model.addMeshNode(10, 3, "data/sphere.ply", "data/checkerboard.jpg",
+                                 glm::translate(mat, origin),
+                                 glm::translate(mat, z));
+
+    controller.model.addMeshNode(11, 3, "data/sphere.ply", "data/checkerboard.jpg",
+                                 glm::translate(mat, origin),
+                                 glm::translate(mat, -z));
+
+    controller.model.addMeshNode(12, 3, "data/sphere.ply", "data/fur.jpg",
+                                 glm::translate(mat, origin),
+                                 glm::translate(mat, origin));
+                                 */
     controller.run();
-
     return 0;
 }

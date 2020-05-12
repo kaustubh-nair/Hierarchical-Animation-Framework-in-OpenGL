@@ -29,7 +29,8 @@ class Model
         void addCameraGroupNode(int id, int parentId);
 
         void addMeshNode(int id, int parentId, std::string meshPath,
-                         std::string texturePath, glm::vec3 initialPos);
+                         std::string texturePath, glm::mat4 initialPos,
+                         glm::mat4 translationMat);
 
         void addCameraNode(int id, int parentId, glm::vec3 position,
                            glm::vec3 front, glm::vec3 up);

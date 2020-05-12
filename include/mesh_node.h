@@ -17,7 +17,6 @@ class MeshNode : public SceneNode
         std::vector<Triangle> triangles;
         unsigned int VAO, VBO, EBO;
         unsigned int texture;
-        glm::mat4 translationMatrix;
         
         void render(Shader shader);
         void update();
@@ -25,9 +24,11 @@ class MeshNode : public SceneNode
 
 
         // TODO: make private
-        MeshNode(int nodeId, std::string meshPath, std::string texturePath, glm::vec3 initialPosition);
+        MeshNode(int nodeId, std::string meshPath, std::string texturePath,
+                 glm::mat4 initialPosition, glm::mat4 translationMatrix);
 
     private:
+        glm::mat4 translationMat;
         void generateTextureObject();
         std::string texPath;
 };

@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <string>
+#include <stack>
 
 #include "../include/definitions.h"
 #include "../include/shader.h"
@@ -20,7 +21,7 @@ class SceneNode
 {
     public:
         std::vector<SceneNode*> children;
-        glm::vec3 position;
+        glm::mat4 positionMat;
 
 
         virtual void render(Shader shader) = 0;

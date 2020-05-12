@@ -15,7 +15,7 @@ void Controller::run()
     if( GLEW_OK != glewInit())
         print("GLEW initialization failed!");
 
-    projMatrix = glm::perspective(glm::radians(45.0f), WIDTH/HEIGHT, 0.1f, 100.0f);
+    projMatrix = glm::perspective(glm::radians(45.0f), (float)WIDTH/(float)HEIGHT, 0.1f, 100.0f);
 
     /* set initial camera information */
     view.leftCamId = model.firstCameraId;
