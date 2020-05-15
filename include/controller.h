@@ -17,11 +17,12 @@ class Controller {
   public:
     View view;
     Model model;
+    Shader shader;
 
     glm::mat4 projMatrix;
 
     void run();
-    void render(GLFWwindow *window, Shader shader, CameraNode *activeCam);
+    void render(GLFWwindow *window, CameraNode *activeCam);
     void setup(GLFWwindow *window);
     void reactToCallback(int ret);
     void changeCamera();

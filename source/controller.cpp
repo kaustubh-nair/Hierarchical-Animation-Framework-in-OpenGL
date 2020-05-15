@@ -22,8 +22,8 @@ void Controller::run()
     view.rightCam = model.getCamera(model.firstCameraId);
 
     /* setup shaders */
-    Shader shader("source/shaders/shader.vs", "source/shaders/shader.fs");
-    Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
+    shader = Shader("source/shaders/shader.vs", "source/shaders/shader.fs");
+    //Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
 
     shader.use();
     shader.setMat4("projection", projMatrix);
@@ -43,8 +43,8 @@ void Controller::run()
     while((!glfwWindowShouldClose(view.leftWindow)) && (!glfwWindowShouldClose(view.rightWindow)))
     {
 
-        render(view.leftWindow, shader, view.leftCam);
-        render(view.rightWindow, shader, view.rightCam);
+        render(view.leftWindow, view.leftCam);
+        render(view.rightWindow, view.rightCam);
 
         glfwPollEvents();
 
@@ -53,7 +53,7 @@ void Controller::run()
 }
 
 
-void Controller::render(GLFWwindow *window, Shader shader, CameraNode *activeCam)
+void Controller::render(GLFWwindow *window, CameraNode *activeCam)
 {
     glfwMakeContextCurrent(window);
 
