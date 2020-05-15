@@ -28,8 +28,8 @@ class View {
     CameraNode *leftCam;
     CameraNode *rightCam;
 
-    glm::vec3 objPosition;      //temporary variable to store selected object position
-    glm::vec2 direction;      //helper variable to store translation direction
+    /* temporary helper variable to store look-around direction */
+    glm::vec2 direction;      
     void initializeWindows();
     int listenToCallbacks(GLFWwindow *window);
     bool windowIsActive(GLFWwindow *window);

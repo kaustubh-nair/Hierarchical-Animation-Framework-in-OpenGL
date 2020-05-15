@@ -9,7 +9,7 @@ class LightNode : public SceneNode
 {
     public:
         void render(Shader shader);
-        void update();
+        void update(int event, int eventTargetId);
         void setup() {};
 };
 

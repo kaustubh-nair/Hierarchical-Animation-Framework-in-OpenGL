@@ -47,7 +47,6 @@ void Controller::run()
         render(view.rightWindow, view.rightCam);
 
         glfwPollEvents();
-
     }
     glfwTerminate();
 }
@@ -59,8 +58,9 @@ void Controller::render(GLFWwindow *window, CameraNode *activeCam)
 
     if(view.windowIsActive(window))
     {
-        int ret = view.listenToCallbacks(window);
-        reactToCallback(ret);
+        int event = view.listenToCallbacks(window);
+        event = reactToCallback(event);
+        model.update(event, activeCam->id);
     }
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -92,14 +92,20 @@ void Controller::setup(GLFWwindow *window)
 }
 
 
-void Controller::reactToCallback(int ret)
+/* returns the event that needs to be passed to the update methods */
+int Controller::reactToCallback(int event)
 {
-    switch(ret)
+    if(event == CHANGE_CAMERA)
     {
-        case CHANGE_CAMERA:
-            changeCamera();
-            break;
+        changeCamera();
+        return NONE;
     }
+    else if(event == LOOK_AROUND)
+    {
+
+    }
+    else
+        return event;
 }
 
 

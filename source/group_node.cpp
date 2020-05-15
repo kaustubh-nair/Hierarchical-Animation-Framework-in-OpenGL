@@ -12,8 +12,16 @@ void GroupNode::render(Shader shader, std::vector <glm::mat4> *stack)
         (*itr)->render(shader, stack);
 }
 
+
 void GroupNode::setup()
 {
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->setup();
+}
+
+
+void GroupNode::update(int event, int eventTargetId)
+{
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->update(event, eventTargetId);
 }

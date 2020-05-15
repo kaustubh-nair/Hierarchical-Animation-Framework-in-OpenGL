@@ -73,6 +73,11 @@ void Model::render(Shader shader)
     }
 }
 
+void Model::update(int event, int eventTargetId)
+{
+    sceneRoot->update(event, eventTargetId);
+}
+
 
 void Model::drawLighting(Shader shader, Shader lightingShader)
 {

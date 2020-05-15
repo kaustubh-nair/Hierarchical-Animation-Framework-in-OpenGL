@@ -24,7 +24,7 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 }
 
 
-void MeshNode::update()
+void MeshNode::update(int event, int eventTargetId)
 {
 
 }

@@ -15,7 +15,7 @@ class CameraNode : public SceneNode
         CameraNode(int Id, glm::vec3 position, glm::vec3 front, glm::vec3 up);
 
         void render(Shader shader, std::vector <glm::mat4> *stack) {};
-        void update() {};
+        void update(int event, int eventTargetId);
         void setup() {};
         void updateCameraAttributes(glm::vec3 positionVec, glm::vec3 frontVec, glm::vec3 upVec);
         
@@ -26,6 +26,7 @@ class CameraNode : public SceneNode
         glm::vec3 position;
         glm::vec3 up;
         glm::vec3 front;
+        void updateLookAt();
 };
 
 #endif

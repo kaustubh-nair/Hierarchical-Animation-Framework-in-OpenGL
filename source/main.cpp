@@ -29,7 +29,7 @@ int main()
     controller.model.addGroupNode(3, 0);   //meshes
 
     /* NOTE: Camera should be inserted sequentially */
-    controller.model.addCameraNode(4, 2, origin + (10.0f*z), -z, y);
+    controller.model.addCameraNode(4, 2, origin + (10.0f*z) + x, -z, y);
     controller.model.addCameraNode(5, 2, origin - (10.0f*x), x, y);
 
 
