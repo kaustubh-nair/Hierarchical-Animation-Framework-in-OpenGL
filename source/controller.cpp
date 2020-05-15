@@ -58,6 +58,7 @@ void Controller::render(GLFWwindow *window, CameraNode *activeCam)
 
     if(view.windowIsActive(window))
     {
+        view.reactToMouseCallbacks(window, activeCam);
         int event = view.listenToCallbacks(window);
         event = reactToCallback(event);
         model.update(event, activeCam->id);

@@ -5,7 +5,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 float WIDTH = 1360.0f;
 float HEIGHT = 768.0f;
-bool firstMouse;    //first mouse click
 
 
 void View::initializeWindows()
@@ -73,42 +72,42 @@ int View::listenToCallbacks(GLFWwindow *window)
         oldStates.at(i) = newState;
         i++;
     }
-
-    /* translation and rotation callbacks */
-    int leftState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
-    //int rightState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT); TODO: REMOVE
-    static double oldX, oldY;
-
-    if(leftState == GLFW_RELEASE)
-        glfwGetCursorPos(window, &oldX, &oldY);
-
-    if(leftState == GLFW_PRESS)
-    {
-        double x, y;
-        glfwGetCursorPos(window, &x, &y);
-
-        if(firstMouse)
-        {
-            oldX = x;
-            oldY = y;
-            firstMouse = false;
-        }
-
-        this->direction = glm::vec2(x - oldX, oldY - y);
-        oldX = x;
-        oldY = y;
-    }
-
-    if(leftState == GLFW_PRESS)
-        return LOOK_AROUND;
-
-    /*if(rightState == GLFW_PRESS)
-        return ROTATE_OBJECT;
-        */
-
     return NONE;
 
 }
+
+void View::reactToMouseCallbacks(GLFWwindow *window, CameraNode *camera)
+{
+    static double oldX = 0.0, oldY = 0.0;
+
+    double x, y;
+    glfwGetCursorPos(window, &x, &y);
+
+    float xoffset = x - oldX;
+    float yoffset = oldY - y;
+    oldX = x;
+    oldY = y;
+
+    float sensitivity = 0.5;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    camera->yaw   += xoffset;
+    camera->pitch += yoffset;
+
+    if(camera->pitch > 89.0f)
+        camera->pitch = 89.0f;
+    if(camera->pitch < -89.0f)
+        camera->pitch = -89.0f;
+
+    glm::vec3 direction;
+    direction.x = cos(glm::radians(camera->yaw)) * cos(glm::radians(camera->pitch));
+    direction.y = sin(glm::radians(camera->pitch));
+    direction.z = sin(glm::radians(camera->yaw)) * cos(glm::radians(camera->pitch));
+    camera->front = glm::normalize(direction);
+    camera->updateLookAt();
+}
+
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

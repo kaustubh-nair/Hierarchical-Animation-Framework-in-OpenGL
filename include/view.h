@@ -29,8 +29,8 @@ class View {
     CameraNode *rightCam;
 
     /* temporary helper variable to store look-around direction */
-    glm::vec2 direction;      
     void initializeWindows();
+    void reactToMouseCallbacks(GLFWwindow *window, CameraNode *camera);
     int listenToCallbacks(GLFWwindow *window);
     bool windowIsActive(GLFWwindow *window);
   private:

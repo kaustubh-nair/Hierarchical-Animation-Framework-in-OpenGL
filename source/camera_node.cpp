@@ -5,11 +5,8 @@ CameraNode::CameraNode(int Id, glm::vec3 position, glm::vec3 front, glm::vec3 up
     id = Id;
     updateCameraAttributes(position, front, up);
     updateLookAt();
-}
-
-glm::vec3 CameraNode::getPosition()
-{
-    return position;
+    yaw = 90.0f;
+    pitch = 0.0f;
 }
 
 
@@ -41,9 +38,6 @@ void CameraNode::update(int event, int eventTargetId)
 
     else if(event == MOVE_LEFT)
         position -= sensitivity * glm::normalize(glm::cross(front, up));
-
-    if(event != NONE)
-        updateLookAt();
 }
 
 void CameraNode::updateLookAt()

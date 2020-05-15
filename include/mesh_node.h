@@ -27,6 +27,7 @@ class MeshNode : public SceneNode
         MeshNode(int nodeId, std::string meshPath, std::string texturePath,
                  glm::mat4 translationMatrix);
 
+
     private:
         glm::mat4 translationMat;
         void generateTextureObject();
