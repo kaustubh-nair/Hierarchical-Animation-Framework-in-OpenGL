@@ -28,8 +28,11 @@ class MeshNode : public SceneNode
                  glm::mat4 translationMatrix);
 
 
+        // TODO remove
+        float angle;
     private:
         glm::mat4 translationMat;
+        glm::mat4 rotationMat;
         void generateTextureObject();
         std::string texPath;
 };

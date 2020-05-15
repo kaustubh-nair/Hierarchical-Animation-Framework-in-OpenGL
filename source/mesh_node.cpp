@@ -16,6 +16,7 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 
     /* initialize transformation matrix */
     translationMat = translationMatrix;
+    rotationMat = glm::mat4(1.0f);
 
 
     /* compute and save texture map coordinates */
@@ -27,8 +28,10 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 void MeshNode::update(int timer, int event, int eventTargetId)
 {
     if(timer > 1000)
-        translationMat = glm::translate(translationMat, glm::vec3(0.05f, 0.05f, 0.05f));
-
+    {
+        angle += 1.0f;
+        rotationMat = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(1.0f,1.0f,1.0f));
+    }
 }
 
 
@@ -36,6 +39,7 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 {
     glm::mat4 model = glm::mat4(1.0f);
     stack->push_back(translationMat);
+    stack->push_back(rotationMat);
 
     for(auto i = stack->begin(); i != stack->end(); i++)
         model = model * (*i);
