@@ -24,8 +24,10 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 }
 
 
-void MeshNode::update(int event, int eventTargetId)
+void MeshNode::update(int timer, int event, int eventTargetId)
 {
+    if(timer > 1000)
+        translationMat = glm::translate(translationMat, glm::vec3(0.05f, 0.05f, 0.05f));
 
 }
 

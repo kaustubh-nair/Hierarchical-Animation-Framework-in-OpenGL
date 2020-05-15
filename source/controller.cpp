@@ -40,11 +40,13 @@ void Controller::run()
     setup(view.leftWindow);
     setup(view.rightWindow);
 
+    int timer = 0;
     while((!glfwWindowShouldClose(view.leftWindow)) && (!glfwWindowShouldClose(view.rightWindow)))
     {
 
-        render(view.leftWindow, view.leftCam);
-        render(view.rightWindow, view.rightCam);
+        timer++;
+        render(timer, view.leftWindow, view.leftCam);
+        render(timer, view.rightWindow, view.rightCam);
 
         glfwPollEvents();
     }
@@ -52,7 +54,7 @@ void Controller::run()
 }
 
 
-void Controller::render(GLFWwindow *window, CameraNode *activeCam)
+void Controller::render(int timer, GLFWwindow *window, CameraNode *activeCam)
 {
     glfwMakeContextCurrent(window);
 
@@ -61,7 +63,7 @@ void Controller::render(GLFWwindow *window, CameraNode *activeCam)
         view.reactToMouseCallbacks(window, activeCam);
         int event = view.listenToCallbacks(window);
         event = reactToCallback(event);
-        model.update(event, activeCam->id);
+        model.update(timer, event, activeCam->id);
     }
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);

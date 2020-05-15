@@ -73,9 +73,9 @@ void Model::render(Shader shader)
     }
 }
 
-void Model::update(int event, int eventTargetId)
+void Model::update(int timer, int event, int eventTargetId)
 {
-    sceneRoot->update(event, eventTargetId);
+    sceneRoot->update(timer, event, eventTargetId);
 }
 
 

@@ -20,8 +20,8 @@ void GroupNode::setup()
 }
 
 
-void GroupNode::update(int event, int eventTargetId)
+void GroupNode::update(int timer, int event, int eventTargetId)
 {
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(event, eventTargetId);
+        (*itr)->update(timer, event, eventTargetId);
 }

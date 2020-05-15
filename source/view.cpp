@@ -84,7 +84,7 @@ void View::reactToMouseCallbacks(GLFWwindow *window, CameraNode *camera)
     glfwGetCursorPos(window, &x, &y);
 
     float xoffset = x - oldX;
-    float yoffset = oldY - y;
+    float yoffset = y - oldY;
     oldX = x;
     oldY = y;
 

@@ -12,7 +12,7 @@ CameraNode::CameraNode(int Id, glm::vec3 positionVec, glm::vec3 frontVec, glm::v
 }
 
 
-void CameraNode::update(int event, int eventTargetId)
+void CameraNode::update(int timer, int event, int eventTargetId)
 {
     if(eventTargetId != id)
         return;

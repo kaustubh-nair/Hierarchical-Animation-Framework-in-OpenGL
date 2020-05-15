@@ -22,7 +22,7 @@ class Controller {
     glm::mat4 projMatrix;
 
     void run();
-    void render(GLFWwindow *window, CameraNode *activeCam);
+    void render(int timer, GLFWwindow *window, CameraNode *activeCam);
     void setup(GLFWwindow *window);
     int reactToCallback(int event);
     void changeCamera();

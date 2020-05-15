@@ -36,7 +36,7 @@ class Model
 
         CameraNode* getCamera(int camId);
         void render(Shader shader);
-        void update(int event, int eventTargetId);
+        void update(int timer, int event, int eventTargetId);
         void drawLighting(Shader shader, Shader lightingShader);
         void refresh();
 

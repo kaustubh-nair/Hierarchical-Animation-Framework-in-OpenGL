@@ -22,7 +22,7 @@ class SceneNode
         std::vector<SceneNode*> children;
 
         virtual void render(Shader shader, std::vector<glm::mat4> *stack) = 0;
-        virtual void update(int event, int eventTargetId) = 0;
+        virtual void update(int timer, int event, int eventTargetId) = 0;
         virtual void setup() = 0;
         static SceneNode* insertNode(int nodeId, int parentId, SceneNode *newNode, SceneNode *root);
 
