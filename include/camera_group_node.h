@@ -8,7 +8,7 @@ class CameraGroupNode : public GroupNode
 {
     public:
         CameraGroupNode(int nodeId);
-        glm::mat4 getCameraLookAt(int nodeId);
+        CameraNode* getCamera(int camId);
 };
 
 #endif

@@ -25,10 +25,8 @@ class View {
     GLFWwindow* rightWindow = nullptr;
     GLFWwindow* leftWindow = nullptr;
 
-    glm::mat4 leftCamLookAt;
-    glm::mat4 rightCamLookAt;
-    int leftCamId;
-    int rightCamId;
+    CameraNode *leftCam;
+    CameraNode *rightCam;
 
     glm::vec3 objPosition;      //temporary variable to store selected object position
     glm::vec2 direction;      //helper variable to store translation direction

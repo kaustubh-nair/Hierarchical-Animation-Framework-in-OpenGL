@@ -19,7 +19,7 @@ class CameraNode : public SceneNode
         void setup() {};
         void updateCameraAttributes(glm::vec3 positionVec, glm::vec3 frontVec, glm::vec3 upVec);
         
-        glm::mat4 getLookat();
+        glm::mat4 lookAt;
         glm::vec3 getPosition();
 
     private:

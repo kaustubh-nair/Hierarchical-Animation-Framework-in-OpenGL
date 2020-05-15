@@ -7,14 +7,15 @@ CameraGroupNode::CameraGroupNode(int nodeId) : GroupNode(nodeId)
 }
 
 /* NOTE: Camera heirarchy can only be one level deep */
-glm::mat4 CameraGroupNode::getCameraLookAt(int nodeId)
+CameraNode* CameraGroupNode::getCamera(int camId)
 {
     for(auto itr = children.begin(); itr != children.end(); itr++)
     {
-        if((*itr)->id == nodeId)
+        if((*itr)->id == camId)
         {
             CameraNode *cam = (CameraNode *) (*itr);
-            return cam->getLookat();
+            return cam;
         }
     }
+    return nullptr;
 }

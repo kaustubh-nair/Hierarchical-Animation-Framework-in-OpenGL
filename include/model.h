@@ -34,7 +34,7 @@ class Model
         void addCameraNode(int id, int parentId, glm::vec3 position,
                            glm::vec3 front, glm::vec3 up);
 
-        glm::mat4 getCameraLookAt(int camId);
+        CameraNode* getCamera(int camId);
         void render(Shader shader);
         void drawLighting(Shader shader, Shader lightingShader);
         void refresh();

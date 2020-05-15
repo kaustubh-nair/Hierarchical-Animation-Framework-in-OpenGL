@@ -46,11 +46,11 @@ void Model::addCameraNode(int id, int parentId, glm::vec3 position,
 }
 
 
-glm::mat4 Model::getCameraLookAt(int camId)
+CameraNode* Model::getCamera(int camId)
 {
     /* Note: this assumes camera group node is always the second child of root */
     CameraGroupNode *cameraGroup = (CameraGroupNode *)(sceneRoot->children).at(1);
-    return cameraGroup->getCameraLookAt(camId);
+    return cameraGroup->getCamera(camId);
 }
 
 void Model::refresh()
