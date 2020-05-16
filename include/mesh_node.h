@@ -13,17 +13,11 @@
 class MeshNode : public SceneNode
 {
     public:
-        std::vector<Vertex> vertices;
-        std::vector<Triangle> triangles;
-        unsigned int VAO, VBO, EBO;
-        unsigned int texture;
-        
         void render(Shader shader, std::vector<glm::mat4> *stack);
         void update(int timer, int event, int eventTargetId);
         void setup();
 
 
-        // TODO: make private
         MeshNode(int nodeId, std::string meshPath, std::string texturePath,
                  glm::mat4 translationMatrix);
 
@@ -31,6 +25,10 @@ class MeshNode : public SceneNode
         // TODO remove
         float angle;
     private:
+        unsigned int VAO, VBO, EBO;
+        unsigned int texture;
+        std::vector<Vertex> vertices;
+        std::vector<Triangle> triangles;
         glm::mat4 translationMat;
         glm::mat4 rotationMat;
         void generateTextureObject();
