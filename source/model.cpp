@@ -46,9 +46,9 @@ void Model::addCameraNode(int id, int parentId, glm::vec3 position,
 }
 
 
-void Model::addLightNode(int id, int parentId)
+void Model::addLightNode(int id, int parentId, glm::vec3 position)
 {
-    SceneNode *newNode = new LightNode(id);
+    SceneNode *newNode = new LightNode(id, position);
     sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
 }
 

@@ -1,9 +1,10 @@
 #include "../include/light_node.h"
 
 
-LightNode::LightNode(int nodeId)
+LightNode::LightNode(int nodeId, glm::vec3 nodePos)
 {
     id = nodeId;
+    position = nodePos;
 }
 
 
