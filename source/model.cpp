@@ -48,8 +48,9 @@ void Model::addCameraNode(int id, int parentId, glm::vec3 position,
 
 void Model::addLightNode(int id, int parentId, glm::vec3 position)
 {
-    SceneNode *newNode = new LightNode(id, position);
+    SceneNode *newNode = new LightNode(id, position, numLights);
     sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
+    numLights++;
 }
 
 
@@ -69,6 +70,7 @@ void Model::render(Shader shader)
     }
     else
     {
+        shader.setInt("NUMBER_OF_LIGHTS", numLights);
         std::vector <glm::mat4> stack;
         sceneRoot->render(shader, &stack);
     }

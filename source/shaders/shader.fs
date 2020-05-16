@@ -23,6 +23,7 @@ uniform Light lights[NUMBER_OF_LIGHTS];
 vec4 calculateLightStrength()
 {
     float ambientStrength = 0.2;
+
     vec3 result = vec3(0.0f, 0.0f, 0.0f);
     for(int i = 0; i < NUMBER_OF_LIGHTS; i++)
     {

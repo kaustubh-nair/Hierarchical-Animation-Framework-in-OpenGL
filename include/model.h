@@ -22,6 +22,7 @@ class Model
 
         int firstCameraId = 0;
         int numCameras = 0;
+        int numLights = 0;
 
         Model();
         void setup(Shader shader);

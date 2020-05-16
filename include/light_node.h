@@ -8,13 +8,14 @@
 class LightNode : public SceneNode
 {
     public:
-        LightNode(int nodeId, glm::vec3 nodePos);
+        LightNode(int nodeId, glm::vec3 nodePos, int shaderID);
         void render(Shader shader, std::vector<glm::mat4> *stack);
         void update(int timer, int event, int eventTargetId) {};
         void setup(Shader shader);
     private:
         unsigned int VAO, VBO;
         glm::vec3 position;
+        int shaderId;        // index in the shader array
 };
 
 #endif
