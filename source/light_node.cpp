@@ -23,8 +23,8 @@ void LightNode::setup(Shader shader)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
     glEnableVertexAttribArray(0);
     shader.setVec3("lights[" + std::to_string(shaderId) + "].Pos",position);
-    shader.setFloat("lights[" + std::to_string(shaderId) + "].diffuseStrength",0.3);
-    shader.setFloat("lights[" + std::to_string(shaderId) + "].specularStrength",0.5);
+    shader.setFloat("lights[" + std::to_string(shaderId) + "].diffuseStrength", 0.5f);  //TODO: set this in main
+    shader.setFloat("lights[" + std::to_string(shaderId) + "].specularStrength", 0.5f);
 }
 
 void LightNode::render(Shader shader, std::vector<glm::mat4> *stack)

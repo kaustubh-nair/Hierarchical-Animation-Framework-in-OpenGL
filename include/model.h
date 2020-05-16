@@ -40,7 +40,6 @@ class Model
         CameraNode* getCamera(int camId);
         void render(Shader shader);
         void update(int timer, int event, int eventTargetId);
-        void drawLighting(Shader shader, Shader lightingShader);
 
         void unselect();
         void select(int direction);
