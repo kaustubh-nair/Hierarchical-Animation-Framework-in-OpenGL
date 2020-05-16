@@ -94,16 +94,11 @@ void Controller::setup(GLFWwindow *window, Shader shader)
 int Controller::reactToCallback(int event)
 {
     if(event == CHANGE_CAMERA)
-    {
         changeCamera();
-        return NONE;
-    }
     else if(event == LOOK_AROUND)
-    {
+        return LOOK_AROUND;
 
-    }
-    else
-        return event;
+    return NONE;
 }
 
 

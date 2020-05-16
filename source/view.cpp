@@ -54,6 +54,9 @@ int View::listenToCallbacks(GLFWwindow *window)
         {GLFW_KEY_S, MOVE_BACKWARD},
         {GLFW_KEY_D, MOVE_RIGHT},
         {GLFW_KEY_UP, CHANGE_CAMERA},
+        {GLFW_KEY_1, TOGGLE_LIGHT_1},
+        {GLFW_KEY_2, TOGGLE_LIGHT_2},
+        {GLFW_KEY_3, TOGGLE_LIGHT_3},
     };
 
     static std::vector<int> oldStates(key_mappings.size(), GLFW_RELEASE);

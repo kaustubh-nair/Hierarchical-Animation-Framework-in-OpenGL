@@ -14,4 +14,14 @@
 #define MOVE_BACKWARD 4
 #define MOVE_RIGHT 5
 
-#define LOOK_AROUND 6
+
+#define TOGGLE_LIGHT_0 6
+#define TOGGLE_LIGHT_1 7
+#define TOGGLE_LIGHT_2 8
+#define TOGGLE_LIGHT_3 9
+#define TOGGLE_LIGHT_4 10
+#define TOGGLE_LIGHT_5 11
+#define TOGGLE_LIGHT_6 12
+#define TOGGLE_LIGHT_7 13
+
+#define LOOK_AROUND 14
