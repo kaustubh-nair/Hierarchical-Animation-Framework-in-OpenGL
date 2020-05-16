@@ -47,7 +47,7 @@ void Mesh::generateTextureObject()
     stbi_image_free(data);
 }
 
-void Mesh::setup()
+void Mesh::setup(Shader shader)
 {
 
     generateTextureObject();

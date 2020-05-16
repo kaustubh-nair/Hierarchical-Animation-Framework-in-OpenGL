@@ -8,7 +8,7 @@ LightNode::LightNode(int nodeId, glm::vec3 nodePos)
 }
 
 
-void LightNode::setup()
+void LightNode::setup(Shader shader)
 {
   float vertices[] = { 0.0f, 0.0f, 0.0f};
   glGenVertexArrays(1, &VAO);

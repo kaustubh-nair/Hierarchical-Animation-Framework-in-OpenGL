@@ -24,7 +24,7 @@ class Model
         int numCameras = 0;
 
         Model();
-        void setup();
+        void setup(Shader shader);
         void addGroupNode(int id, int parentId);
         void addCameraGroupNode(int id, int parentId);
 
@@ -40,7 +40,6 @@ class Model
         void render(Shader shader);
         void update(int timer, int event, int eventTargetId);
         void drawLighting(Shader shader, Shader lightingShader);
-        void refresh();
 
         void unselect();
         void select(int direction);

@@ -9,6 +9,6 @@ class GroupNode : public SceneNode
         GroupNode(int nodeId);
         void render(Shader shader, std::vector <glm::mat4> *stack);
         void update(int timer, int event, int eventTargetId);
-        void setup();
+        void setup(Shader shader);
 };
 #endif

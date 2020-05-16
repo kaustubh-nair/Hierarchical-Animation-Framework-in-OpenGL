@@ -6,9 +6,9 @@ Model::Model()
     sceneRoot = new GroupNode(0);
 }
 
-void Model::setup()
+void Model::setup(Shader shader)
 {
-    sceneRoot->setup();
+    sceneRoot->setup(shader);
 }
 
 void Model::addGroupNode(int id, int parentId)
@@ -58,12 +58,6 @@ CameraNode* Model::getCamera(int camId)
     /* Note: this assumes camera group node is always the second child of root */
     CameraGroupNode *cameraGroup = (CameraGroupNode *)(sceneRoot->children).at(1);
     return cameraGroup->getCamera(camId);
-}
-
-void Model::refresh()
-{
-    for(auto mesh = meshes.begin(); mesh < meshes.end(); mesh++)
-        mesh->setup();
 }
 
 void Model::render(Shader shader)

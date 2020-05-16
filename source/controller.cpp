@@ -32,8 +32,8 @@ void Controller::run()
 
 
     /* load buffers */
-    setup(view.leftWindow);
-    setup(view.rightWindow);
+    setup(view.leftWindow, shader);
+    setup(view.rightWindow, shader);
 
     int timer = 0;
     while((!glfwWindowShouldClose(view.leftWindow)) && (!glfwWindowShouldClose(view.rightWindow)))
@@ -77,7 +77,7 @@ void Controller::render(int timer, GLFWwindow *window, CameraNode *activeCam)
 }
 
 
-void Controller::setup(GLFWwindow *window)
+void Controller::setup(GLFWwindow *window, Shader shader)
 {
     glfwMakeContextCurrent(window);
 
@@ -85,7 +85,7 @@ void Controller::setup(GLFWwindow *window)
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 
     /* generate buffers */
-    model.setup();
+    model.setup(shader);
     glfwMakeContextCurrent(NULL);
 }
 

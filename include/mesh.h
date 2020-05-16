@@ -34,7 +34,7 @@ class Mesh {
     glm::vec3 position;
 
     Mesh(std::string filepath, glm::vec3 position, std::string texturePath);
-    void setup();
+    void setup(Shader shader);
     void draw(Shader shader);
     void generateTextureObject();
     void computeTextureMapping();

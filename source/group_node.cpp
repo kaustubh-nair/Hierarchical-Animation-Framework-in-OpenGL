@@ -13,10 +13,10 @@ void GroupNode::render(Shader shader, std::vector <glm::mat4> *stack)
 }
 
 
-void GroupNode::setup()
+void GroupNode::setup(Shader shader)
 {
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->setup();
+        (*itr)->setup(shader);
 }
 
 

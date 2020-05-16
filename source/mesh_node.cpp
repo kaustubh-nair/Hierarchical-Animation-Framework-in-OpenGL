@@ -85,7 +85,7 @@ void MeshNode::generateTextureObject()
 }
 
 
-void MeshNode::setup()
+void MeshNode::setup(Shader shader)
 {
     generateTextureObject();
 
@@ -108,6 +108,6 @@ void MeshNode::setup()
     glBindVertexArray(0);
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->setup();
+        (*itr)->setup(shader);
 
 }
