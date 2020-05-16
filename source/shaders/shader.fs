@@ -56,6 +56,6 @@ vec4 calculateLightStrength()
 void main()
 {
     //FragColor = texture(Texture, TexCoord);
-    vec3 ambient = 0.5f * lightColor;
+    vec3 ambient = 0.5f * vec3(texture(Texture, TexCoord));
     FragColor = vec4(ambient,1.0f);
 } 
