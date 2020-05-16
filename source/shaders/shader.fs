@@ -7,7 +7,6 @@ in vec3 Normal;
 in vec3 FragPos;  
 in vec2 TexCoord;
   
-uniform vec3 lightColor;
 uniform vec3 objectColor;
 uniform sampler2D Texture;
 uniform vec3 viewPos;
@@ -20,9 +19,10 @@ struct Light {
 
 uniform Light lights[NUMBER_OF_LIGHTS];
 
-vec4 calculateLightStrength()
+void main()
 {
     float ambientStrength = 0.2;
+    vec3 lightColor = vec3(texture(Texture, TexCoord));
 
     vec3 result = vec3(0.0f, 0.0f, 0.0f);
     for(int i = 0; i < NUMBER_OF_LIGHTS; i++)
@@ -51,12 +51,5 @@ vec4 calculateLightStrength()
     result += (ambient+ specular+ diffuse);
 
 }
-    return vec4(result * objectColor, 1.0f);
+    FragColor =  vec4(result * objectColor, 1.0f);
 }
-
-void main()
-{
-    //FragColor = texture(Texture, TexCoord);
-    vec3 ambient = 0.5f * vec3(texture(Texture, TexCoord));
-    FragColor = vec4(ambient,1.0f);
-} 
