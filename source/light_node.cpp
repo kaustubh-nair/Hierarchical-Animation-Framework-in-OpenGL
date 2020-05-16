@@ -26,8 +26,7 @@ void LightNode::setup(Shader shader)
 void LightNode::render(Shader shader, std::vector<glm::mat4> *stack)
 {
 
-    glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 1.0f);
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), lightPos);
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), position);
     shader.setMat4("model", model);
 
     // render the cube
