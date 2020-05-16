@@ -23,15 +23,10 @@ void Controller::run()
 
     /* setup shaders */
     shader = Shader("source/shaders/shader.vs", "source/shaders/shader.fs");
-    //Shader lightingShader("source/shaders/lighting_shader.vs", "source/shaders/lighting_shader.fs");
 
     shader.use();
     shader.setMat4("projection", projMatrix);
-    /*
-    lightingShader.use();
-    lightingShader.setMat4("view", viewMatrix);
-    lightingShader.setMat4("projection", projMatrix);
-    */
+    shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
     glfwMakeContextCurrent(NULL);
 
@@ -117,6 +112,7 @@ void Controller::changeCamera()
     if(view.windowIsActive(view.leftWindow))
     {
         // increate camId by 1
+        /* NOTE: Camera nodes should be inserted sequentially */
         int camId = model.firstCameraId + ((view.leftCam->id + 1) % model.numCameras);
         view.leftCam = model.getCamera(camId);
     }

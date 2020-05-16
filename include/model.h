@@ -34,6 +34,8 @@ class Model
         void addCameraNode(int id, int parentId, glm::vec3 position,
                            glm::vec3 front, glm::vec3 up);
 
+        void addLightNode(int id, int parentId);
+
         CameraNode* getCamera(int camId);
         void render(Shader shader);
         void update(int timer, int event, int eventTargetId);

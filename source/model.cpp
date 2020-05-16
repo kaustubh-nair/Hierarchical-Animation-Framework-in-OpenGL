@@ -46,6 +46,13 @@ void Model::addCameraNode(int id, int parentId, glm::vec3 position,
 }
 
 
+void Model::addLightNode(int id, int parentId)
+{
+    SceneNode *newNode = new LightNode(id);
+    sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
+}
+
+
 CameraNode* Model::getCamera(int camId)
 {
     /* Note: this assumes camera group node is always the second child of root */
@@ -81,6 +88,7 @@ void Model::update(int timer, int event, int eventTargetId)
 
 void Model::drawLighting(Shader shader, Shader lightingShader)
 {
+    /*
     glm::vec3 lightPos = glm::vec3(15.0f, 0.0f, -2.0f);
 
     shader.setVec3("lights[0].Pos",lightPos.x, lightPos.y, lightPos.z);
@@ -91,10 +99,10 @@ void Model::drawLighting(Shader shader, Shader lightingShader)
     shader.setFloat("lights[1].diffuseStrength",0.5f);
     shader.setFloat("lights[1].specularStrength",0.0f);
 
-    shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
     Lighting lighting;
     lighting.draw(lightingShader, lightPos);
+    */
 }
 
 

@@ -28,7 +28,7 @@ int main()
     controller.model.addGroupNode(2, 0);   //cameras
     controller.model.addGroupNode(3, 0);   //meshes
 
-    /* NOTE: Camera should be inserted sequentially */
+    /* NOTE: Camera nodes should be inserted sequentially */
     controller.model.addCameraNode(4, 2, origin + (10.0f*z) + x, -z, y);
     controller.model.addCameraNode(5, 2, origin - (10.0f*x), x, y);
 
@@ -56,6 +56,7 @@ int main()
     controller.model.addMeshNode(12, 3, "data/beethoven.ply", "data/fur.jpg",
                                  glm::translate(mat, origin));
                                  */
+    controller.model.addLightNode(13, 1);
     controller.run();
     return 0;
 }

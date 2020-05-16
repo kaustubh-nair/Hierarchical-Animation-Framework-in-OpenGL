@@ -8,9 +8,12 @@
 class LightNode : public SceneNode
 {
     public:
-        void render(Shader shader);
-        void update(int timer, int event, int eventTargetId);
-        void setup() {};
+        LightNode(int nodeId);
+        void render(Shader shader, std::vector<glm::mat4> *stack);
+        void update(int timer, int event, int eventTargetId) {};
+        void setup();
+    private:
+        unsigned int VAO, VBO;
 };
 
 #endif

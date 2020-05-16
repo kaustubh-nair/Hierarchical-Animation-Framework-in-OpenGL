@@ -20,7 +20,7 @@ struct Light {
 
 uniform Light lights[NUMBER_OF_LIGHTS];
 
-vec3 calculateLightStrength()
+vec4 calculateLightStrength()
 {
     float ambientStrength = 0.2;
     vec3 result = vec3(0.0f, 0.0f, 0.0f);
@@ -50,11 +50,12 @@ vec3 calculateLightStrength()
     result += (ambient+ specular+ diffuse);
 
 }
-    return result * objectColor;
+    return vec4(result * objectColor, 1.0f);
 }
 
 void main()
 {
-
-    FragColor = texture(Texture, TexCoord);
+    //FragColor = texture(Texture, TexCoord);
+    vec3 ambient = 0.5f * lightColor;
+    FragColor = vec4(ambient,1.0f);
 } 
