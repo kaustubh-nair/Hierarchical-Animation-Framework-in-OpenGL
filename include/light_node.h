@@ -8,14 +8,18 @@
 class LightNode : public SceneNode
 {
     public:
-        LightNode(int nodeId, glm::vec3 nodePos, int shaderID);
+        LightNode(int nodeId, glm::vec3 nodePos, int lightID);
         void render(Shader shader, std::vector<glm::mat4> *stack);
-        void update(int timer, int event, int eventTargetId, Shader shader) {};
+        void update(int timer, int event, int eventTargetId, Shader shader);
         void setup(Shader shader);
     private:
         unsigned int VAO, VBO;
         glm::vec3 position;
-        int shaderId;        // index in the shader array
+
+        /* index in the shader array */
+        /* Note that eventTargetID in update is based on this, since they are sequentially ordered. */
+        int lightId;
+        bool active = true;
 };
 
 #endif

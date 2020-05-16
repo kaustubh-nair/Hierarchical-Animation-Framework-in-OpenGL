@@ -23,5 +23,6 @@
 #define TOGGLE_LIGHT_5 11
 #define TOGGLE_LIGHT_6 12
 #define TOGGLE_LIGHT_7 13
+#define TOGGLE_LIGHTS 14
 
-#define LOOK_AROUND 14
+#define LOOK_AROUND 15

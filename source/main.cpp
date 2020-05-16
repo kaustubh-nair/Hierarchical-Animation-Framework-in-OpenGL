@@ -56,9 +56,12 @@ int main()
     controller.model.addMeshNode(12, 3, "data/beethoven.ply", "data/fur.jpg",
                                  glm::translate(mat, origin));
                                  */
-    controller.model.addLightNode(13, 1, origin);
+    controller.model.addLightNode(13, 1, origin + z);
     controller.model.addLightNode(14, 1, origin+(3.0f*x));
-    controller.model.addLightNode(15, 1, origin-(5.0f*y));
+    controller.model.addLightNode(15, 1, origin+(2.0f*y)-z);
+    controller.model.addLightNode(16, 1, origin-(2.0f*x));
+
+
     controller.run();
     return 0;
 }

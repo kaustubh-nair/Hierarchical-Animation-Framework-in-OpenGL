@@ -24,7 +24,7 @@ class Controller {
     void run();
     void render(int timer, GLFWwindow *window, CameraNode *activeCam);
     void setup(GLFWwindow *window, Shader shader);
-    int reactToCallback(int event, CameraNode *activeCam);
+    int reactToCallback(int &event, CameraNode *activeCam);
     void changeCamera();
 };
 
