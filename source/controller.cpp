@@ -57,8 +57,8 @@ void Controller::render(int timer, GLFWwindow *window, CameraNode *activeCam)
     {
         view.reactToMouseCallbacks(window, activeCam);
         int event = view.listenToCallbacks(window);
-        event = reactToCallback(event);
-        model.update(timer, event, activeCam->id);
+        int target = reactToCallback(event, activeCam);
+        model.update(timer, event, target);
     }
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -90,15 +90,18 @@ void Controller::setup(GLFWwindow *window, Shader shader)
 }
 
 
-/* returns the event that needs to be passed to the update methods */
-int Controller::reactToCallback(int event)
+/* returns the target object's id that needs to be passed to the update methods */
+int Controller::reactToCallback(int event, CameraNode *activeCam)
 {
     if(event == CHANGE_CAMERA)
+    {
         changeCamera();
+        return activeCam->id;
+    }
     else if(event == LOOK_AROUND)
-        return LOOK_AROUND;
+        return activeCam->id;
 
-    return NONE;
+    return -1;
 }
 
 
