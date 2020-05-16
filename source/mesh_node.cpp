@@ -27,11 +27,13 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 
 void MeshNode::update(int timer, int event, int eventTargetId)
 {
+    /*
     if(timer > 1000)
     {
         angle += 1.0f;
         rotationMat = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(1.0f,1.0f,1.0f));
     }
+    */
 }
 
 
