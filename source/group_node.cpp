@@ -20,8 +20,8 @@ void GroupNode::setup(Shader shader)
 }
 
 
-void GroupNode::update(int timer, int event, int eventTargetId)
+void GroupNode::update(int timer, int event, int eventTargetId, Shader shader)
 {
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId);
+        (*itr)->update(timer, event, eventTargetId, shader);
 }

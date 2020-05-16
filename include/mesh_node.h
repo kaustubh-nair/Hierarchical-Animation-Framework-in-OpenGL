@@ -14,7 +14,7 @@ class MeshNode : public SceneNode
 {
     public:
         void render(Shader shader, std::vector<glm::mat4> *stack);
-        void update(int timer, int event, int eventTargetId);
+        void update(int timer, int event, int eventTargetId, Shader shader);
         void setup(Shader shader);
 
 

@@ -25,7 +25,7 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 }
 
 
-void MeshNode::update(int timer, int event, int eventTargetId)
+void MeshNode::update(int timer, int event, int eventTargetId, Shader shader)
 {
     /*
     if(timer > 1000)

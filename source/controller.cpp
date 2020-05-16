@@ -58,7 +58,7 @@ void Controller::render(int timer, GLFWwindow *window, CameraNode *activeCam)
         view.reactToMouseCallbacks(window, activeCam);
         int event = view.listenToCallbacks(window);
         int target = reactToCallback(event, activeCam);
-        model.update(timer, event, target);
+        model.update(timer, event, target, shader);
     }
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
