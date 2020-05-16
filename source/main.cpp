@@ -57,6 +57,8 @@ int main()
                                  glm::translate(mat, origin));
                                  */
     controller.model.addLightNode(13, 1, origin);
+    controller.model.addLightNode(14, 1, origin+(3.0f*x));
+    controller.model.addLightNode(15, 1, origin-(5.0f*y));
     controller.run();
     return 0;
 }
