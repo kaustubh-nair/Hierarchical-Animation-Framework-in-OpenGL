@@ -40,6 +40,7 @@ void MeshNode::update(int timer, int event, int eventTargetId, Shader shader)
 void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 {
     glm::mat4 model = glm::mat4(1.0f);
+
     stack->push_back(translationMat);
     stack->push_back(rotationMat);
 
@@ -47,7 +48,6 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
         model = model * (*i);
 
     shader.setMat4("model", model);
-    shader.setVec3("objectColor", 0.5f, 0.1f, 0.1f);
 
     glBindVertexArray(VAO); 
     glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
