@@ -40,6 +40,8 @@ int main()
     controller.model.addMeshNode(6, 3, "data/meshes/body.ply", "data/textures/skin.jpg",
                                  mat, mat, mat);
 
+    controller.model.addMeshNode(10, 6, "data/meshes/sphere.ply", "data/textures/face.jpg",
+                                 glm::translate(mat, 0.3f*y), glm::scale(mat, 0.1f*unit), mat);
 
     controller.model.addMeshNode(7, 3, "data/meshes/octahedron.ply", "data/textures/checkerboard.jpg",
                                  glm::translate(mat, -z), mat, mat);
@@ -48,7 +50,7 @@ int main()
                                  glm::translate(mat, z), mat, mat);
     
     controller.model.addMeshNode(9, 3, "data/meshes/rectangle.ply", "data/textures/grass.jpg",
-                                 glm::translate(mat, -2.0f*y), glm::scale(mat, 60.0f * unit), mat);
+                                 glm::translate(mat, -2.0f*y), glm::scale(mat, 20.0f * unit), mat);
 
     /*
     controller.model.addMeshNode(10, 3, "data/meshes/beethoven.ply", "data/checkerboard.jpg",
@@ -62,6 +64,7 @@ int main()
                                  */
     controller.model.addLightNode(13, 1, origin + (4.0f*y) + x);
     controller.model.addLightNode(14, 1, origin + (4.0f*y) - x);
+    controller.model.addLightNode(15, 1, origin + (1.0f*y) - x);
 
 
     controller.run();

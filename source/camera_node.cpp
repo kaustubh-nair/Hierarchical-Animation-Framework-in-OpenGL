@@ -20,16 +20,16 @@ void CameraNode::update(int timer, int event, int eventTargetId, Shader shader)
     float sensitivity = 0.5f;
 
     if(event == MOVE_FORWARD)
-        position += sensitivity * front;
+        position -= sensitivity * glm::normalize(position - front);
 
     else if(event == MOVE_BACKWARD)
-        position -= sensitivity * front;
+        position += sensitivity * glm::normalize(position - front);
     
     else if(event == MOVE_RIGHT)
-        position += sensitivity * glm::normalize(glm::cross(front, up));
+        position -= sensitivity * glm::normalize(glm::cross((position - front), up));
 
     else if(event == MOVE_LEFT)
-        position -= sensitivity * glm::normalize(glm::cross(front, up));
+        position += sensitivity * glm::normalize(glm::cross((position - front), up));
 }
 
 

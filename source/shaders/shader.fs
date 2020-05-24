@@ -20,7 +20,7 @@ uniform Light lights[NUMBER_OF_LIGHTS];
 
 void main()
 {
-    float ambientStrength = 0.2;
+    float ambientStrength = 0.3;
     vec3 color = vec3(texture(Texture, TexCoord));
 
     vec3 result = vec3(0.0f, 0.0f, 0.0f);

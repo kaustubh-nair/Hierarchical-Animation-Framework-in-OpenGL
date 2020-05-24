@@ -89,11 +89,11 @@ glm::vec2 findSphPointFromObjectNormal(glm::vec3 position, glm::vec3 normal)
 
 void Vertex::computeTextureCoords()
 {
-    TexCoords = findCylPointFromObjectNormal(position, normal);
-    //cylTexCoords3 = findCylMapping(position);
+    //TexCoords = findCylPointFromObjectNormal(position, normal);
+    //TexCoords = findCylMapping(position);
 
-    //sphTexCoords2 = findSphPointFromObjectNormal(position, normal);
-    //sphTexCoords3 = findSphMapping(position);
+    TexCoords = findSphPointFromObjectNormal(position, normal);
+    //TexCoords = findSphMapping(position);
 }
 
 void Vertex::computeAvgNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles)
