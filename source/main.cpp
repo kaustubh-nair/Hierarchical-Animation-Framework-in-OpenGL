@@ -38,7 +38,7 @@ int main()
 
 
     controller.model.addMeshNode(6, 3, "data/meshes/cylinder.ply", "data/textures/black.png",
-                                 glm::translate(mat, -z), mat);
+                                 glm::translate(mat, -z), glm::scale(mat, x+y+(4.0f*z)));
 
 
     controller.model.addMeshNode(7, 6, "data/meshes/octahedron.ply", "data/textures/checkerboard.jpg",
@@ -48,7 +48,7 @@ int main()
                                  glm::translate(mat, -z), mat);
     
     controller.model.addMeshNode(9, 3, "data/meshes/rectangle.ply", "data/textures/grass.jpg",
-                                 glm::translate(mat, -2.0f*y), glm::scale(mat, 100.0f * unit));
+                                 glm::translate(mat, -2.0f*y), glm::scale(mat, 60.0f * unit));
 
     /*
     controller.model.addMeshNode(10, 3, "data/meshes/beethoven.ply", "data/checkerboard.jpg",
