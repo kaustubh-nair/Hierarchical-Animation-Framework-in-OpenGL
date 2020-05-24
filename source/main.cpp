@@ -37,9 +37,8 @@ int main()
 
 
 
-    controller.model.addMeshNode(6, 3, "data/meshes/cylinder.ply", "data/textures/black.png",
-                                 mat, glm::scale(mat, x+y+(4.0f*z)),
-                                 mat);
+    controller.model.addMeshNode(6, 3, "data/meshes/body.ply", "data/textures/skin.jpg",
+                                 mat, mat, mat);
 
 
     controller.model.addMeshNode(7, 3, "data/meshes/octahedron.ply", "data/textures/checkerboard.jpg",

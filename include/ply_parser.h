@@ -80,19 +80,34 @@ class PlyParser
               head_position = "end";
 
             split(line, split_line, ' ');
-            if(std::stoi(split_line[0]) != 3)
+            if(std::stoi(split_line[0]) == 4)
             {
-              print("Face not triangular");
-              continue;
+                /* store indices */
+                int v1 = std::stoi(split_line[1].c_str());
+                int v2 = std::stoi(split_line[2].c_str());
+                int v3 = std::stoi(split_line[3].c_str());
+                int v4 = std::stoi(split_line[4].c_str());
+
+                Triangle triangle1(v1, v2, v3);
+                triangles.push_back(triangle1);
+
+                Triangle triangle2(v3, v4, v1);
+                triangles.push_back(triangle2);
             }
-            /* store indices */
-            int v1 = std::stoi(split_line[1].c_str());
-            int v2 = std::stoi(split_line[2].c_str());
-            int v3 = std::stoi(split_line[3].c_str());
+            else if(std::stoi(split_line[0]) == 3)
+            {
+                /* store indices */
+                int v1 = std::stoi(split_line[1].c_str());
+                int v2 = std::stoi(split_line[2].c_str());
+                int v3 = std::stoi(split_line[3].c_str());
 
-            Triangle triangle(v1, v2, v3);
-            triangles.push_back(triangle);
-
+                Triangle triangle(v1, v2, v3);
+                triangles.push_back(triangle);
+            }
+            else
+            {
+                print("Face not triangular");
+            }
 
             j--;
           }
