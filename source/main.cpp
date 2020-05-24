@@ -37,19 +37,19 @@ int main()
 
 
 
-    controller.model.addMeshNode(6, 3, "data/meshes/body.ply", "data/textures/skin.jpg",
+    controller.model.addMeshNode(6, 3, "data/meshes/body.ply", "data/textures/skin.jpg", CYLINDERICAL_MAPPING,
                                  mat, mat, mat);
 
-    controller.model.addMeshNode(10, 6, "data/meshes/sphere.ply", "data/textures/face.jpg",
-                                 glm::translate(mat, 0.3f*y), glm::scale(mat, 0.1f*unit), mat);
+    controller.model.addMeshNode(10, 6, "data/meshes/sphere.ply", "data/textures/face.jpg", SPHERICAL_MAPPING,
+                                 glm::translate(mat, (0.45f*y) + (0.03f*x) + (0.03f*z)), glm::scale(mat, 0.15f*unit), glm::rotate(mat, glm::radians(-90.0f), y));
 
-    controller.model.addMeshNode(7, 3, "data/meshes/octahedron.ply", "data/textures/checkerboard.jpg",
+    controller.model.addMeshNode(7, 3, "data/meshes/sphere.ply", "data/textures/red.jpg", CYLINDERICAL_MAPPING,
                                  glm::translate(mat, -z), mat, mat);
 
-    controller.model.addMeshNode(8, 3, "data/meshes/teapot.ply", "data/textures/rainbow.png",
-                                 glm::translate(mat, z), mat, mat);
+    controller.model.addMeshNode(8, 7, "data/meshes/cube.ply", "data/textures/basket.jpeg", CYLINDERICAL_MAPPING,
+                                 mat, glm::scale(mat, 0.5f*unit), mat);
     
-    controller.model.addMeshNode(9, 3, "data/meshes/rectangle.ply", "data/textures/grass.jpg",
+    controller.model.addMeshNode(9, 3, "data/meshes/rectangle.ply", "data/textures/grass.jpg", CYLINDERICAL_MAPPING,
                                  glm::translate(mat, -2.0f*y), glm::scale(mat, 20.0f * unit), mat);
 
     /*

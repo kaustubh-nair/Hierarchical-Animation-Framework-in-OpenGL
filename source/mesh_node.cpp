@@ -1,6 +1,6 @@
 #include "../include/mesh_node.h"
 
-MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
+MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath, int mappingStyle,
                    glm::mat4 translationMatrix, glm::mat4 scalingMatrix,
                    glm::mat4 rotationMatrix)
 {
@@ -23,7 +23,7 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 
     /* compute and save texture map coordinates */
     for(auto vertex = vertices.begin(); vertex < vertices.end(); vertex++)
-        vertex->computeTextureCoords();
+        vertex->computeTextureCoords(mappingStyle);
 }
 
 

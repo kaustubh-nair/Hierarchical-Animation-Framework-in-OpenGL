@@ -18,8 +18,8 @@ Mesh::Mesh(std::string filepath, glm::vec3 position, std::string texture)
     Vertex::computeAvgNormals(vertices, triangles);
 
     // compute and save texture map coordinates
-    for(auto vertex = vertices.begin(); vertex < vertices.end(); vertex++)
-        vertex->computeTextureCoords();
+    //for(auto vertex = vertices.begin(); vertex < vertices.end(); vertex++)
+        //vertex->computeTextureCoords();
 }
 
 void Mesh::generateTextureObject()
