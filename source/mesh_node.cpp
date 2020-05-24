@@ -50,9 +50,12 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
     shader.setMat4("model", model);
 
     glBindVertexArray(VAO); 
-    glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
     glBindTexture(GL_TEXTURE_2D, texture);
+
+    glDrawElements(GL_TRIANGLES, 3*triangles.size(), GL_UNSIGNED_INT, 0);
+
     glBindVertexArray(0); 
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->render(shader, stack);
@@ -65,6 +68,7 @@ void MeshNode::generateTextureObject()
 {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
+    
     // set the texture wrapping/filtering options (on the currently bound texture object)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -84,6 +88,7 @@ void MeshNode::generateTextureObject()
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 
