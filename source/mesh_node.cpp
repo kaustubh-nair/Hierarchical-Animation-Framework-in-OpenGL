@@ -48,7 +48,7 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
     stack->push_back(translationMat);
 
     for(auto i = stack->begin(); i != stack->end(); i++)
-        model = (*i) * model;
+        model = model * (*i);
 
     shader.setMat4("model", model);
 
