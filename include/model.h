@@ -31,7 +31,7 @@ class Model
 
         void addMeshNode(int id, int parentId, std::string meshPath,
                          std::string texturePath, glm::mat4 translationMat,
-                         glm::mat4 scalingMat);
+                         glm::mat4 scalingMat, glm::mat4 rotationMat);
 
         void addCameraNode(int id, int parentId, glm::vec3 position,
                            glm::vec3 front, glm::vec3 up);
