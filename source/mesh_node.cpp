@@ -1,7 +1,7 @@
 #include "../include/mesh_node.h"
 
 MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
-                   glm::mat4 translationMatrix)
+                   glm::mat4 translationMatrix, glm::mat4 scalingMatrix)
 {
     id = nodeId;
 
@@ -17,6 +17,7 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
     /* initialize transformation matrix */
     translationMat = translationMatrix;
     rotationMat = glm::mat4(1.0f);
+    scalingMat = scalingMatrix;
 
 
     /* compute and save texture map coordinates */
@@ -43,6 +44,7 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 
     stack->push_back(translationMat);
     stack->push_back(rotationMat);
+    stack->push_back(scalingMat);
 
     for(auto i = stack->begin(); i != stack->end(); i++)
         model = model * (*i);

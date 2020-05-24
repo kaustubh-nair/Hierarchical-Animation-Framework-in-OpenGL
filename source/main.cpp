@@ -15,6 +15,7 @@ int main()
     glm::vec3 x = glm::vec3(1.0f, 0.0f, 0.0f);
     glm::vec3 y = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 z = glm::vec3(0.0f, 0.0f, 1.0f);
+    glm::vec3 unit = glm::vec3(1.0f, 1.0f, 1.0f);
     glm::mat4 mat = glm::mat4(1.0f);
 
     Controller controller;
@@ -37,17 +38,17 @@ int main()
 
 
     controller.model.addMeshNode(6, 3, "data/meshes/beethoven.ply", "data/textures/black.png",
-                                 glm::translate(mat, -z));
+                                 glm::translate(mat, -z), mat);
 
 
     controller.model.addMeshNode(7, 6, "data/meshes/octahedron.ply", "data/textures/checkerboard.jpg",
-                                 glm::translate(mat, -z));
+                                 glm::translate(mat, -z), mat);
 
     controller.model.addMeshNode(8, 7, "data/meshes/teapot.ply", "data/textures/rainbow.png",
-                                 glm::translate(mat, -z));
+                                 glm::translate(mat, -z), mat);
     
     controller.model.addMeshNode(9, 8, "data/meshes/rectangle.ply", "data/textures/grass.jpg",
-                                 glm::translate(mat, -x));
+                                 glm::translate(mat, -x), glm::scale(mat, 30.0f * unit));
 
     /*
 

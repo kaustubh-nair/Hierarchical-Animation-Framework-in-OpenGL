@@ -19,7 +19,7 @@ class MeshNode : public SceneNode
 
 
         MeshNode(int nodeId, std::string meshPath, std::string texturePath,
-                 glm::mat4 translationMatrix);
+                   glm::mat4 translationMatrix, glm::mat4 scalingMatrix);
 
 
         // TODO remove
@@ -29,10 +29,12 @@ class MeshNode : public SceneNode
         unsigned int texture;
         std::vector<Vertex> vertices;
         std::vector<Triangle> triangles;
-        glm::mat4 translationMat;
-        glm::mat4 rotationMat;
         void generateTextureObject();
         std::string texPath;
+
+        glm::mat4 translationMat;
+        glm::mat4 rotationMat;
+        glm::mat4 scalingMat;
 };
 
 #endif
