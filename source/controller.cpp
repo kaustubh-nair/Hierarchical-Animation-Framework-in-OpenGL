@@ -102,7 +102,7 @@ int Controller::reactToCallback(int &event, CameraNode *activeCam)
     || (event == MOVE_BACKWARD)
     || (event == MOVE_RIGHT)
     )
-       return 6;  //change later
+       return 10;  //change later
 
     else if(event == CHANGE_CAMERA)
     {
@@ -134,13 +134,14 @@ void Controller::changeCamera()
     if(view.windowIsActive(view.leftWindow))
     {
         // increate camId by 1
-        /* NOTE: Camera nodes should be inserted sequentially */
-        int camId = model.firstCameraId + ((view.leftCam->id + 1) % model.numCameras);
+        /* NOTE: Camera nodes should be inserted with sequential ids */
+        // TODO: Store a list of camera ids in camera group nodes.
+        int camId = model.firstCameraId + ((view.leftCam->id + 1) % (model.numCameras - 1));
         view.leftCam = model.getCamera(camId);
     }
     else if(view.windowIsActive(view.rightWindow))
     {
-        int camId = model.firstCameraId + ((view.rightCam->id + 1) % model.numCameras);
+        int camId = model.firstCameraId + ((view.rightCam->id + 1) % (model.numCameras - 1));
         view.rightCam = model.getCamera(camId);
     }
 }

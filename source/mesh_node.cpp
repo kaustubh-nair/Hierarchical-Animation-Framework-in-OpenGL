@@ -39,18 +39,29 @@ void MeshNode::update(int timer, int event, int eventTargetId, Shader shader, bo
         float sensitivity = 0.5f;
 
         if(event == MOVE_FORWARD)
+        {
             position -= sensitivity * glm::normalize(position - front);
+            translationMat = glm::translate(glm::mat4(1.0f), position);
+        }
 
         else if(event == MOVE_BACKWARD)
+        {
             position += sensitivity * glm::normalize(position - front);
+            translationMat = glm::translate(glm::mat4(1.0f), position);
+        }
         
         else if(event == MOVE_RIGHT)
+        {
             position -= sensitivity * glm::normalize(glm::cross((position - front), up));
+            translationMat = glm::translate(glm::mat4(1.0f), position);
+        }
 
         else if(event == MOVE_LEFT)
+        {
             position += sensitivity * glm::normalize(glm::cross((position - front), up));
+            translationMat = glm::translate(glm::mat4(1.0f), position);
+        }
 
-        translationMat = glm::translate(glm::mat4(1.0f), position);
 
         for(auto itr = connections.begin(); itr != connections.end(); itr++)
             (*itr)->update(timer, event, eventTargetId, shader, true);

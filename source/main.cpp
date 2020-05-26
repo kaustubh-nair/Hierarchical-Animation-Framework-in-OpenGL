@@ -45,11 +45,13 @@ int main()
                                                       x + (0.5f*y), mat, mat);
 
     SceneNode *headA = controller.model.addMeshNode(11, 10, "data/meshes/sphere.ply", "data/textures/face.jpg", SPHERICAL_MAPPING,
-                                                    1.5f*y, glm::scale(mat, 0.12f*unit), glm::rotate(mat, glm::radians(-90.0f), y));
-    SceneNode *leftHmdA = controller.model.addCameraNode(5, 2, origin - (10.0f*x), x, y);
-    SceneNode *rightHmdA = controller.model.addCameraNode(6, 2, origin - (10.0f*x), x, y);
-    controller.model.addConnection(personA, leftHmdA);
-    controller.model.addConnection(personA, rightHmdA);
+                                                    2.0f*y, glm::scale(mat, 0.12f*unit), glm::rotate(mat, glm::radians(-90.0f), y));
+    SceneNode *leftHmdA = controller.model.addCameraNode(5, 2, x +(2.0f*y), z, y);
+    SceneNode *rightHmdA = controller.model.addCameraNode(6, 2, x +(2.0f*y), z, y);
+    controller.model.addConnection(personA, leftHmdA);        // for moving 
+    controller.model.addConnection(personA, rightHmdA);       
+    controller.model.addConnection(headA, leftHmdA);          // for look around
+    controller.model.addConnection(headA, rightHmdA);
 
 
 
@@ -60,8 +62,10 @@ int main()
                                                    1.5f*y, glm::scale(mat, 0.12f*unit), glm::rotate(mat, glm::radians(-90.0f), y));
     SceneNode *leftHmdB = controller.model.addCameraNode(7, 2, origin - (10.0f*x), x, y);
     SceneNode *rightHmdB = controller.model.addCameraNode(8, 2, origin - (10.0f*x), x, y);
-    controller.model.addConnection(personA, leftHmdB);
-    controller.model.addConnection(personA, rightHmdB);
+    controller.model.addConnection(personB, leftHmdB);
+    controller.model.addConnection(personB, rightHmdB);
+    controller.model.addConnection(headB, leftHmdB);
+    controller.model.addConnection(headB, rightHmdB);
 
 
 
