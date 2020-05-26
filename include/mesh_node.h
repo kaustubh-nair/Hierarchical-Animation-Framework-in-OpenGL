@@ -18,7 +18,7 @@ class MeshNode : public SceneNode
         void setup(Shader shader);
 
 
-        MeshNode(int nodeId, std::string meshPath, std::string texturePath, int mappingStyle,
+        MeshNode(int nodeId, std::string meshPath, std::string texturePath,
                    glm::vec3 pos, glm::mat4 scalingMatrix,
                    glm::mat4 rotationMatrix);
 

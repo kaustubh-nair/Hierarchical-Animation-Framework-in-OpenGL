@@ -25,7 +25,7 @@ class Vertex
 
         std::vector<glm::vec3> face_normals;
 
-        void computeTextureCoords(int mappingStyle);
+        void computeTextureCoords();
         static void computeAvgNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles);
 
 };

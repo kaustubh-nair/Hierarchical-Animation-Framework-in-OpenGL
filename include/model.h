@@ -30,7 +30,7 @@ class Model
         SceneNode* addCameraGroupNode(int id, int parentId);
 
         SceneNode* addMeshNode(int id, int parentId, std::string meshPath,
-                         std::string texturePath, int mappingStyle, glm::vec3 pos,
+                         std::string texturePath, glm::vec3 pos,
                          glm::mat4 scalingMat, glm::mat4 rotationMat);
 
         SceneNode* addCameraNode(int id, int parentId, glm::vec3 position,

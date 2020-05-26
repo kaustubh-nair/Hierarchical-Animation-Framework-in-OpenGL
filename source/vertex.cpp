@@ -87,12 +87,9 @@ glm::vec2 findSphPointFromObjectNormal(glm::vec3 position, glm::vec3 normal)
 }
 
 
-void Vertex::computeTextureCoords(int mappingStyle)
+void Vertex::computeTextureCoords()
 {
-    if(mappingStyle == CYLINDERICAL_MAPPING)
-        TexCoords = findCylPointFromObjectNormal(position, normal);
-    else if(mappingStyle == SPHERICAL_MAPPING)
-        TexCoords = findSphPointFromObjectNormal(position, normal);
+    TexCoords = findCylPointFromObjectNormal(position, normal);
 }
 
 void Vertex::computeAvgNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles)
