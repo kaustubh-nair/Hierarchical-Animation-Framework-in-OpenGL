@@ -20,3 +20,7 @@ SceneNode* SceneNode::insertNode(int nodeId, int parentId, SceneNode *newNode, S
     return root;
 
 }
+void SceneNode::addConnection(SceneNode *node)
+{
+    connections.push_back(node);
+}

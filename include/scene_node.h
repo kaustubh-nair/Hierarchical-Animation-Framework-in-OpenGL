@@ -19,12 +19,15 @@
 class SceneNode
 {
     public:
-        std::vector<SceneNode*> children;
+        // TODO: make private?
+        std::vector<SceneNode*> children;        // Traversed during render and update.
+        std::vector<SceneNode*> connections;        // Traversed during update.
 
         virtual void render(Shader shader, std::vector<glm::mat4> *stack) = 0;
         virtual void update(int timer, int event, int eventTargetId, Shader shader) = 0;
         virtual void setup(Shader shader) = 0;
         static SceneNode* insertNode(int nodeId, int parentId, SceneNode *newNode, SceneNode *root);
+        void addConnection(SceneNode *node);
 
         int id;
 

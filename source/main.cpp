@@ -58,8 +58,6 @@ int main()
     SceneNode *bird = controller.model.addMeshNode(12, 3, "data/meshes/humbird.ply", "data/textures/feather.jpg", CYLINDERICAL_MAPPING,
                                  glm::translate(mat, -x), glm::scale(mat, 0.5f*unit), mat);
 
-    
-
     /*
     controller.model.addMeshNode(10, 3, "data/meshes/beethoven.ply", "data/checkerboard.jpg",
                                  glm::translate(mat, z));
@@ -72,6 +70,9 @@ int main()
                                  */
     SceneNode *light1 = controller.model.addLightNode(13, 1, origin + (4.0f*y) + x);
     SceneNode *light2 = controller.model.addLightNode(14, 1, origin + (4.0f*y) - x);
+
+    // Connections are traversed during update only.
+    controller.model.addConnection(head, camera1);
 
 
     controller.run();

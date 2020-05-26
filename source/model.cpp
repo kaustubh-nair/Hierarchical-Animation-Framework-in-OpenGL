@@ -66,6 +66,12 @@ SceneNode* Model::addLightNode(int id, int parentId, glm::vec3 position)
 }
 
 
+void Model::addConnection(SceneNode *node1, SceneNode *node2)
+{
+    node1->addConnection(node2);
+}
+
+
 CameraNode* Model::getCamera(int camId)
 {
     /* Note: this assumes camera group node is always the second child of root */

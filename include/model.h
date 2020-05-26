@@ -37,6 +37,7 @@ class Model
                            glm::vec3 front, glm::vec3 up);
 
         SceneNode* addLightNode(int id, int parentId, glm::vec3 position);
+        void addConnection(SceneNode *node1, SceneNode *node2);
 
         CameraNode* getCamera(int camId);
         void render(Shader shader);
