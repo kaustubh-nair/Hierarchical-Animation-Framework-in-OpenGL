@@ -2,7 +2,7 @@
 
 MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath, int mappingStyle,
                    glm::mat4 translationMatrix, glm::mat4 scalingMatrix,
-                   glm::mat4 rotationMatrix)
+                   glm::mat4 rotationMatrix, glm::vec3 pos)
 {
     id = nodeId;
 
@@ -20,6 +20,10 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath, in
     rotationMat = rotationMatrix;
     scalingMat = scalingMatrix;
 
+    position = pos;
+    front = glm::vec3(0.0f, 0.0f, -1.0f);     //NOTE: hard-coded for now.
+    up = glm::vec3(0.0f, 1.0f, 0.0f);         //NOTE:: hard-coded for now.
+
 
     /* compute and save texture map coordinates */
     for(auto vertex = vertices.begin(); vertex < vertices.end(); vertex++)
@@ -29,13 +33,28 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath, in
 
 void MeshNode::update(int timer, int event, int eventTargetId, Shader shader)
 {
-    /*
-    if(timer > 1000)
+
+    if(id == eventTargetId)
     {
-        angle += 1.0f;
-        rotationMat = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(1.0f,1.0f,1.0f));
+        float sensitivity = 0.5f;
+
+        if(event == MOVE_FORWARD)
+            position -= sensitivity * glm::normalize(position - front);
+
+        else if(event == MOVE_BACKWARD)
+            position += sensitivity * glm::normalize(position - front);
+        
+        else if(event == MOVE_RIGHT)
+            position -= sensitivity * glm::normalize(glm::cross((position - front), up));
+
+        else if(event == MOVE_LEFT)
+            position += sensitivity * glm::normalize(glm::cross((position - front), up));
+
+        translationMat = glm::translate(glm::mat4(1.0f), position);
     }
-    */
+
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->update(timer, event, eventTargetId, shader);
 }
 
 

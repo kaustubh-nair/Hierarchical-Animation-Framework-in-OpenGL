@@ -20,7 +20,7 @@ class MeshNode : public SceneNode
 
         MeshNode(int nodeId, std::string meshPath, std::string texturePath, int mappingStyle,
                    glm::mat4 translationMatrix, glm::mat4 scalingMatrix,
-                   glm::mat4 rotationMatrix);
+                   glm::mat4 rotationMatrix, glm::vec3 pos);
 
 
         // TODO remove
@@ -36,6 +36,10 @@ class MeshNode : public SceneNode
         glm::mat4 translationMat;
         glm::mat4 rotationMat;
         glm::mat4 scalingMat;
+
+        glm::vec3 position;
+        glm::vec3 front;
+        glm::vec3 up;
 };
 
 #endif

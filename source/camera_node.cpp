@@ -14,6 +14,7 @@ CameraNode::CameraNode(int Id, glm::vec3 positionVec, glm::vec3 frontVec, glm::v
 
 void CameraNode::update(int timer, int event, int eventTargetId, Shader shader)
 {
+    //TODO Remove?
     if(eventTargetId != id)
         return;
 
@@ -30,6 +31,10 @@ void CameraNode::update(int timer, int event, int eventTargetId, Shader shader)
 
     else if(event == MOVE_LEFT)
         position += sensitivity * glm::normalize(glm::cross((position - front), up));
+
+
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->update(timer, event, eventTargetId, shader);
 }
 
 

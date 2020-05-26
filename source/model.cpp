@@ -32,11 +32,11 @@ SceneNode* Model::addCameraGroupNode(int id, int parentId)
 
 SceneNode* Model::addMeshNode(int id, int parentId, std::string meshPath,
                            std::string texturePath, int mappingStyle, glm::mat4 translationMat,
-                           glm::mat4 scalingMat, glm::mat4 rotationMat)
+                           glm::mat4 scalingMat, glm::mat4 rotationMat, glm::vec3 pos)
 {
     SceneNode *newNode = new MeshNode(id, meshPath, texturePath, mappingStyle,
                                       translationMat, scalingMat,
-                                      rotationMat);
+                                      rotationMat, pos);
     sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
 
     return newNode;

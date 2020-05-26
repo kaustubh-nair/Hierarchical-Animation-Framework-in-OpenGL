@@ -7,6 +7,7 @@ CameraGroupNode::CameraGroupNode(int nodeId) : GroupNode(nodeId)
 }
 
 /* NOTE: Camera heirarchy can only be one level deep */
+// TODO: Refactor?
 CameraNode* CameraGroupNode::getCamera(int camId)
 {
     for(auto itr = children.begin(); itr != children.end(); itr++)

@@ -93,14 +93,16 @@ void Controller::setup(GLFWwindow *window, Shader shader)
 /* returns the target object's id that needs to be passed to the update methods */
 int Controller::reactToCallback(int &event, CameraNode *activeCam)
 {
-    if(
-           (event == LOOK_AROUND)
-        || (event == MOVE_FORWARD)
-        || (event == MOVE_LEFT)
-        || (event == MOVE_BACKWARD)
-        || (event == MOVE_RIGHT)
-    )
+   if(event == LOOK_AROUND)
         return activeCam->id;
+   
+   if(
+       (event == MOVE_FORWARD)
+    || (event == MOVE_LEFT)
+    || (event == MOVE_BACKWARD)
+    || (event == MOVE_RIGHT)
+    )
+       return 6;  //change later
 
     else if(event == CHANGE_CAMERA)
     {
@@ -110,7 +112,7 @@ int Controller::reactToCallback(int &event, CameraNode *activeCam)
     else if(event == TOGGLE_LIGHT_0)
     {
         event = TOGGLE_LIGHTS;
-        return 0;
+        return 0;   // this is the light id in the shader struct - zero indexed
     }
     else if(event == TOGGLE_LIGHT_1)
     {
