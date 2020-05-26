@@ -11,6 +11,7 @@
 
 // problems
 // position in mesh_node needs to be update and kept absolute, even though you're only passing relative positions while creation.
+// connection needs to be added between camera and person for move around, but camera and head for lookaround
 int main()
 {
     glm::vec3 origin = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -42,10 +43,10 @@ int main()
 
 
     SceneNode *person = controller.model.addMeshNode(6, 3, "data/meshes/body.ply", "data/textures/skin.jpg", CYLINDERICAL_MAPPING,
-                                 glm::translate(mat, x), mat, mat, x);
+                                 glm::translate(mat, x + (0.5f*y)), mat, mat, x);
 
     SceneNode *head = controller.model.addMeshNode(10, 6, "data/meshes/sphere.ply", "data/textures/face.jpg", SPHERICAL_MAPPING,
-                                 glm::translate(mat, (2.0f*y) ), glm::scale(mat, 0.12f*unit), glm::rotate(mat, glm::radians(-90.0f), y), x);
+                                 glm::translate(mat, (1.5f*y) ), glm::scale(mat, 0.12f*unit), glm::rotate(mat, glm::radians(-90.0f), y), x);
 
     SceneNode *balloon = controller.model.addMeshNode(7, 3, "data/meshes/sphere.ply", "data/textures/red.jpg", CYLINDERICAL_MAPPING,
                                  glm::translate(mat, -z), glm::scale(mat, 4.0f*unit), mat, x);
@@ -74,7 +75,7 @@ int main()
     SceneNode *light2 = controller.model.addLightNode(14, 1, origin + (4.0f*y) - x);
 
     // Connections are traversed during update only.
-    controller.model.addConnection(head, camera1);
+    controller.model.addConnection(person, camera1);
 
 
     controller.run();

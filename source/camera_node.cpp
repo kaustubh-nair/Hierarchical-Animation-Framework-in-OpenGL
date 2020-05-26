@@ -12,29 +12,31 @@ CameraNode::CameraNode(int Id, glm::vec3 positionVec, glm::vec3 frontVec, glm::v
 }
 
 
-void CameraNode::update(int timer, int event, int eventTargetId, Shader shader)
+void CameraNode::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
 {
     //TODO Remove?
-    if(eventTargetId != id)
-        return;
+    if((eventTargetId == id) || isConnection)
+    {
+        float sensitivity = 0.5f;
 
-    float sensitivity = 0.5f;
+        if(event == MOVE_FORWARD)
+            position -= sensitivity * glm::normalize(position - front);
 
-    if(event == MOVE_FORWARD)
-        position -= sensitivity * glm::normalize(position - front);
+        else if(event == MOVE_BACKWARD)
+            position += sensitivity * glm::normalize(position - front);
 
-    else if(event == MOVE_BACKWARD)
-        position += sensitivity * glm::normalize(position - front);
-    
-    else if(event == MOVE_RIGHT)
-        position -= sensitivity * glm::normalize(glm::cross((position - front), up));
+        else if(event == MOVE_RIGHT)
+            position -= sensitivity * glm::normalize(glm::cross((position - front), up));
 
-    else if(event == MOVE_LEFT)
-        position += sensitivity * glm::normalize(glm::cross((position - front), up));
+        else if(event == MOVE_LEFT)
+            position += sensitivity * glm::normalize(glm::cross((position - front), up));
 
+        for(auto itr = children.begin(); itr != children.end(); itr++)
+            (*itr)->update(timer, event, eventTargetId, shader, true);
+    }
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader);
+        (*itr)->update(timer, event, eventTargetId, shader, false);
 }
 
 

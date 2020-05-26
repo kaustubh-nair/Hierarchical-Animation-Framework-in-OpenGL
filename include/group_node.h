@@ -8,7 +8,7 @@ class GroupNode : public SceneNode
     public:
         GroupNode(int nodeId);
         void render(Shader shader, std::vector <glm::mat4> *stack);
-        void update(int timer, int event, int eventTargetId, Shader shader);
+        void update(int timer, int event, int eventTargetId, Shader shader, bool isConnection);
         void setup(Shader shader);
 };
 #endif

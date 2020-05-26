@@ -31,10 +31,10 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath, in
 }
 
 
-void MeshNode::update(int timer, int event, int eventTargetId, Shader shader)
+void MeshNode::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
 {
 
-    if(id == eventTargetId)
+    if((id == eventTargetId) || isConnection)
     {
         float sensitivity = 0.5f;
 
@@ -51,10 +51,14 @@ void MeshNode::update(int timer, int event, int eventTargetId, Shader shader)
             position += sensitivity * glm::normalize(glm::cross((position - front), up));
 
         translationMat = glm::translate(glm::mat4(1.0f), position);
+
+        for(auto itr = connections.begin(); itr != connections.end(); itr++)
+            (*itr)->update(timer, event, eventTargetId, shader, true);
     }
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader);
+        (*itr)->update(timer, event, eventTargetId, shader, false);
+
 }
 
 
