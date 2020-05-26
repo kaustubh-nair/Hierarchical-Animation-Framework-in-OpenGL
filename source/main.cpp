@@ -30,7 +30,7 @@ int main()
     controller.model.addGroupNode(3, 0);   //meshes
 
     /* NOTE: Camera nodes should be inserted sequentially */
-    controller.model.addCameraNode(4, 2, origin + (5.0f*z) + x, -z, y);
+    controller.model.addCameraNode(4, 2, origin + (5.0f*z) + x + y, -z, y);
     controller.model.addCameraNode(5, 2, origin - (10.0f*x), x, y);
 
 
@@ -53,9 +53,9 @@ int main()
                                  glm::translate(mat, -(1.7f*y) + (0.3f*x)), mat, mat);
     
     controller.model.addMeshNode(9, 3, "data/meshes/rectangle.ply", "data/textures/grass.jpg", CYLINDERICAL_MAPPING,
-                                 glm::translate(mat, -(2.0f*y)), glm::scale(mat, 40.0f * unit), mat);
+                                 mat, glm::scale(mat, 40.0f * unit), mat);
 
-    controller.model.addMeshNode(12, 3, "data/meshes/humbird.ply", "data/textures/black.jpg", CYLINDERICAL_MAPPING,
+    controller.model.addMeshNode(12, 3, "data/meshes/humbird.ply", "data/textures/feather.jpg", CYLINDERICAL_MAPPING,
                                  glm::translate(mat, -x), glm::scale(mat, 0.5f*unit), mat);
 
     
