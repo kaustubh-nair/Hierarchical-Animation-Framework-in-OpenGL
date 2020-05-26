@@ -1,8 +1,8 @@
 #include "../include/mesh_node.h"
 
 MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath, int mappingStyle,
-                   glm::mat4 translationMatrix, glm::mat4 scalingMatrix,
-                   glm::mat4 rotationMatrix, glm::vec3 pos)
+                   glm::vec3 pos, glm::mat4 scalingMatrix,
+                   glm::mat4 rotationMatrix)
 {
     id = nodeId;
 
@@ -16,12 +16,12 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath, in
     texPath = texturePath;
 
     /* initialize transformation matrix */
-    translationMat = translationMatrix;
+    translationMat = glm::translate(glm::mat4(1.0f), pos);
     rotationMat = rotationMatrix;
     scalingMat = scalingMatrix;
 
     position = pos;
-    front = glm::vec3(0.0f, 0.0f, -1.0f);     //NOTE: hard-coded for now.
+    front = glm::vec3(0.0f, 0.0f, 1.0f);     //NOTE: hard-coded for now.
     up = glm::vec3(0.0f, 1.0f, 0.0f);         //NOTE:: hard-coded for now.
 
 

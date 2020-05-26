@@ -19,8 +19,8 @@ class MeshNode : public SceneNode
 
 
         MeshNode(int nodeId, std::string meshPath, std::string texturePath, int mappingStyle,
-                   glm::mat4 translationMatrix, glm::mat4 scalingMatrix,
-                   glm::mat4 rotationMatrix, glm::vec3 pos);
+                   glm::vec3 pos, glm::mat4 scalingMatrix,
+                   glm::mat4 rotationMatrix);
 
 
         // TODO remove
