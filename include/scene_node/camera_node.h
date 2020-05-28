@@ -2,7 +2,7 @@
 #define CAMERA_NODE_H
 
 
-#include "../include/scene_node.h"
+#include "../../include/scene_node/scene_node.h"
 
 // TODO: Remove all occurances of this.
 #define GLM_ENABLE_EXPERIMENTAL 1

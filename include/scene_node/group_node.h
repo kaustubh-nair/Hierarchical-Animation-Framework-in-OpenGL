@@ -1,7 +1,7 @@
 #ifndef GROUP_NODE_H
 #define GROUP_NODE_H
 
-#include "../include/scene_node.h"
+#include "../../include/scene_node/scene_node.h"
 
 class GroupNode : public SceneNode
 {

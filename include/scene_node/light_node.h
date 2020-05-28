@@ -1,7 +1,7 @@
 #ifndef LIGHT_NODE_H
 #define LIGHT_NODE_H
 
-#include "../include/scene_node.h"
+#include "../../include/scene_node/scene_node.h"
 
 
 

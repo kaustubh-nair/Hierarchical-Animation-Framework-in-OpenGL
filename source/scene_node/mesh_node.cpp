@@ -1,4 +1,4 @@
-#include "../include/mesh_node.h"
+#include "../../include/scene_node/mesh_node.h"
 
 MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
                    glm::vec3 pos, glm::mat4 scalingMatrix,
@@ -34,6 +34,7 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 void MeshNode::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
 {
 
+    /*
     if((id == eventTargetId) || isConnection)
     {
         float sensitivity = 0.5f;
@@ -66,6 +67,7 @@ void MeshNode::update(int timer, int event, int eventTargetId, Shader shader, bo
         for(auto itr = connections.begin(); itr != connections.end(); itr++)
             (*itr)->update(timer, event, eventTargetId, shader, true);
     }
+    */
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->update(timer, event, eventTargetId, shader, false);

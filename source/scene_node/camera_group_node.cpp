@@ -1,4 +1,4 @@
-#include "../include/camera_group_node.h"
+#include "../../include/scene_node/camera_group_node.h"
 
 
 CameraGroupNode::CameraGroupNode(int nodeId) : GroupNode(nodeId)

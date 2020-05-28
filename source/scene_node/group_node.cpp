@@ -1,4 +1,4 @@
-#include "../include/group_node.h"
+#include "../../include/scene_node/group_node.h"
 
 GroupNode::GroupNode(int nodeId)
 {

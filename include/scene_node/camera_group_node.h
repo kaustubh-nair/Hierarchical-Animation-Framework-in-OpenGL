@@ -1,8 +1,8 @@
 #ifndef CAMERA_GROUP_NODE_H
 #define CAMERA_GROUP_NODE_H
 
-#include "../include/group_node.h"
-#include "../include/camera_node.h"
+#include "../../include/scene_node/group_node.h"
+#include "../../include/scene_node/camera_node.h"
 
 class CameraGroupNode : public GroupNode
 {

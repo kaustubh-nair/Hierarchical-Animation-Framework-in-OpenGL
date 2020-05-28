@@ -87,11 +87,9 @@ int main()
 
     controller.model.addMeshNode(12, 3, "data/meshes/beethoven.ply", "data/fur.jpg",
                                  glm::translate(mat, origin));
-                                 */
+    */
     SceneNode *light1 = controller.model.addLightNode(13, 1, origin + (4.0f*y) + x);
     SceneNode *light2 = controller.model.addLightNode(14, 1, origin + (4.0f*y) - x);
-
-
 
     controller.run();
     return 0;

@@ -7,12 +7,12 @@
 #include "../include/mesh.h"
 #include "../include/lighting.h"
 
-#include "../include/scene_node.h"
-#include "../include/mesh_node.h"
-#include "../include/camera_node.h"
-#include "../include/light_node.h"
-#include "../include/group_node.h"
-#include "../include/camera_group_node.h"
+#include "../include/scene_node/scene_node.h"
+#include "../include/scene_node/mesh_node.h"
+#include "../include/scene_node/camera_node.h"
+#include "../include/scene_node/light_node.h"
+#include "../include/scene_node/group_node.h"
+#include "../include/scene_node/camera_group_node.h"
 
 class Model
 {

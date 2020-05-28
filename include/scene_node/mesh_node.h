@@ -1,12 +1,12 @@
 #ifndef MESH_NODE_H
 #define MESH_NODE_H
 
-#include "../include/scene_node.h"
+#include "../../include/scene_node/scene_node.h"
 
-#include "../include/stb_image.h"
-#include "../include/vertex.h"
-#include "../include/triangle.h"
-#include "../include/ply_parser.h"
+#include "../../include/stb_image.h"
+#include "../../include/vertex.h"
+#include "../../include/triangle.h"
+#include "../../include/ply_parser.h"
 
 
 

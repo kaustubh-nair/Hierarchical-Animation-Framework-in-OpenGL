@@ -1,4 +1,4 @@
-#include "../include/scene_node.h"
+#include "../../include/scene_node/scene_node.h"
 
 
 // TODO: exit recursion stack if node inserted. Convert to iteration?

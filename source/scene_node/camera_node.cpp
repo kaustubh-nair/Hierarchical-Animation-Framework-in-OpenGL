@@ -1,4 +1,4 @@
-#include "../include/camera_node.h"
+#include "../../include/scene_node/camera_node.h"
 
 CameraNode::CameraNode(int Id, glm::vec3 positionVec, glm::vec3 frontVec, glm::vec3 upVec)
 {

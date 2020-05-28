@@ -1,4 +1,4 @@
-#include "../include/light_node.h"
+#include "../../include/scene_node/light_node.h"
 
 
 LightNode::LightNode(int nodeId, glm::vec3 nodePos, int lightID)

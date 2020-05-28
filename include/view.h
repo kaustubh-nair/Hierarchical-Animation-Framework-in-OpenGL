@@ -15,7 +15,7 @@
 #include <map>
 
 #include "../include/definitions.h"
-#include "../include/camera_node.h"
+#include "../include/scene_node/camera_node.h"
 
 extern float WIDTH;
 extern float HEIGHT;

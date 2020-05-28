@@ -12,8 +12,8 @@
 #include <vector>
 #include <string>
 
-#include "../include/definitions.h"
-#include "../include/shader.h"
+#include "../../include/definitions.h"
+#include "../../include/shader.h"
 
 
 class SceneNode
