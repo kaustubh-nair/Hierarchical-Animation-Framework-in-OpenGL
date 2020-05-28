@@ -22,9 +22,6 @@ class MeshNode : public SceneNode
                    glm::vec3 pos, glm::mat4 scalingMatrix,
                    glm::mat4 rotationMatrix);
 
-
-        // TODO remove
-        float angle;
     private:
         unsigned int VAO, VBO, EBO;
         unsigned int texture;
