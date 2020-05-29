@@ -14,6 +14,7 @@
 #include "../include/scene_node/animal.h"
 #include "../include/scene_node/basket.h"
 #include "../include/scene_node/person.h"
+#include "../include/scene_node/head.h"
 #include "../include/scene_node/movable_person.h"
 
 
@@ -54,17 +55,23 @@ int main()
 
     SceneNode *leftHmdA = new CameraNode(5, X +(2.0f*Y), Z, Y);
     SceneNode *rightHmdA = new CameraNode(6, X +(2.0f*Y), Z, Y);
+    SceneNode *headA = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
+                                  (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
 
     SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg",
-                                                     X + (0.5f*Y), MAT, MAT, MAT);
+                                                     -X + (0.5f*Y), MAT, MAT, MAT);
 
     SceneNode *leftHmdB = new CameraNode(7, ORIGIN - (10.0f*X), X, Y);
     SceneNode *rightHmdB = new CameraNode(8, ORIGIN - (10.0f*X), X, Y);
+    SceneNode *headB = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
+                                  (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
 
     SceneNode *personC = new MovablePerson(14, "data/meshes/body.ply", "data/textures/skin.jpg",
-                                                     X + (0.5f*Y), MAT, MAT, MAT);
+                                                     (0.5f*Y), MAT, MAT, MAT);
+    SceneNode *headC = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
+                                  (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
     SceneNode *balloon = new Balloon(16, "data/meshes/balloon.ply", "data/textures/purple.jpeg",
                                          ORIGIN + Y, MAT, MAT, glm::scale(MAT, 3.0f*UNIT));
@@ -92,6 +99,7 @@ int main()
 
 
     controller.model.addNode(personA, 3);
+    controller.model.addNode(headA, 10);
 
 
     controller.model.addCameraNode(leftHmdA, 2);
@@ -101,6 +109,7 @@ int main()
 
 
     controller.model.addNode(personB, 3);
+    controller.model.addNode(headB, 12);
 
     controller.model.addCameraNode(leftHmdB, 2);
     controller.model.addCameraNode(rightHmdB, 2);
@@ -110,6 +119,7 @@ int main()
 
 
     controller.model.addNode(personC, 3);
+    controller.model.addNode(headC, 14);
     controller.model.addNode(balloon, 3);
     controller.model.addNode(basket, 16);
     controller.model.addNode(animal, 16);
@@ -172,6 +182,7 @@ void MovablePerson::update(int timer, int event, int eventTargetId, Shader shade
 void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
 void Animal::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
 void Basket::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+void Head::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
 
 
 void Balloon::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
