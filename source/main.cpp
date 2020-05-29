@@ -44,7 +44,7 @@ int main()
     /* NOTE: Camera nodes should be inserted with sequential ids */
 
     /* main camera */
-    SceneNode *camera = new CameraNode(4, ORIGIN + (5.0f*Z) + Y, -Z - ORIGIN = (5.0f*Z) - X - Y, Y);
+    SceneNode *camera = new CameraNode(4, ORIGIN + (5.0f*Z) + Y, -Z - ORIGIN - (5.0f*Z) - X - Y, Y);
     SceneNode *grass = new MeshNode(9, "data/meshes/rectangle.ply", "data/textures/grass.jpg",
                                   ORIGIN, glm::scale(MAT, 40.0f * UNIT), MAT, MAT);
 
@@ -53,8 +53,8 @@ int main()
                                      "data/textures/skin.jpg",
                               X + (0.5f*Y), MAT, MAT, MAT);
 
-    SceneNode *leftHmdA = new CameraNode(5, X +(2.0f*Y), Z, Y);
-    SceneNode *rightHmdA = new CameraNode(6, X +(2.0f*Y), Z, Y);
+    SceneNode *leftHmdA = new CameraNode(5, (0.5f*Y)+ (0.2f*X), Z, Y);
+    SceneNode *rightHmdA = new CameraNode(6, (0.5f*Y)- (0.2f*X), Z, Y);
     SceneNode *headA = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
                                   (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
@@ -62,8 +62,8 @@ int main()
     SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg",
                                                      -X + (0.5f*Y), MAT, MAT, MAT);
 
-    SceneNode *leftHmdB = new CameraNode(7, ORIGIN - (10.0f*X), X, Y);
-    SceneNode *rightHmdB = new CameraNode(8, ORIGIN - (10.0f*X), X, Y);
+    SceneNode *leftHmdB = new CameraNode(7, (0.5f*Y)+ (0.2f*X), Z, Y);
+    SceneNode *rightHmdB = new CameraNode(8, (0.5f*Y)- (0.2f*X), Z, Y);
     SceneNode *headB = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
                                   (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
@@ -138,7 +138,7 @@ int time(int seconds)
     return 60 * seconds;  //assume 60fps
 }
 
-void Person::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+void Person::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection, GLFWwindow *activeWindow)
 {
     if((id == eventTargetId) || isConnection)
     {
@@ -170,22 +170,62 @@ void Person::update(int timer, int event, int eventTargetId, Shader shader, bool
 
 
         for(auto itr = connections.begin(); itr != connections.end(); itr++)
-            (*itr)->update(timer, event, eventTargetId, shader, true);
+            (*itr)->update(timer, event, eventTargetId, shader, true, activeWindow);
     }
     // TODO: add else here?
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader, false);
-
+        (*itr)->update(timer, event, eventTargetId, shader, false, activeWindow);
 }
 
-void MovablePerson::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
-void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
-void Animal::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
-void Basket::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
-void Head::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+void MovablePerson::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection, GLFWwindow *activeWindow) {};
+void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection, GLFWwindow *activeWindow) {};
+void Animal::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection, GLFWwindow *activeWindow) {};
+void Basket::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection, GLFWwindow *activeWindow) {};
+
+void Head::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection, GLFWwindow *activeWindow)
+{
+    // look around
+
+    static double oldX = 0.0, oldY = 0.0;
+
+    double x, y;
+    glfwGetCursorPos(activeWindow, &x, &y);
+
+    float xoffset = x - oldX;
+    float yoffset = y - oldY;
+    oldX = x;
+    oldY = y;
+
+    float sensitivity = 0.2;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    yaw   += xoffset;
+    pitch += yoffset;
+
+    if(pitch > 89.0f)
+        pitch = 89.0f;
+    if(pitch < -89.0f)
+        pitch = -89.0f;
+
+    glm::vec3 direction;
+    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    direction.y = -sin(glm::radians(pitch));
+    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+
+    front = glm::normalize(direction);
+
+    glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
+    up = glm::normalize(glm::cross(right, front));
+
+    rotationMat = glm::rotate(MAT, glm::radians(45.0f), front);
+
+    for(auto itr = connections.begin(); itr != connections.end(); itr++)
+        (*itr)->update(timer, event, eventTargetId, shader, true, activeWindow);
+}
 
 
-void Balloon::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+void Balloon::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection, GLFWwindow *activeWindow)
 {
     if(timer > time(4))
     {
@@ -195,5 +235,5 @@ void Balloon::update(int timer, int event, int eventTargetId, Shader shader, boo
     }
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader, false);
+        (*itr)->update(timer, event, eventTargetId, shader, false, activeWindow);
 }

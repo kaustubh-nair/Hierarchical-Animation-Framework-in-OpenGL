@@ -48,7 +48,7 @@ void LightNode::render(Shader shader, std::vector<glm::mat4> *stack)
     glBindVertexArray(0); 
 }
 
-void LightNode::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+void LightNode::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection, GLFWwindow *activeWindow)
 {
     if(event == TOGGLE_LIGHTS)
     {

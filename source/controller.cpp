@@ -58,7 +58,7 @@ void Controller::render(int timer, GLFWwindow *window, CameraNode *activeCam)
         view.reactToMouseCallbacks(window, activeCam);
         int event = view.listenToCallbacks(window);
         int target = reactToCallback(event, activeCam);
-        model.update(timer, event, target, shader);
+        model.update(timer, event, target, shader, window);
     }
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -94,7 +94,7 @@ void Controller::setup(GLFWwindow *window, Shader shader)
 int Controller::reactToCallback(int &event, CameraNode *activeCam)
 {
    if(event == LOOK_AROUND)
-        return activeCam->id;
+        return 100;  //TODO
    
    if(
        (event == MOVE_FORWARD)
@@ -102,7 +102,7 @@ int Controller::reactToCallback(int &event, CameraNode *activeCam)
     || (event == MOVE_BACKWARD)
     || (event == MOVE_RIGHT)
     )
-       return 10;  //change later
+       return 10;  //TODO: change later
 
     else if(event == CHANGE_CAMERA)
     {

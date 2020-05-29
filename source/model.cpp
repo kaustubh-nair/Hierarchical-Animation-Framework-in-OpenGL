@@ -66,9 +66,9 @@ void Model::render(Shader shader)
     }
 }
 
-void Model::update(int timer, int event, int eventTargetId, Shader shader)
+void Model::update(int timer, int event, int eventTargetId, Shader shader, GLFWwindow *activeWindow)
 {
-    sceneRoot->update(timer, event, eventTargetId, shader, false);
+    sceneRoot->update(timer, event, eventTargetId, shader, false, activeWindow);
 }
 
 
