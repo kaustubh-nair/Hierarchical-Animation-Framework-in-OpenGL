@@ -8,7 +8,7 @@ class Balloon : public MeshNode
     public:
         void update(int timer, int event, int eventTargetId, Shader shader, bool isConnection);
         using MeshNode::MeshNode;
-        glm::vec3 size = glm::vec3(1.0f, 1.0f, 1.0f);
+        glm::vec3 size = glm::vec3(3.0f, 3.0f, 3.0f);
 };
 
 #endif

@@ -67,7 +67,7 @@ int main()
                                                      X + (0.5f*Y), MAT, MAT, MAT);
 
     SceneNode *balloon = new Balloon(16, "data/meshes/balloon.ply", "data/textures/purple.jpeg",
-                                         ORIGIN + Y, MAT, MAT, MAT);
+                                         ORIGIN + Y, MAT, MAT, glm::scale(MAT, 3.0f*UNIT));
     SceneNode *basket = new Basket(17, "data/meshes/sphere.ply", "data/textures/skin.jpg",
                                          ORIGIN, MAT, MAT, MAT);
     SceneNode *animal = new Animal(18, "data/meshes/cow.ply", "data/textures/black.jpg",
@@ -115,8 +115,8 @@ int main()
     controller.model.addNode(animal, 16);
     controller.model.addNode(bird, 3);
 
-    SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + X, "data/meshes/sphere.ply");
-    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - X, "data/meshes/sphere.ply");
+    SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply");
+    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply");
 
 
     controller.run();
