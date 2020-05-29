@@ -6,7 +6,7 @@
 class Person : public MeshNode
 {
     public:
-        void update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+        void update(int timer, int event, int eventTargetId, Shader shader, bool isConnection);
         using MeshNode::MeshNode;
 };
 

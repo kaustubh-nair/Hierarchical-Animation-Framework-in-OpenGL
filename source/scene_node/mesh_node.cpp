@@ -30,51 +30,6 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
         vertex->computeTextureCoords();
 }
 
-
-void MeshNode::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
-{
-
-    /*
-    if((id == eventTargetId) || isConnection)
-    {
-        float sensitivity = 0.5f;
-
-        if(event == MOVE_FORWARD)
-        {
-            position -= sensitivity * glm::normalize(position - front);
-            translationMat = glm::translate(glm::mat4(1.0f), position);
-        }
-
-        else if(event == MOVE_BACKWARD)
-        {
-            position += sensitivity * glm::normalize(position - front);
-            translationMat = glm::translate(glm::mat4(1.0f), position);
-        }
-        
-        else if(event == MOVE_RIGHT)
-        {
-            position -= sensitivity * glm::normalize(glm::cross((position - front), up));
-            translationMat = glm::translate(glm::mat4(1.0f), position);
-        }
-
-        else if(event == MOVE_LEFT)
-        {
-            position += sensitivity * glm::normalize(glm::cross((position - front), up));
-            translationMat = glm::translate(glm::mat4(1.0f), position);
-        }
-
-
-        for(auto itr = connections.begin(); itr != connections.end(); itr++)
-            (*itr)->update(timer, event, eventTargetId, shader, true);
-    }
-    */
-
-    for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader, false);
-
-}
-
-
 void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 {
     glm::mat4 model = glm::mat4(1.0f);

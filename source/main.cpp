@@ -41,7 +41,7 @@ int main()
 
     /* main camera */
     SceneNode *camera = new CameraNode(4, origin + (5.0f*z) + x + y, -z, y);
-    SceneNode *grass = new Person(9, "data/meshes/rectangle.ply", "data/textures/grass.jpg",
+    SceneNode *grass = new MeshNode(9, "data/meshes/rectangle.ply", "data/textures/grass.jpg",
                                   origin, glm::scale(mat, 40.0f * unit), mat);
 
 
@@ -60,17 +60,17 @@ int main()
     SceneNode *rightHmdB = new CameraNode(8, origin - (10.0f*x), x, y);
 
 
-    SceneNode *personC = new Person(14, "data/meshes/body.ply", "data/textures/skin.jpg",
+    SceneNode *personC = new MovablePerson(14, "data/meshes/body.ply", "data/textures/skin.jpg",
                                                      x + (0.5f*y), mat, mat);
 
-    SceneNode *balloon = new Person(16, "data/meshes/sphere.ply", "data/textures/red.jpg",
+    SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/red.jpg",
                                                      -z, glm::scale(mat, 4.0f*unit), mat);
-    SceneNode *basket = new Person(17, "data/meshes/cube.ply", "data/textures/skin.jpg",
+    SceneNode *basket = new Basket(17, "data/meshes/cube.ply", "data/textures/skin.jpg",
                                                      -(1.7f*y), mat, mat);
-    SceneNode *animal = new Person(18, "data/meshes/cow.ply", "data/textures/black.jpg",
+    SceneNode *animal = new Animal(18, "data/meshes/cow.ply", "data/textures/black.jpg",
                                                      -(1.7f*y) + (0.3f*x), mat, mat);
 
-    SceneNode *bird = new Person(19, "data/meshes/humbird.ply", "data/textures/feather.jpg",
+    SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg",
                                                    -x, glm::scale(mat, 0.5f*unit), mat);
 
 
@@ -119,3 +119,49 @@ int main()
     controller.run();
     return 0;
 }
+
+void Person::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+{
+    if((id == eventTargetId) || isConnection)
+    {
+        float sensitivity = 0.5f;
+
+        if(event == MOVE_FORWARD)
+        {
+            position -= sensitivity * glm::normalize(position - front);
+            translationMat = glm::translate(glm::mat4(1.0f), position);
+        }
+
+        else if(event == MOVE_BACKWARD)
+        {
+            position += sensitivity * glm::normalize(position - front);
+            translationMat = glm::translate(glm::mat4(1.0f), position);
+        }
+
+        else if(event == MOVE_RIGHT)
+        {
+            position -= sensitivity * glm::normalize(glm::cross((position - front), up));
+            translationMat = glm::translate(glm::mat4(1.0f), position);
+        }
+
+        else if(event == MOVE_LEFT)
+        {
+            position += sensitivity * glm::normalize(glm::cross((position - front), up));
+            translationMat = glm::translate(glm::mat4(1.0f), position);
+        }
+
+
+        for(auto itr = connections.begin(); itr != connections.end(); itr++)
+            (*itr)->update(timer, event, eventTargetId, shader, true);
+    }
+
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->update(timer, event, eventTargetId, shader, false);
+
+}
+
+void MovablePerson::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+void Animal::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+void Basket::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+void Balloon::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
