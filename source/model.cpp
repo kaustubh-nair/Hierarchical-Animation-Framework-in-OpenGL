@@ -11,47 +11,20 @@ void Model::setup(Shader shader)
     sceneRoot->setup(shader);
 }
 
-SceneNode* Model::addGroupNode(int id, int parentId)
-{
-    SceneNode *newNode = new GroupNode(id);
-    sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
 
-    return newNode;
+void Model::addNode(SceneNode *node, int parentId)
+{
+    sceneRoot = SceneNode::insertNode(node->id, parentId, node, sceneRoot);
 }
 
 
-// REMOVE?
-SceneNode* Model::addCameraGroupNode(int id, int parentId)
+void Model::addCameraNode(SceneNode *node, int parentId)
 {
-    SceneNode *newNode = new CameraGroupNode(id);
-    sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
+    addNode(node, parentId);
 
-    return newNode;
-}
-
-
-SceneNode* Model::addMeshNode(int id, int parentId, std::string meshPath,
-                 std::string texturePath, glm::vec3 pos,
-                 glm::mat4 scalingMat, glm::mat4 rotationMat)
-{
-    SceneNode *newNode = new MeshNode(id, meshPath, texturePath,
-                                      pos, scalingMat, rotationMat);
-    sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
-
-    return newNode;
-}
-
-
-SceneNode* Model::addCameraNode(int id, int parentId, glm::vec3 position,
-                          glm::vec3 front, glm::vec3 up)
-{
-    SceneNode *newNode = new CameraNode(id, position, front, up);
-    sceneRoot = SceneNode::insertNode(id, parentId, newNode, sceneRoot);
-
-    if(!firstCameraId) { firstCameraId = id; }
+    if(!firstCameraId) { firstCameraId = node->id; }
     numCameras++;
 
-    return newNode;
 }
 
 

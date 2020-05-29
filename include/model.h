@@ -26,17 +26,11 @@ class Model
 
         Model();
         void setup(Shader shader);
-        SceneNode* addGroupNode(int id, int parentId);
-        SceneNode* addCameraGroupNode(int id, int parentId);
 
-        SceneNode* addMeshNode(int id, int parentId, std::string meshPath,
-                         std::string texturePath, glm::vec3 pos,
-                         glm::mat4 scalingMat, glm::mat4 rotationMat);
-
-        SceneNode* addCameraNode(int id, int parentId, glm::vec3 position,
-                           glm::vec3 front, glm::vec3 up);
-
+        void addNode(SceneNode *node, int parentId);
         SceneNode* addLightNode(int id, int parentId, glm::vec3 position);
+        void addCameraNode(SceneNode *node, int parentId);
+
         void addConnection(SceneNode *node1, SceneNode *node2);
 
         CameraNode* getCamera(int camId);
