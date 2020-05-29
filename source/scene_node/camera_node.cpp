@@ -42,5 +42,5 @@ void CameraNode::update(int timer, int event, int eventTargetId, Shader shader, 
 
 void CameraNode::updateLookAt()
 {
-    lookAt = glm::lookAt(position, front, up);
+    lookAt = glm::lookAt(position, position + front, up);
 }

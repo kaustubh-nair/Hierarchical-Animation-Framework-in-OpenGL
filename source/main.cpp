@@ -40,7 +40,7 @@ int main()
     /* NOTE: Camera nodes should be inserted with sequential ids */
 
     /* main camera */
-    SceneNode *camera = new CameraNode(4, origin + (5.0f*z) + x + y, -z, y);
+    SceneNode *camera = new CameraNode(4, origin + (5.0f*z) + x + y, -z - origin = (5.0f*z) - x - y, y);
     SceneNode *grass = new MeshNode(9, "data/meshes/rectangle.ply", "data/textures/grass.jpg",
                                   origin, glm::scale(mat, 40.0f * unit), mat);
 

@@ -93,7 +93,7 @@ void View::reactToMouseCallbacks(GLFWwindow *window, CameraNode *camera)
     oldX = x;
     oldY = y;
 
-    float sensitivity = 0.5;
+    float sensitivity = 0.2;
     xoffset *= sensitivity;
     yoffset *= sensitivity;
 
@@ -107,9 +107,13 @@ void View::reactToMouseCallbacks(GLFWwindow *window, CameraNode *camera)
 
     glm::vec3 direction;
     direction.x = cos(glm::radians(camera->yaw)) * cos(glm::radians(camera->pitch));
-    direction.y = sin(glm::radians(camera->pitch));
+    direction.y = -sin(glm::radians(camera->pitch));
     direction.z = sin(glm::radians(camera->yaw)) * cos(glm::radians(camera->pitch));
+
     camera->front = glm::normalize(direction);
+
+    glm::vec3 right = glm::normalize(glm::cross(camera->front, glm::vec3(0.0f, 1.0f, 0.0f)));
+    camera->up = glm::normalize(glm::cross(right, camera->front));
     camera->updateLookAt();
 }
 
