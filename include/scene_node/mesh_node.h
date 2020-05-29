@@ -20,7 +20,7 @@ class MeshNode : public SceneNode
 
         MeshNode(int nodeId, std::string meshPath, std::string texturePath,
                    glm::vec3 pos, glm::mat4 scalingMatrix,
-                   glm::mat4 rotationMatrix);
+                   glm::mat4 rotationMatrix, glm::mat4 selfScalingMatrix);
 
     protected:
         glm::vec3 position;
@@ -30,6 +30,7 @@ class MeshNode : public SceneNode
         glm::mat4 translationMat;
         glm::mat4 rotationMat;
         glm::mat4 scalingMat;
+        glm::mat4 selfScalingMat;
 
     private:
         unsigned int VAO, VBO, EBO;

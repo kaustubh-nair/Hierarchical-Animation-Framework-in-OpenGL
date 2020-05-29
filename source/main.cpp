@@ -16,17 +16,20 @@
 #include "../include/scene_node/person.h"
 #include "../include/scene_node/movable_person.h"
 
+
+// constants 
+glm::vec3 ORIGIN = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 X = glm::vec3(1.0f, 0.0f, 0.0f);
+glm::vec3 Y = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 Z = glm::vec3(0.0f, 0.0f, 1.0f);
+glm::vec3 UNIT = glm::vec3(1.0f, 1.0f, 1.0f);
+glm::mat4 MAT = glm::mat4(1.0f);
+
 // problems
-// position in mesh_node needs to be update and kept absolute, even though you're only passing relative positions while creation.
+// position in mesh_node needs to be update and kept absolute, even though You're onlY passing relative positions while creation.
 // connection needs to be added between camera and personA for move around, but camera and head for lookaround
 int main()
 {
-    glm::vec3 origin = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 x = glm::vec3(1.0f, 0.0f, 0.0f);
-    glm::vec3 y = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 z = glm::vec3(0.0f, 0.0f, 1.0f);
-    glm::vec3 unit = glm::vec3(1.0f, 1.0f, 1.0f);
-    glm::mat4 mat = glm::mat4(1.0f);
 
     Controller controller;
 
@@ -40,41 +43,41 @@ int main()
     /* NOTE: Camera nodes should be inserted with sequential ids */
 
     /* main camera */
-    SceneNode *camera = new CameraNode(4, origin + (5.0f*z) + x + y, -z - origin = (5.0f*z) - x - y, y);
+    SceneNode *camera = new CameraNode(4, ORIGIN + (5.0f*Z) + Y, -Z - ORIGIN = (5.0f*Z) - X - Y, Y);
     SceneNode *grass = new MeshNode(9, "data/meshes/rectangle.ply", "data/textures/grass.jpg",
-                                  origin, glm::scale(mat, 40.0f * unit), mat);
+                                  ORIGIN, glm::scale(MAT, 40.0f * UNIT), MAT, MAT);
 
 
     SceneNode *personA  = new Person(10, "data/meshes/body.ply",
                                      "data/textures/skin.jpg",
-                              x + (0.5f*y), mat, mat);
+                              X + (0.5f*Y), MAT, MAT, MAT);
 
-    SceneNode *leftHmdA = new CameraNode(5, x +(2.0f*y), z, y);
-    SceneNode *rightHmdA = new CameraNode(6, x +(2.0f*y), z, y);
+    SceneNode *leftHmdA = new CameraNode(5, X +(2.0f*Y), Z, Y);
+    SceneNode *rightHmdA = new CameraNode(6, X +(2.0f*Y), Z, Y);
 
 
     SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg",
-                                                     x + (0.5f*y), mat, mat);
+                                                     X + (0.5f*Y), MAT, MAT, MAT);
 
-    SceneNode *leftHmdB = new CameraNode(7, origin - (10.0f*x), x, y);
-    SceneNode *rightHmdB = new CameraNode(8, origin - (10.0f*x), x, y);
+    SceneNode *leftHmdB = new CameraNode(7, ORIGIN - (10.0f*X), X, Y);
+    SceneNode *rightHmdB = new CameraNode(8, ORIGIN - (10.0f*X), X, Y);
 
 
     SceneNode *personC = new MovablePerson(14, "data/meshes/body.ply", "data/textures/skin.jpg",
-                                                     x + (0.5f*y), mat, mat);
+                                                     X + (0.5f*Y), MAT, MAT, MAT);
 
-    SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/red.jpg",
-                                                     -z, glm::scale(mat, 4.0f*unit), mat);
-    SceneNode *basket = new Basket(17, "data/meshes/cube.ply", "data/textures/skin.jpg",
-                                                     -(1.7f*y), mat, mat);
+    SceneNode *balloon = new Balloon(16, "data/meshes/balloon.ply", "data/textures/purple.jpeg",
+                                         ORIGIN + Y, MAT, MAT, MAT);
+    SceneNode *basket = new Basket(17, "data/meshes/sphere.ply", "data/textures/skin.jpg",
+                                         ORIGIN, MAT, MAT, MAT);
     SceneNode *animal = new Animal(18, "data/meshes/cow.ply", "data/textures/black.jpg",
-                                                     -(1.7f*y) + (0.3f*x), mat, mat);
+                                         ORIGIN, MAT, MAT, MAT);
 
     SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg",
-                                                   -x, glm::scale(mat, 0.5f*unit), mat);
+                                        -X, glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
 
 
-    /* NOTE: id = 0 is scene root, which is inserted automatically. */
+    /* NOTE: id = 0 is scene root, which is inserted autoMATicallY. */
 
     /* id, parentId */
     controller.model.addNode(lightGroup, 0);   //lights
@@ -112,41 +115,46 @@ int main()
     controller.model.addNode(animal, 16);
     controller.model.addNode(bird, 3);
 
-    SceneNode *light1 = controller.model.addLightNode(13, 1, origin + (4.0f*y) + x);
-    SceneNode *light2 = controller.model.addLightNode(14, 1, origin + (4.0f*y) - x);
+    SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + X);
+    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - X);
 
 
     controller.run();
     return 0;
 }
 
+int time(int seconds)
+{
+    return 60 * seconds;  //assume 60fps
+}
+
 void Person::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
 {
     if((id == eventTargetId) || isConnection)
     {
-        float sensitivity = 0.5f;
+        float sensitivitY = 0.5f;
 
         if(event == MOVE_FORWARD)
         {
-            position -= sensitivity * glm::normalize(position - front);
+            position -= sensitivitY * glm::normalize(position - front);
             translationMat = glm::translate(glm::mat4(1.0f), position);
         }
 
         else if(event == MOVE_BACKWARD)
         {
-            position += sensitivity * glm::normalize(position - front);
+            position += sensitivitY * glm::normalize(position - front);
             translationMat = glm::translate(glm::mat4(1.0f), position);
         }
 
         else if(event == MOVE_RIGHT)
         {
-            position -= sensitivity * glm::normalize(glm::cross((position - front), up));
+            position -= sensitivitY * glm::normalize(glm::cross((position - front), up));
             translationMat = glm::translate(glm::mat4(1.0f), position);
         }
 
         else if(event == MOVE_LEFT)
         {
-            position += sensitivity * glm::normalize(glm::cross((position - front), up));
+            position += sensitivitY * glm::normalize(glm::cross((position - front), up));
             translationMat = glm::translate(glm::mat4(1.0f), position);
         }
 
@@ -154,7 +162,7 @@ void Person::update(int timer, int event, int eventTargetId, Shader shader, bool
         for(auto itr = connections.begin(); itr != connections.end(); itr++)
             (*itr)->update(timer, event, eventTargetId, shader, true);
     }
-
+    // TODO: add else here?
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->update(timer, event, eventTargetId, shader, false);
 
@@ -164,4 +172,17 @@ void MovablePerson::update(int timer, int event, int eventTargetId, Shader shade
 void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
 void Animal::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
 void Basket::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
-void Balloon::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+
+
+void Balloon::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+{
+    if(timer > time(4))
+    {
+        translationMat = glm::translate(translationMat, glm::vec3(0.003f, 0.006f, 0.0f));
+        size += 0.005f;
+        selfScalingMat = glm::scale(MAT, size);
+    }
+
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->update(timer, event, eventTargetId, shader, false);
+}

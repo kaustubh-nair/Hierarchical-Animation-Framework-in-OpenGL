@@ -80,7 +80,26 @@ class PlyParser
               head_position = "end";
 
             split(line, split_line, ' ');
-            if(std::stoi(split_line[0]) == 4)
+            if(std::stoi(split_line[0]) == 5)
+            {
+                /* store indices */
+                int v1 = std::stoi(split_line[1].c_str());
+                int v2 = std::stoi(split_line[2].c_str());
+                int v3 = std::stoi(split_line[3].c_str());
+                int v4 = std::stoi(split_line[4].c_str());
+                int v5 = std::stoi(split_line[5].c_str());
+
+                Triangle triangle1(v1, v2, v4);
+                triangles.push_back(triangle1);
+
+                Triangle triangle2(v2, v3, v4);
+                triangles.push_back(triangle2);
+
+                Triangle triangle3(v1, v4, v5);
+                triangles.push_back(triangle3);
+
+            }
+            else if(std::stoi(split_line[0]) == 4)
             {
                 /* store indices */
                 int v1 = std::stoi(split_line[1].c_str());
@@ -106,7 +125,7 @@ class PlyParser
             }
             else
             {
-                print("Face not triangular");
+                print("Face shape not supported");
             }
 
             j--;

@@ -2,7 +2,7 @@
 
 MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
                    glm::vec3 pos, glm::mat4 scalingMatrix,
-                   glm::mat4 rotationMatrix)
+                   glm::mat4 rotationMatrix, glm::mat4 selfScalingMatrix)
 {
     id = nodeId;
 
@@ -19,6 +19,7 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
     translationMat = glm::translate(glm::mat4(1.0f), pos);
     rotationMat = rotationMatrix;
     scalingMat = scalingMatrix;
+    selfScalingMat = selfScalingMatrix;
 
     position = pos;
     front = glm::vec3(0.0f, 0.0f, 1.0f);     //NOTE: hard-coded for now.
@@ -37,9 +38,13 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
     stack->push_back(scalingMat);
     stack->push_back(rotationMat);
     stack->push_back(translationMat);
+    stack->push_back(selfScalingMat);
 
+    //stack but composition happens LIFO
     for(auto i = stack->begin(); i != stack->end(); i++)
         model = model * (*i);
+
+    stack->pop_back();
 
     shader.setMat4("model", model);
 
