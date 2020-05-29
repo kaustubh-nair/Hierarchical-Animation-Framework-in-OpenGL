@@ -28,7 +28,8 @@ class Model
         void setup(Shader shader);
 
         void addNode(SceneNode *node, int parentId);
-        SceneNode* addLightNode(int id, int parentId, glm::vec3 position);
+        SceneNode* addLightNode(int id, int parentId, glm::vec3 position,
+                                std::string meshPath);
         void addCameraNode(SceneNode *node, int parentId);
 
         void addConnection(SceneNode *node1, SceneNode *node2);

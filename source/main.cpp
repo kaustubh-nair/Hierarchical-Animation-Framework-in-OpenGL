@@ -115,8 +115,8 @@ int main()
     controller.model.addNode(animal, 16);
     controller.model.addNode(bird, 3);
 
-    SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + X);
-    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - X);
+    SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + X, "data/meshes/sphere.ply");
+    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - X, "data/meshes/sphere.ply");
 
 
     controller.run();

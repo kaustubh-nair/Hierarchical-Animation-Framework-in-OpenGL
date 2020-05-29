@@ -23,7 +23,13 @@ void main()
     float ambientStrength = 0.3;
     vec3 color = vec3(texture(Texture, TexCoord));
 
-    vec3 result = vec3(0.0f, 0.0f, 0.0f);
+    vec3 result;
+    if(color == vec3(0.0f, 0.0f, 0.0f))  //TODO hacky for no textures - light nodes
+        result = vec3(1.0f, 1.0f, 1.0f);
+    else
+    {
+
+    result = vec3(0.0f, 0.0f, 0.0f);
 
     for(int i = 0; i < NUMBER_OF_LIGHTS; i++)
     {
@@ -49,6 +55,7 @@ void main()
     // ambient
     vec3 ambient = ambientStrength * color;
     result += ambient;
+    }
 
     FragColor =  vec4(result, 1.0f);
 }
