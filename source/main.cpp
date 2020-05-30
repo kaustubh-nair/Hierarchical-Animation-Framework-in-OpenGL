@@ -152,6 +152,16 @@ int main()
     personC->dependantTarget = target3;
     personA->ownedTarget = target3;
 
+    Target *target4 = new Target();
+    headA->ownedTarget = target4;
+    leftHmdA->dependantTarget = target4;
+    rightHmdA->dependantTarget = target4;
+
+    Target *target5 = new Target();
+    headB->ownedTarget = target5;
+    leftHmdB->dependantTarget = target5;
+    rightHmdB->dependantTarget = target5;
+
 
     //cameraGroup->leftCamIds.push_back(birdCam->id);  TODO
     //cameraGroup->rightCamIds.push_back(camera->id);
