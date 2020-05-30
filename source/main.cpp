@@ -127,7 +127,8 @@ int main()
     controller.model.addNode(bird, 3);
 
     SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
-    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, SPOTLIGHT);
+    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
+    SceneNode *light3 = controller.model.addLightNode(14, 1, ORIGIN + (6.0f*Y) - (1.0f*X), "data/meshes/tetrahedron.ply", UNIT, SPOTLIGHT);
 
 
     cameraGroup->leftCamIds.push_back(leftHmdA->id);
@@ -139,10 +140,13 @@ int main()
     cameraGroup->leftCamIds.push_back(rightHmdA->id);
     cameraGroup->rightCamIds.push_back(rightHmdB->id);
 
-    Target *target = new Target();
-    bird->dependantTarget = target;
-    balloon->ownedTarget = target;
+    Target *target1 = new Target();
+    bird->dependantTarget = target1;
+    balloon->ownedTarget = target1;
 
+    Target *target2 = new Target();
+    light3->dependantTarget = target2;
+    bird->ownedTarget = target2;
 
     //cameraGroup->leftCamIds.push_back(birdCam->id);  TODO
     //cameraGroup->rightCamIds.push_back(camera->id);
