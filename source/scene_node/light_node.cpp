@@ -75,4 +75,11 @@ void LightNode::update(int timer, int event, int eventTargetId, Shader shader, b
             active = !active;
         }
     }
+
+    // if target constrained
+    if(dependantTarget != nullptr)
+    {
+        direction = normalize(dependantTarget->data);
+        shader.setVec3("lights[" + std::to_string(lightId) + "].dir", direction);
+    }
 }

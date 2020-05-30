@@ -35,16 +35,23 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 {
     glm::mat4 model = glm::mat4(1.0f);
 
+    stack->push_back(selfScalingMat);
     stack->push_back(scalingMat);
     stack->push_back(rotationMat);
     stack->push_back(translationMat);
-    stack->push_back(selfScalingMat);
 
     //stack but composition happens LIFO
     for(auto i = stack->begin(); i != stack->end(); i++)
-        model = model * (*i);
+        model = (*i) * model;
 
+    stack->pop_back();  //change to dequeue;
     stack->pop_back();
+    stack->pop_back();
+    stack->pop_back();
+
+    stack->push_back(scalingMat);
+    stack->push_back(rotationMat);
+    stack->push_back(translationMat);
 
     shader.setMat4("model", model);
 

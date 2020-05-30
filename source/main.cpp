@@ -139,6 +139,11 @@ int main()
     cameraGroup->leftCamIds.push_back(rightHmdA->id);
     cameraGroup->rightCamIds.push_back(rightHmdB->id);
 
+    Target *target = new Target();
+    light2->dependantTarget = target;
+    personA->ownedTarget = target;
+
+
     //cameraGroup->leftCamIds.push_back(birdCam->id);  TODO
     //cameraGroup->rightCamIds.push_back(camera->id);
 
@@ -181,6 +186,11 @@ void Person::update(int timer, int event, int eventTargetId, Shader shader, bool
         {
             position += sensitivitY * glm::normalize(glm::cross((position - front), up));
             translationMat = glm::translate(glm::mat4(1.0f), position);
+        }
+
+        if(ownedTarget != nullptr)
+        {
+            ownedTarget->data = position;
         }
 
 
