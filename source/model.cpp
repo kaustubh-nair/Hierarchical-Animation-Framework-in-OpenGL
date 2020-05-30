@@ -72,9 +72,9 @@ void Model::render(Shader shader)
     }
 }
 
-void Model::update(int timer, int event, int eventTargetId, Shader shader)
+void Model::update(int timer, int event, int eventTargetNodeId, Shader shader)
 {
-    sceneRoot->update(timer, event, eventTargetId, shader, false);
+    sceneRoot->update(timer, event, eventTargetNodeId, shader, false, glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 

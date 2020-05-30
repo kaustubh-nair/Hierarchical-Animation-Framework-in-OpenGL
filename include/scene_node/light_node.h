@@ -1,7 +1,7 @@
 #ifndef LIGHT_NODE_H
 #define LIGHT_NODE_H
 
-#include "../../include/scene_node/scene_node.h"
+#include "../../include/scene_node/target_node.h"
 
 #include "../../include/vertex.h"
 #include "../../include/triangle.h"
@@ -13,8 +13,10 @@ class LightNode : public SceneNode
     public:
         LightNode(int nodeId, glm::vec3 nodePos, int lightID, std::string meshPath, glm::vec3 Direction, int Type);
         void render(Shader shader, std::vector<glm::mat4> *stack);
-        void update(int timer, int event, int eventTargetId, Shader shader, bool isConnection);
+        void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data);
         void setup(Shader shader);
+
+        TargetNode *target = nullptr;
     private:
         unsigned int VAO, VBO, EBO;
         glm::vec3 position;
@@ -23,7 +25,7 @@ class LightNode : public SceneNode
         std::vector<Triangle> triangles;
 
         /* index in the shader array */
-        /* Note that eventTargetID in update is based on this, since they are sequentially ordered. */
+        /* Note that eventTargetNodeID in update is based on this, since they are sequentially ordered. */
         int lightId;
         bool active = true;
         int type;

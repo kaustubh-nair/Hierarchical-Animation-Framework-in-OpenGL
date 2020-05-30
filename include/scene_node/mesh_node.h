@@ -1,7 +1,7 @@
 #ifndef MESH_NODE_H
 #define MESH_NODE_H
 
-#include "../../include/scene_node/scene_node.h"
+#include "../../include/scene_node/target_node.h"
 
 #include "../../include/stb_image.h"
 #include "../../include/vertex.h"
@@ -14,7 +14,7 @@ class MeshNode : public SceneNode
 {
     public:
         void render(Shader shader, std::vector<glm::mat4> *stack);
-        void update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+        void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data) {};
         void setup(Shader shader);
 
 
@@ -22,6 +22,8 @@ class MeshNode : public SceneNode
                    glm::vec3 pos, glm::mat4 scalingMatrix,
                    glm::mat4 rotationMatrix, glm::mat4 selfScalingMatrix);
 
+
+        TargetNode *target = nullptr; 
     protected:
         glm::vec3 position;
         glm::vec3 front;

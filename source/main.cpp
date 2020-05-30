@@ -15,6 +15,7 @@
 #include "../include/scene_node/basket.h"
 #include "../include/scene_node/person.h"
 #include "../include/scene_node/head.h"
+#include "../include/scene_node/target_node.h"
 
 
 // constants 
@@ -142,27 +143,27 @@ int main()
     cameraGroup->leftCamIds.push_back(rightHmdA->id);
     cameraGroup->rightCamIds.push_back(rightHmdB->id);
 
-    Target *target1 = new Target();
-    bird->dependantTarget = target1;
-    balloon->ownedTarget = target1;
+    TargetNode *target1 = new TargetNode(300);
+    ((MeshNode*)bird)->target = target1;
+    controller.model.addNode(target1, balloon->id);
 
-    Target *target2 = new Target();
-    light3->dependantTarget = target2;
-    bird->ownedTarget = target2;
+    TargetNode *target2 = new TargetNode(301);
+    ((LightNode*)light3)->target = target2;
+    controller.model.addNode(target2, bird->id);
 
-    Target *target3 = new Target();
-    personC->dependantTarget = target3;
-    personA->ownedTarget = target3;
+    TargetNode *target3 = new TargetNode(302);
+    ((MeshNode*)personC)->target = target3;
+    controller.model.addNode(target3, personA->id);
 
-    Target *target4 = new Target();
-    headA->ownedTarget = target4;
-    leftHmdA->dependantTarget = target4;
-    rightHmdA->dependantTarget = target4;
+    TargetNode *target4 = new TargetNode(303);
+    ((CameraNode*)leftHmdA)->target = target4;
+    ((CameraNode*)rightHmdA)->target = target4;
+    controller.model.addNode(target4, headA->id);
 
-    Target *target5 = new Target();
-    headB->ownedTarget = target5;
-    leftHmdB->dependantTarget = target5;
-    rightHmdB->dependantTarget = target5;
+    TargetNode *target5 = new TargetNode(304);
+    ((CameraNode*)leftHmdB)->target = target5;
+    ((CameraNode*)rightHmdB)->target = target5;
+    controller.model.addNode(target5, headB->id);
 
 
     //cameraGroup->leftCamIds.push_back(birdCam->id);  TODO
@@ -179,11 +180,11 @@ int time(int seconds)
     return 60 * seconds;  //assume 60fps
 }
 
-void Person::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
 {
     if(userControlled)
     {
-        if((id == eventTargetId) || isConnection)
+        if((id == eventTargetNodeId) || isConnection)
         {
             float sensitivitY = 0.5f;
 
@@ -211,20 +212,15 @@ void Person::update(int timer, int event, int eventTargetId, Shader shader, bool
                 translationMat = glm::translate(MAT, position);
             }
 
-            if(ownedTarget != nullptr)
-            {
-                ownedTarget->data = position;
-            }
-
             for(auto itr = connections.begin(); itr != connections.end(); itr++)
-                (*itr)->update(timer, event, eventTargetId, shader, true);
+                (*itr)->update(timer, event, eventTargetNodeId, shader, true, position);
         }
     }
     else
     {
-        if(dependantTarget != nullptr)
+        if(target != nullptr)
         {
-            glm::vec3 dir = glm::normalize(dependantTarget->data - position);
+            glm::vec3 dir = glm::normalize(target->data - position);
             position = position + (0.008f*dir);
             translationMat = glm::translate(MAT, position);
 
@@ -234,26 +230,26 @@ void Person::update(int timer, int event, int eventTargetId, Shader shader, bool
     }
     // TODO: add else here?
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader, false);
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position);
 
 }
-void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+void Bird::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
 {
-    if(dependantTarget != nullptr)
+    if(target != nullptr)
     {
-        glm::vec3 dir = glm::normalize(dependantTarget->data - position);
+        glm::vec3 dir = glm::normalize(target->data - position);
         position = position + (0.005f*dir);
         translationMat = glm::translate(MAT, position);
     }
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader, false);
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position);
 }
-void Animal::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
-void Basket::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+void Animal::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data) {};
+void Basket::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data) {};
 
 
-void Head::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+void Head::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
 {
     if(userControlled)
     {
@@ -264,11 +260,11 @@ void Head::update(int timer, int event, int eventTargetId, Shader shader, bool i
 
     }
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader, false);
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, front);
 }
 
 
-void Balloon::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+void Balloon::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
 {
     if(timer > time(4))
     {
@@ -279,9 +275,7 @@ void Balloon::update(int timer, int event, int eventTargetId, Shader shader, boo
         size += 0.005f;
         selfScalingMat = glm::scale(MAT, size);
     }
-    if(ownedTarget != nullptr)
-        ownedTarget->data = position;
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader, false);
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position);
 }

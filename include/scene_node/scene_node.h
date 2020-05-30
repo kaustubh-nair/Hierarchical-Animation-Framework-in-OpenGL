@@ -14,7 +14,7 @@
 
 #include "../../include/definitions.h"
 #include "../../include/shader.h"
-#include "../../include/scene_node/target.h"
+
 
 
 class SceneNode
@@ -23,11 +23,9 @@ class SceneNode
         // TODO: make private?
         std::vector<SceneNode*> children;           // Traversed during render and update.
         std::vector<SceneNode*> connections;        // Traversed during update.
-        Target *dependantTarget = nullptr;
-        Target *ownedTarget = nullptr;
 
         virtual void render(Shader shader, std::vector<glm::mat4> *stack) = 0;
-        virtual void update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) = 0;
+        virtual void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data) = 0;
         virtual void setup(Shader shader) = 0;
         static SceneNode* insertNode(int nodeId, int parentId, SceneNode *newNode, SceneNode *root);
         void addConnection(SceneNode *node);

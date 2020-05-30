@@ -56,11 +56,11 @@ void LightNode::render(Shader shader, std::vector<glm::mat4> *stack)
     glBindVertexArray(0); 
 }
 
-void LightNode::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+void LightNode::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
 {
     if(event == TOGGLE_LIGHTS)
     {
-        if(eventTargetId == lightId)
+        if(eventTargetNodeId == lightId)
         {
             if(active)
             {
@@ -77,9 +77,9 @@ void LightNode::update(int timer, int event, int eventTargetId, Shader shader, b
     }
 
     // if target constrained
-    if(dependantTarget != nullptr)
+    if(target != nullptr)
     {
-        direction = normalize(dependantTarget->data);
+        direction = glm::normalize(target->data);
         shader.setVec3("lights[" + std::to_string(lightId) + "].dir", direction);
     }
 }

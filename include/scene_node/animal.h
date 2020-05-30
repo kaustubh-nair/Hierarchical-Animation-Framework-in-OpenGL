@@ -6,7 +6,7 @@
 class Animal : public MeshNode
 {
     public:
-        void update(int timer, int event, int eventTargetId, Shader shader, bool isConnection);
+        void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data);
         using MeshNode::MeshNode;
 };
 

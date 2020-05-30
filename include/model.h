@@ -37,7 +37,7 @@ class Model
         CameraNode* getCamera(int camId);
         CameraGroupNode* getCameraGroup();
         void render(Shader shader);
-        void update(int timer, int event, int eventTargetId, Shader shader);
+        void update(int timer, int event, int eventTargetNodeId, Shader shader);
 
         void unselect();
         void select(int direction);

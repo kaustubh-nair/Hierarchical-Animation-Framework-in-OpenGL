@@ -20,8 +20,8 @@ void GroupNode::setup(Shader shader)
 }
 
 
-void GroupNode::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+void GroupNode::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
 {
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader, isConnection);
+        (*itr)->update(timer, event, eventTargetNodeId, shader, isConnection, glm::vec3(0.0f, 0.0f, 0.0f));
 }

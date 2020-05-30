@@ -2,7 +2,7 @@
 #define CAMERA_NODE_H
 
 
-#include "../../include/scene_node/scene_node.h"
+#include "../../include/scene_node/target_node.h"
 
 // TODO: Remove all occurances of this.
 #define GLM_ENABLE_EXPERIMENTAL 1
@@ -15,8 +15,10 @@ class CameraNode : public SceneNode
         CameraNode(int Id, glm::vec3 positionVec, glm::vec3 frontVec, glm::vec3 upVec);
 
         void render(Shader shader, std::vector <glm::mat4> *stack) {};
-        void update(int timer, int event, int eventTargetId, Shader shader, bool isConnection);
+        void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data);
         void setup(Shader shader) {};
+
+        TargetNode *target = nullptr;
         
         glm::mat4 lookAt;
 
