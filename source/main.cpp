@@ -15,7 +15,6 @@
 #include "../include/scene_node/basket.h"
 #include "../include/scene_node/person.h"
 #include "../include/scene_node/head.h"
-#include "../include/scene_node/movable_person.h"
 
 
 // constants 
@@ -52,7 +51,6 @@ int main()
     SceneNode *personA  = new Person(10, "data/meshes/body.ply",
                                      "data/textures/skin.jpg",
                               X + (0.5f*Y), MAT, MAT, MAT);
-
     SceneNode *leftHmdA = new CameraNode(5, X +(2.0f*Y), Z, Y);
     SceneNode *rightHmdA = new CameraNode(6, X +(2.0f*Y), Z, Y);
     SceneNode *headA = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
@@ -61,15 +59,15 @@ int main()
 
     SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg",
                                                      -X + (0.5f*Y), MAT, MAT, MAT);
-
     SceneNode *leftHmdB = new CameraNode(7, ORIGIN - (10.0f*X), X, Y);
     SceneNode *rightHmdB = new CameraNode(8, ORIGIN - (10.0f*X), X, Y);
     SceneNode *headB = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
                                   (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
 
-    SceneNode *personC = new MovablePerson(14, "data/meshes/body.ply", "data/textures/skin.jpg",
+    SceneNode *personC = new Person(14, "data/meshes/body.ply", "data/textures/skin.jpg",
                                                      (0.5f*Y), MAT, MAT, MAT);
+    ((Person*) personC)->userControlled = false;
     SceneNode *headC = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
                                   (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
@@ -179,63 +177,61 @@ int time(int seconds)
 
 void Person::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
 {
-    if((id == eventTargetId) || isConnection)
+    if(userControlled)
     {
-        float sensitivitY = 0.5f;
-
-        if(event == MOVE_FORWARD)
+        if((id == eventTargetId) || isConnection)
         {
-            position -= sensitivitY * glm::normalize(position - front);
+            float sensitivitY = 0.5f;
+
+            if(event == MOVE_FORWARD)
+            {
+                position -= sensitivitY * glm::normalize(position - front);
+                translationMat = glm::translate(MAT, position);
+            }
+
+            else if(event == MOVE_BACKWARD)
+            {
+                position += sensitivitY * glm::normalize(position - front);
+                translationMat = glm::translate(MAT, position);
+            }
+
+            else if(event == MOVE_RIGHT)
+            {
+                position -= sensitivitY * glm::normalize(glm::cross((position - front), up));
+                translationMat = glm::translate(MAT, position);
+            }
+
+            else if(event == MOVE_LEFT)
+            {
+                position += sensitivitY * glm::normalize(glm::cross((position - front), up));
+                translationMat = glm::translate(MAT, position);
+            }
+
+            if(ownedTarget != nullptr)
+            {
+                ownedTarget->data = position;
+            }
+
+            for(auto itr = connections.begin(); itr != connections.end(); itr++)
+                (*itr)->update(timer, event, eventTargetId, shader, true);
+        }
+    }
+    else
+    {
+        if(dependantTarget != nullptr)
+        {
+            glm::vec3 dir = glm::normalize(dependantTarget->data - position);
+            position = position + (0.008f*dir);
             translationMat = glm::translate(MAT, position);
-        }
 
-        else if(event == MOVE_BACKWARD)
-        {
-            position += sensitivitY * glm::normalize(position - front);
-            translationMat = glm::translate(MAT, position);
+            float angle = acos(glm::dot(front, dir));
+            rotationMat = glm::rotate(MAT, angle, Y);
         }
-
-        else if(event == MOVE_RIGHT)
-        {
-            position -= sensitivitY * glm::normalize(glm::cross((position - front), up));
-            translationMat = glm::translate(MAT, position);
-        }
-
-        else if(event == MOVE_LEFT)
-        {
-            position += sensitivitY * glm::normalize(glm::cross((position - front), up));
-            translationMat = glm::translate(MAT, position);
-        }
-
-        if(ownedTarget != nullptr)
-        {
-            ownedTarget->data = position;
-        }
-
-        for(auto itr = connections.begin(); itr != connections.end(); itr++)
-            (*itr)->update(timer, event, eventTargetId, shader, true);
     }
     // TODO: add else here?
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->update(timer, event, eventTargetId, shader, false);
 
-}
-
-void MovablePerson::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
-{
-    if(dependantTarget != nullptr)
-    {
-        glm::vec3 dir = glm::normalize(dependantTarget->data - position);
-        position = position + (0.008f*dir);
-        translationMat = glm::translate(MAT, position);
-
-        float angle = acos(glm::dot(front, dir));
-        rotationMat = glm::rotate(MAT, angle, Y);
-    }
-
-    for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetId, shader, false);
-    
 }
 void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
 {
