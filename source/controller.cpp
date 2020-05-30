@@ -54,7 +54,7 @@ void Controller::render(int timer, GLFWwindow *window, CameraNode *activeCam)
 
     if(view.windowIsActive(window))
     {
-        view.reactToMouseCallbacks(window, activeCam);
+        //view.reactToMouseCallbacks(window, activeCam);
         int event = view.listenToCallbacks(window);
         int target = reactToCallback(event, activeCam);
         model.update(timer, event, target, shader, window);
@@ -132,10 +132,12 @@ void Controller::changeCamera()
 {
     static int i = 0;
     int size = ((model.getCameraGroup())->leftCamIds).size();
+
     int camId = (model.getCameraGroup())->leftCamIds[i%size];
     view.leftCam = model.getCamera(camId);
 
     camId = (model.getCameraGroup())->rightCamIds[i%size];
     view.rightCam = model.getCamera(camId);
+
     i++;
 }

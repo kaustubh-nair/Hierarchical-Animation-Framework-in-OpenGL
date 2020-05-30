@@ -34,6 +34,14 @@ void CameraNode::update(int timer, int event, int eventTargetNodeId, Shader shad
         for(auto itr = children.begin(); itr != children.end(); itr++)
             (*itr)->update(timer, event, eventTargetNodeId, shader, true, position, activeWindow);
     }
+    if(target != nullptr)
+    {
+        front = target->data;
+        glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
+        up = glm::normalize(glm::cross(right, front));
+
+        updateLookAt();
+    }
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->update(timer, event, eventTargetNodeId, shader, false, position, activeWindow);
