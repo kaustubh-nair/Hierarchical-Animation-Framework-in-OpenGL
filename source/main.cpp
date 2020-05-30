@@ -148,6 +148,11 @@ int main()
     light3->dependantTarget = target2;
     bird->ownedTarget = target2;
 
+    Target *target3 = new Target();
+    personC->dependantTarget = target3;
+    personA->ownedTarget = target3;
+
+
     //cameraGroup->leftCamIds.push_back(birdCam->id);  TODO
     //cameraGroup->rightCamIds.push_back(camera->id);
 
@@ -171,32 +176,31 @@ void Person::update(int timer, int event, int eventTargetId, Shader shader, bool
         if(event == MOVE_FORWARD)
         {
             position -= sensitivitY * glm::normalize(position - front);
-            translationMat = glm::translate(glm::mat4(1.0f), position);
+            translationMat = glm::translate(MAT, position);
         }
 
         else if(event == MOVE_BACKWARD)
         {
             position += sensitivitY * glm::normalize(position - front);
-            translationMat = glm::translate(glm::mat4(1.0f), position);
+            translationMat = glm::translate(MAT, position);
         }
 
         else if(event == MOVE_RIGHT)
         {
             position -= sensitivitY * glm::normalize(glm::cross((position - front), up));
-            translationMat = glm::translate(glm::mat4(1.0f), position);
+            translationMat = glm::translate(MAT, position);
         }
 
         else if(event == MOVE_LEFT)
         {
             position += sensitivitY * glm::normalize(glm::cross((position - front), up));
-            translationMat = glm::translate(glm::mat4(1.0f), position);
+            translationMat = glm::translate(MAT, position);
         }
 
         if(ownedTarget != nullptr)
         {
             ownedTarget->data = position;
         }
-
 
         for(auto itr = connections.begin(); itr != connections.end(); itr++)
             (*itr)->update(timer, event, eventTargetId, shader, true);
@@ -207,7 +211,22 @@ void Person::update(int timer, int event, int eventTargetId, Shader shader, bool
 
 }
 
-void MovablePerson::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+void MovablePerson::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+{
+    if(dependantTarget != nullptr)
+    {
+        glm::vec3 dir = glm::normalize(dependantTarget->data - position);
+        position = position + (0.008f*dir);
+        translationMat = glm::translate(MAT, position);
+
+        float angle = acos(glm::dot(front, dir));
+        rotationMat = glm::rotate(MAT, angle, Y);
+    }
+
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->update(timer, event, eventTargetId, shader, false);
+    
+}
 void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
 {
     if(dependantTarget != nullptr)
@@ -216,6 +235,9 @@ void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool i
         position = position + (0.005f*dir);
         translationMat = glm::translate(MAT, position);
     }
+
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->update(timer, event, eventTargetId, shader, false);
 }
 void Animal::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
 void Basket::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
