@@ -1,11 +1,13 @@
 #include "../../include/scene_node/light_node.h"
 
 
-LightNode::LightNode(int nodeId, glm::vec3 nodePos, int lightID, std::string meshPath)
+LightNode::LightNode(int nodeId, glm::vec3 nodePos, int lightID, std::string meshPath, glm::vec3 Direction, int Type)
 {
     id = nodeId;
     position = nodePos;
     lightId = lightID;
+    type = Type;
+    direction = Direction;
 
     PlyParser parser;
     parser.parse(meshPath, vertices, triangles); 
@@ -30,8 +32,14 @@ void LightNode::setup(Shader shader)
     glEnableVertexAttribArray(1);
 
     shader.setVec3("lights[" + std::to_string(lightId) + "].Pos",position);
+    shader.setVec3("lights[" + std::to_string(lightId) + "].dir",direction);
     shader.setFloat("lights[" + std::to_string(lightId) + "].diffuseStrength", 0.6f);  //TODO: set this in main
     shader.setFloat("lights[" + std::to_string(lightId) + "].specularStrength", 0.5f);
+
+    if(type == SPOTLIGHT)
+        shader.setInt("lights[" + std::to_string(lightId) + "].type", 1);
+    else if(type == POINTLIGHT)
+        shader.setInt("lights[" + std::to_string(lightId) + "].type", 0);
 }
 
 void LightNode::render(Shader shader, std::vector<glm::mat4> *stack)

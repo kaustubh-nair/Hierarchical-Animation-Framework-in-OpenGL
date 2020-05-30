@@ -29,7 +29,7 @@ class Model
 
         void addNode(SceneNode *node, int parentId);
         SceneNode* addLightNode(int id, int parentId, glm::vec3 position,
-                                std::string meshPath);
+                                std::string meshPath, glm::vec3 direction, int type);
         void addCameraNode(SceneNode *node, int parentId);
 
         void addConnection(SceneNode *node1, SceneNode *node2);

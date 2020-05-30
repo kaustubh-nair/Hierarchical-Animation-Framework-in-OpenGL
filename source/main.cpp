@@ -126,8 +126,8 @@ int main()
     controller.model.addNode(animal, 16);
     controller.model.addNode(bird, 3);
 
-    SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply");
-    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply");
+    SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
+    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, SPOTLIGHT);
 
 
     cameraGroup->leftCamIds.push_back(leftHmdA->id);
@@ -139,8 +139,8 @@ int main()
     cameraGroup->leftCamIds.push_back(rightHmdA->id);
     cameraGroup->rightCamIds.push_back(rightHmdB->id);
 
-    cameraGroup->leftCamIds.push_back(birdCam->id);
-    cameraGroup->rightCamIds.push_back(camera->id);
+    //cameraGroup->leftCamIds.push_back(birdCam->id);  TODO
+    //cameraGroup->rightCamIds.push_back(camera->id);
 
 
 

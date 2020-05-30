@@ -11,13 +11,14 @@
 class LightNode : public SceneNode
 {
     public:
-        LightNode(int nodeId, glm::vec3 nodePos, int lightID, std::string meshPath);
+        LightNode(int nodeId, glm::vec3 nodePos, int lightID, std::string meshPath, glm::vec3 Direction, int Type);
         void render(Shader shader, std::vector<glm::mat4> *stack);
         void update(int timer, int event, int eventTargetId, Shader shader, bool isConnection);
         void setup(Shader shader);
     private:
         unsigned int VAO, VBO, EBO;
         glm::vec3 position;
+        glm::vec3 direction;
         std::vector<Vertex> vertices;
         std::vector<Triangle> triangles;
 
@@ -25,6 +26,7 @@ class LightNode : public SceneNode
         /* Note that eventTargetID in update is based on this, since they are sequentially ordered. */
         int lightId;
         bool active = true;
+        int type;
 };
 
 #endif
