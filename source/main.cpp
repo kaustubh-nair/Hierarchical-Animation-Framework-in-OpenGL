@@ -38,7 +38,7 @@ int main()
 
     /* id, parentId */
     SceneNode *lightGroup = new GroupNode(1);
-    SceneNode *cameraGroup = new GroupNode(2);
+    CameraGroupNode *cameraGroup = new CameraGroupNode(2);
     SceneNode *meshGroup = new GroupNode(3);
 
     /* NOTE: Camera nodes should be inserted with sequential ids */
@@ -82,6 +82,7 @@ int main()
 
     SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg",
                                         -X, glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
+    SceneNode *birdCam = new CameraNode(199, -X, X, Y);
 
 
     /* NOTE: id = 0 is scene root, which is inserted autoMATicallY. */
@@ -127,6 +128,20 @@ int main()
 
     SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply");
     SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply");
+
+
+    cameraGroup->leftCamIds.push_back(leftHmdA->id);
+    cameraGroup->rightCamIds.push_back(rightHmdA->id);
+
+    cameraGroup->leftCamIds.push_back(leftHmdB->id);
+    cameraGroup->rightCamIds.push_back(rightHmdB->id);
+
+    cameraGroup->leftCamIds.push_back(rightHmdA->id);
+    cameraGroup->rightCamIds.push_back(rightHmdB->id);
+
+    cameraGroup->leftCamIds.push_back(birdCam->id);
+    cameraGroup->rightCamIds.push_back(camera->id);
+
 
 
     controller.run();

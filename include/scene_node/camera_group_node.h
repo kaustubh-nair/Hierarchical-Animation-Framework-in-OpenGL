@@ -9,6 +9,8 @@ class CameraGroupNode : public GroupNode
     public:
         CameraGroupNode(int nodeId);
         CameraNode* getCamera(int camId);
+        std::vector<int> leftCamIds;  //TODO: Change to vector of CameraNode*
+        std::vector<int> rightCamIds;
 };
 
 #endif

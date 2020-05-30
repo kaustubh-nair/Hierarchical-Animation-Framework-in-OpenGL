@@ -18,8 +18,7 @@ void Controller::run()
     projMatrix = glm::perspective(glm::radians(45.0f), (float)WIDTH/(float)HEIGHT, 0.1f, 100.0f);
 
     /* set initial camera information */
-    view.leftCam = model.getCamera(model.firstCameraId);
-    view.rightCam = model.getCamera(model.firstCameraId);
+    changeCamera();
 
     /* setup shaders */
     shader = Shader("source/shaders/shader.vs", "source/shaders/shader.fs");
@@ -131,17 +130,12 @@ int Controller::reactToCallback(int &event, CameraNode *activeCam)
 
 void Controller::changeCamera()
 {
-    if(view.windowIsActive(view.leftWindow))
-    {
-        // increate camId by 1
-        /* NOTE: Camera nodes should be inserted with sequential ids */
-        // TODO: Store a list of camera ids in camera group nodes.
-        int camId = model.firstCameraId + ((view.leftCam->id + 1) % (model.numCameras - 1));
-        view.leftCam = model.getCamera(camId);
-    }
-    else if(view.windowIsActive(view.rightWindow))
-    {
-        int camId = model.firstCameraId + ((view.rightCam->id + 1) % (model.numCameras - 1));
-        view.rightCam = model.getCamera(camId);
-    }
+    static int i = 0;
+    int size = ((model.getCameraGroup())->leftCamIds).size();
+    int camId = (model.getCameraGroup())->leftCamIds[i%size];
+    view.leftCam = model.getCamera(camId);
+
+    camId = (model.getCameraGroup())->rightCamIds[i%size];
+    view.rightCam = model.getCamera(camId);
+    i++;
 }

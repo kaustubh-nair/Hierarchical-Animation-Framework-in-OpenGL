@@ -51,6 +51,12 @@ CameraNode* Model::getCamera(int camId)
     return cameraGroup->getCamera(camId);
 }
 
+CameraGroupNode* Model::getCameraGroup()
+{
+    /* Note: this assumes camera group node is always the second child of root */
+    return (CameraGroupNode *)(sceneRoot->children).at(1);
+
+}
 void Model::render(Shader shader)
 {
     if(sceneRoot == nullptr)
