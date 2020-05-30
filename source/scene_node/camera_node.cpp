@@ -12,7 +12,7 @@ CameraNode::CameraNode(int Id, glm::vec3 positionVec, glm::vec3 frontVec, glm::v
 }
 
 
-void CameraNode::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
+void CameraNode::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
 {
     //TODO Remove?
     if((eventTargetNodeId == id) || isConnection)
@@ -32,11 +32,11 @@ void CameraNode::update(int timer, int event, int eventTargetNodeId, Shader shad
             position += sensitivity * glm::normalize(glm::cross((position - front), up));
 
         for(auto itr = children.begin(); itr != children.end(); itr++)
-            (*itr)->update(timer, event, eventTargetNodeId, shader, true, position);
+            (*itr)->update(timer, event, eventTargetNodeId, shader, true, position, activeWindow);
     }
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position);
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position, activeWindow);
 }
 
 

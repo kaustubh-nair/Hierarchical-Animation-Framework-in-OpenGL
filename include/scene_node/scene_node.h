@@ -9,6 +9,9 @@
 #define GLM_ENABLE_EXPERIMENTAL 1
 #include <glm/gtx/string_cast.hpp>
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include <vector>
 #include <string>
 
@@ -25,7 +28,7 @@ class SceneNode
         std::vector<SceneNode*> connections;        // Traversed during update.
 
         virtual void render(Shader shader, std::vector<glm::mat4> *stack) = 0;
-        virtual void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data) = 0;
+        virtual void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow) = 0;
         virtual void setup(Shader shader) = 0;
         static SceneNode* insertNode(int nodeId, int parentId, SceneNode *newNode, SceneNode *root);
         void addConnection(SceneNode *node);

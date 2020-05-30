@@ -13,7 +13,7 @@ class LightNode : public SceneNode
     public:
         LightNode(int nodeId, glm::vec3 nodePos, int lightID, std::string meshPath, glm::vec3 Direction, int Type);
         void render(Shader shader, std::vector<glm::mat4> *stack);
-        void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data);
+        void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow);
         void setup(Shader shader);
 
         TargetNode *target = nullptr;

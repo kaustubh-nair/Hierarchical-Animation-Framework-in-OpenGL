@@ -180,7 +180,7 @@ int time(int seconds)
     return 60 * seconds;  //assume 60fps
 }
 
-void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
+void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
 {
     if(userControlled)
     {
@@ -213,7 +213,7 @@ void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, 
             }
 
             for(auto itr = connections.begin(); itr != connections.end(); itr++)
-                (*itr)->update(timer, event, eventTargetNodeId, shader, true, position);
+                (*itr)->update(timer, event, eventTargetNodeId, shader, true, position, activeWindow);
         }
     }
     else
@@ -230,10 +230,10 @@ void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, 
     }
     // TODO: add else here?
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position);
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position, activeWindow);
 
 }
-void Bird::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
+void Bird::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
 {
     if(target != nullptr)
     {
@@ -243,13 +243,13 @@ void Bird::update(int timer, int event, int eventTargetNodeId, Shader shader, bo
     }
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position);
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position, activeWindow);
 }
-void Animal::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data) {};
-void Basket::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data) {};
+void Animal::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow) {};
+void Basket::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow) {};
 
 
-void Head::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
+void Head::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
 {
     if(userControlled)
     {
@@ -275,27 +275,30 @@ void Head::update(int timer, int event, int eventTargetNodeId, Shader shader, bo
             pitch = -89.0f;
 
         glm::vec3 direction;
-        direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-        direction.y = -sin(glm::radians(pitch));
-        direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+        float yaw_radians = glm::radians(yaw);
+        float pitch_radians = glm::radians(pitch);
+
+        direction.x = cos(yaw_radians) * cos(pitch_radians);
+        direction.y = -sin(pitch_radians);
+        direction.z = sin(yaw_radians) * cos(pitch_radians);
 
         front = glm::normalize(direction);
 
         glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
         up = glm::normalize(glm::cross(right, front));
 
-        rotationMat = glm::rotate(MAT, glm::radians(45.0f), front);
+        rotationMat = glm::rotate(MAT, glm::radians(180.0f), up);
     }
     else
     {
 
     }
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetNodeId, shader, false, front);
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, front, activeWindow);
 }
 
 
-void Balloon::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data)
+void Balloon::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
 {
     if(timer > time(4))
     {
@@ -308,5 +311,5 @@ void Balloon::update(int timer, int event, int eventTargetNodeId, Shader shader,
     }
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position);
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position, activeWindow);
 }

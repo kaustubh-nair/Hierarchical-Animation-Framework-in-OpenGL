@@ -4,8 +4,12 @@
 #include <vector>
 #include <map>
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include "../include/mesh.h"
 #include "../include/lighting.h"
+
 
 #include "../include/scene_node/scene_node.h"
 #include "../include/scene_node/mesh_node.h"
@@ -37,7 +41,7 @@ class Model
         CameraNode* getCamera(int camId);
         CameraGroupNode* getCameraGroup();
         void render(Shader shader);
-        void update(int timer, int event, int eventTargetNodeId, Shader shader);
+        void update(int timer, int event, int eventTargetNodeId, Shader shader, GLFWwindow *activeWindow);
 
         void unselect();
         void select(int direction);

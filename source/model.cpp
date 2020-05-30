@@ -72,9 +72,9 @@ void Model::render(Shader shader)
     }
 }
 
-void Model::update(int timer, int event, int eventTargetNodeId, Shader shader)
+void Model::update(int timer, int event, int eventTargetNodeId, Shader shader, GLFWwindow *activeWindow)
 {
-    sceneRoot->update(timer, event, eventTargetNodeId, shader, false, glm::vec3(0.0f, 0.0f, 0.0f));
+    sceneRoot->update(timer, event, eventTargetNodeId, shader, false, glm::vec3(0.0f, 0.0f, 0.0f), activeWindow);
 }
 
 

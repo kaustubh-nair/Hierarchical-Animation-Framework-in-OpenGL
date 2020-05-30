@@ -15,7 +15,7 @@ class CameraNode : public SceneNode
         CameraNode(int Id, glm::vec3 positionVec, glm::vec3 frontVec, glm::vec3 upVec);
 
         void render(Shader shader, std::vector <glm::mat4> *stack) {};
-        void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data);
+        void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow);
         void setup(Shader shader) {};
 
         TargetNode *target = nullptr;
