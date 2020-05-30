@@ -62,13 +62,13 @@ int main()
 
     SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg",
                                                      -X + (0.5f*Y), MAT, MAT, MAT);
-    SceneNode *leftHmdB = new CameraNode(5, (0.5f*X) +(2.0f*Y), Z, Y);
-    SceneNode *rightHmdB = new CameraNode(6, -(0.5f*X) +(2.0f*Y), Z, Y);
+    SceneNode *leftHmdB = new CameraNode(52, (0.5f*X) +(2.0f*Y), Z, Y);
+    SceneNode *rightHmdB = new CameraNode(69, -(0.5f*X) +(2.0f*Y), Z, Y);
     SceneNode *headB = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
                                   (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
 
-    SceneNode *personC = new Person(14, "data/meshes/body.ply", "data/textures/skin.jpg",
+    SceneNode *personC = new Person(1092, "data/meshes/body.ply", "data/textures/skin.jpg",
                                                      (0.5f*Y), MAT, MAT, MAT);
     SceneNode *headC = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
                                   (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
@@ -131,7 +131,7 @@ int main()
 
     SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
     SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
-    SceneNode *light3 = controller.model.addLightNode(14, 1, ORIGIN + (6.0f*Y) - (1.0f*X), "data/meshes/tetrahedron.ply", UNIT, SPOTLIGHT);
+    SceneNode *light3 = controller.model.addLightNode(15, 1, ORIGIN + (6.0f*Y) - (1.0f*X), "data/meshes/tetrahedron.ply", UNIT, SPOTLIGHT);
 
 
     cameraGroup->leftCamIds.push_back(leftHmdA->id);
