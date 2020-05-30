@@ -51,25 +51,29 @@ int main()
     SceneNode *personA  = new Person(10, "data/meshes/body.ply",
                                      "data/textures/skin.jpg",
                               X + (0.5f*Y), MAT, MAT, MAT);
-    SceneNode *leftHmdA = new CameraNode(5, X +(2.0f*Y), Z, Y);
-    SceneNode *rightHmdA = new CameraNode(6, X +(2.0f*Y), Z, Y);
+    SceneNode *leftHmdA = new CameraNode(5, (0.5f*X) +(2.0f*Y), Z, Y);
+    SceneNode *rightHmdA = new CameraNode(6, -(0.5f*X) +(2.0f*Y), Z, Y);
     SceneNode *headA = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
                                   (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+
+    ((Head*) headA)->userControlled = false;
 
 
     SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg",
                                                      -X + (0.5f*Y), MAT, MAT, MAT);
-    SceneNode *leftHmdB = new CameraNode(7, ORIGIN - (10.0f*X), X, Y);
-    SceneNode *rightHmdB = new CameraNode(8, ORIGIN - (10.0f*X), X, Y);
+    SceneNode *leftHmdB = new CameraNode(5, (0.5f*X) +(2.0f*Y), Z, Y);
+    SceneNode *rightHmdB = new CameraNode(6, -(0.5f*X) +(2.0f*Y), Z, Y);
     SceneNode *headB = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
                                   (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
 
     SceneNode *personC = new Person(14, "data/meshes/body.ply", "data/textures/skin.jpg",
                                                      (0.5f*Y), MAT, MAT, MAT);
-    ((Person*) personC)->userControlled = false;
     SceneNode *headC = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
                                   (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+
+    ((Person*) personC)->userControlled = false;
+    ((Head*) headA)->userControlled = false;
 
     SceneNode *balloon = new Balloon(16, "data/meshes/balloon.ply", "data/textures/purple.jpeg",
                                          ORIGIN + Y, MAT, MAT, glm::scale(MAT, 3.0f*UNIT));
@@ -247,7 +251,21 @@ void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool i
 }
 void Animal::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
 void Basket::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
-void Head::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+
+
+void Head::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+{
+    if(userControlled)
+    {
+
+    }
+    else
+    {
+
+    }
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->update(timer, event, eventTargetId, shader, false);
+}
 
 
 void Balloon::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
