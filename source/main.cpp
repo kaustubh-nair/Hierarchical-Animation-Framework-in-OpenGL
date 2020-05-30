@@ -253,7 +253,38 @@ void Head::update(int timer, int event, int eventTargetNodeId, Shader shader, bo
 {
     if(userControlled)
     {
+        static double oldX = 0.0, oldY = 0.0;
+        double x, y;
+        glfwGetCursorPos(activeWindow, &x, &y);
 
+        float xoffset = x - oldX;
+        float yoffset = y - oldY;
+        oldX = x;
+        oldY = y;
+
+        float sensitivity = 0.2;
+        xoffset *= sensitivity;
+        yoffset *= sensitivity;
+
+        yaw   += xoffset;
+        pitch += yoffset;
+
+        if(pitch > 89.0f)
+            pitch = 89.0f;
+        if(pitch < -89.0f)
+            pitch = -89.0f;
+
+        glm::vec3 direction;
+        direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+        direction.y = -sin(glm::radians(pitch));
+        direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+
+        front = glm::normalize(direction);
+
+        glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
+        up = glm::normalize(glm::cross(right, front));
+
+        rotationMat = glm::rotate(MAT, glm::radians(45.0f), front);
     }
     else
     {
