@@ -81,7 +81,7 @@ int main()
                                          ORIGIN, MAT, MAT, MAT);
 
     SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg",
-                                        -X, glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
+                                        Y + X + Z, glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
     SceneNode *birdCam = new CameraNode(199, -X, X, Y);
 
 
@@ -140,8 +140,8 @@ int main()
     cameraGroup->rightCamIds.push_back(rightHmdB->id);
 
     Target *target = new Target();
-    light2->dependantTarget = target;
-    personA->ownedTarget = target;
+    bird->dependantTarget = target;
+    balloon->ownedTarget = target;
 
 
     //cameraGroup->leftCamIds.push_back(birdCam->id);  TODO
@@ -204,7 +204,15 @@ void Person::update(int timer, int event, int eventTargetId, Shader shader, bool
 }
 
 void MovablePerson::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
-void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
+void Bird::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection)
+{
+    if(dependantTarget != nullptr)
+    {
+        glm::vec3 dir = glm::normalize(dependantTarget->data - position);
+        position = position + (0.005f*dir);
+        translationMat = glm::translate(MAT, position);
+    }
+}
 void Animal::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
 void Basket::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
 void Head::update(int timer, int event, int eventTargetId, Shader shader, bool isConnection) {};
@@ -214,10 +222,15 @@ void Balloon::update(int timer, int event, int eventTargetId, Shader shader, boo
 {
     if(timer > time(4))
     {
-        translationMat = glm::translate(translationMat, glm::vec3(0.003f, 0.006f, 0.0f));
+        glm::vec3 diff(0.003f, 0.006f, 0.0f);
+        position += diff;
+
+        translationMat = glm::translate(translationMat, diff);
         size += 0.005f;
         selfScalingMat = glm::scale(MAT, size);
     }
+    if(ownedTarget != nullptr)
+        ownedTarget->data = position;
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->update(timer, event, eventTargetId, shader, false);
