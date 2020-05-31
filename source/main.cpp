@@ -120,20 +120,13 @@ int main()
     controller.model.addConnection(personA, rightHmdA);
 
 
-    /*
-    cameraGroup->leftCamIds.push_back(leftHmdA->id);
-    cameraGroup->rightCamIds.push_back(rightHmdA->id);
+    cameraGroup->leftCamIds.push_back(camera->id);
+    cameraGroup->rightCamIds.push_back(camera->id);
 
     cameraGroup->leftCamIds.push_back(leftHmdB->id);
     cameraGroup->rightCamIds.push_back(rightHmdB->id);
 
-    cameraGroup->leftCamIds.push_back(rightHmdA->id);
-    cameraGroup->rightCamIds.push_back(rightHmdB->id);
-    */
 
-
-    cameraGroup->leftCamIds.push_back(camera->id);
-    cameraGroup->rightCamIds.push_back(camera->id);
 
     TargetNode *target1 = new TargetNode(300);
     ((MeshNode*)bird)->target = target1;

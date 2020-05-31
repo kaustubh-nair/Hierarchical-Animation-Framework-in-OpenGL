@@ -37,6 +37,7 @@ class SceneNode
         SceneNode *avoidCollisionsWith = nullptr;
         bool active = false;
         void toggleActive();
+        void toggleInActive();
 
     private:
 

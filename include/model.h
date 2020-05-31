@@ -50,6 +50,7 @@ class Model
 
         void drawLighting( Shader shader);
         void toggleObjectsActive();
+        void toggleObjectsInActive();
 
 };
 

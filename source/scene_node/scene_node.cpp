@@ -27,5 +27,15 @@ void SceneNode::addConnection(SceneNode *node)
 
 void SceneNode::toggleActive()
 {
-    active = !active;
+    active = true;
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->toggleActive();
+
+}
+
+void SceneNode::toggleInActive()
+{
+    active = false;
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->toggleInActive();
 }

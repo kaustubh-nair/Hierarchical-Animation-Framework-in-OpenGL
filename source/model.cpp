@@ -122,3 +122,10 @@ void Model::toggleObjectsActive()
     sceneRoot->toggleActive();
 
 }
+
+
+void Model::toggleObjectsInActive()
+{
+    sceneRoot->toggleInActive();
+
+}

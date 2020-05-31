@@ -57,10 +57,11 @@ void Controller::render(int timer, GLFWwindow *window, CameraNode *activeCam)
         if(activeCam->id == 4)   // WARNING: hardcoded
         {
             view.reactToMouseCallbacks(window, activeCam);
-            model.toggleObjectsActive();
+            model.toggleObjectsInActive();
         }
         else
             model.toggleObjectsActive();
+
         int event = view.listenToCallbacks(window);
         int target = reactToCallback(event, activeCam);
         model.update(timer, event, target, shader, window);
