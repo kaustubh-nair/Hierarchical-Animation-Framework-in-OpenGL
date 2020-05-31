@@ -176,29 +176,29 @@ void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, 
     {
         if((id == eventTargetNodeId) || isConnection)
         {
-            float sensitivitY = 0.5f;
+            float sensitivity = 0.5f;
 
             if(event == MOVE_FORWARD)
             {
-                position -= sensitivitY * glm::normalize(position - front);
+                position += sensitivity * glm::normalize(front - position);
                 translationMat = glm::translate(MAT, position);
             }
 
             else if(event == MOVE_BACKWARD)
             {
-                position += sensitivitY * glm::normalize(position - front);
+                position -= sensitivity * glm::normalize(front - position);
                 translationMat = glm::translate(MAT, position);
             }
 
             else if(event == MOVE_RIGHT)
             {
-                position -= sensitivitY * glm::normalize(glm::cross((position - front), up));
+                position -= sensitivity * glm::normalize(glm::cross((position - front), up));
                 translationMat = glm::translate(MAT, position);
             }
 
             else if(event == MOVE_LEFT)
             {
-                position += sensitivitY * glm::normalize(glm::cross((position - front), up));
+                position += sensitivity * glm::normalize(glm::cross((position - front), up));
                 translationMat = glm::translate(MAT, position);
             }
 

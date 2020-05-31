@@ -22,8 +22,8 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
     selfScalingMat = selfScalingMatrix;
 
     position = pos;
-    front = glm::vec3(0.0f, 0.0f, 1.0f);     //NOTE: hard-coded for now.
-    up = glm::vec3(0.0f, 1.0f, 0.0f);         //NOTE:: hard-coded for now.
+    front = glm::vec3(0.0f, 0.5f, 1.0f);     //NOTE: hard-coded for now. Take input in constructor
+    up = glm::vec3(0.0f, 1.0f, 0.0f);         //NOTE:: hard-coded for now. Take input in constructor
 
 
     /* compute and save texture map coordinates */
@@ -49,6 +49,10 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
     //absScaling = selfScalingMat*absScaling;
     glm::vec4 upMat = (model*glm::vec4(up, 0.0f));
     up = glm::normalize(glm::vec3(upMat.x, upMat.y, upMat.z));
+
+    glm::vec4 frontMat = (model*glm::vec4(front, 0.0f));
+    front = glm::normalize(glm::vec3(frontMat.x, frontMat.y, frontMat.z));
+
     stack->pop_back();
 
     /* bounding boxes for collisions 
