@@ -101,7 +101,7 @@ int Controller::reactToCallback(int &event, CameraNode *activeCam)
     || (event == MOVE_BACKWARD)
     || (event == MOVE_RIGHT)
     )
-       return 10;  //change later
+       return 12;  //change later
 
     else if(event == CHANGE_CAMERA)
     {

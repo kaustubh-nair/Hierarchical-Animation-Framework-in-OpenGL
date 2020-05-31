@@ -33,25 +33,27 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 
 void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 {
-    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 absScaling = glm::mat4(1.0f);
+    glm::mat4 absTrans = glm::mat4(1.0f);
+    glm::mat4 absRotation = glm::mat4(1.0f);
 
-    stack->push_back(selfScalingMat);
     stack->push_back(scalingMat);
     stack->push_back(rotationMat);
     stack->push_back(translationMat);
 
     //stack but composition happens LIFO
-    for(auto i = stack->begin(); i != stack->end(); i++)
-        model = (*i) * model;
+    for(auto i = stack->begin(); i != stack->end(); i+=3)
+    {
+        absScaling = (*i)*absScaling;
+        absRotation = (*(i+1))*absRotation;
+        absTrans = (*(i+2))*absTrans;
+    }
 
-    stack->pop_back();  //change to dequeue;
-    stack->pop_back();
-    stack->pop_back();
-    stack->pop_back();
+    absScaling = selfScalingMat*absScaling;
+    glm::mat4 model = absTrans*absRotation*absScaling;
+    glm::vec4 upMat = (absTrans*glm::vec4(up, 0.0f));
+    up = glm::vec3(upMat.x, upMat.y, upMat.z);
 
-    stack->push_back(scalingMat);
-    stack->push_back(rotationMat);
-    stack->push_back(translationMat);
 
     shader.setMat4("model", model);
 
