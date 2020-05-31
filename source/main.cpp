@@ -79,11 +79,11 @@ int main()
     personB->avoidCollisionsWith = personC;
 
     SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/purple.jpeg",
-                                         ORIGIN + Y, MAT, MAT, glm::scale(MAT, 3.0f*UNIT));
-    SceneNode *basket = new Basket(17, "data/meshes/sphere.ply", "data/textures/skin.jpg",
-                                         ORIGIN, MAT, MAT, MAT);
+                                         ORIGIN + (4.0f*Y) , MAT, MAT, glm::scale(MAT, 2.0f*UNIT));
+    SceneNode *basket = new Basket(17, "data/meshes/cube.ply", "data/textures/skin.jpg",
+                                         ORIGIN - Y, MAT, MAT, glm::scale(MAT,0.5f*UNIT));
     SceneNode *animal = new Animal(18, "data/meshes/cow.ply", "data/textures/black.jpg",
-                                         ORIGIN, MAT, MAT, MAT);
+                                         ORIGIN - Y - (0.2f*X), MAT, MAT, glm::scale(MAT,0.5f*UNIT));
 
     SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg",
                                         7.0f*(Y + X + Z), glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
@@ -134,8 +134,8 @@ int main()
     controller.model.addNode(bird, 3);
 
     SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
-    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
-    SceneNode *light3 = controller.model.addLightNode(15, 1, ORIGIN + (6.0f*Y) - (1.0f*X), "data/meshes/tetrahedron.ply", UNIT, SPOTLIGHT);
+    SceneNode *light3 = controller.model.addLightNode(14, 1, ORIGIN + (6.0f*Y) - (1.0f*X), "data/meshes/tetrahedron.ply", UNIT, SPOTLIGHT);
+    SceneNode *light2 = controller.model.addLightNode(15, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
 
 
     cameraGroup->leftCamIds.push_back(leftHmdA->id);
@@ -255,7 +255,16 @@ void Bird::update(int timer, int event, int eventTargetNodeId, Shader shader, bo
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->update(timer, event, eventTargetNodeId, shader, false, position, activeWindow);
 }
-void Animal::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow) {};
+
+
+void Animal::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
+{
+    static float angle = 0.0f;
+    rotationMat = glm::rotate(MAT, angle, up);
+    angle += 0.01f;
+}
+
+
 void Basket::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow) {};
 
 

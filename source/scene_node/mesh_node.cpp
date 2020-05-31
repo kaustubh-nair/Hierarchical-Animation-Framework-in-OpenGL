@@ -35,19 +35,21 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 {
     glm::mat4 model = glm::mat4(1.0f);
 
-    stack->push_back(scalingMat);
-    stack->push_back(rotationMat);
     stack->push_back(translationMat);
+    stack->push_back(rotationMat);
+    stack->push_back(scalingMat);
+    stack->push_back(selfScalingMat);
 
     //stack but composition happens LIFO
     for(auto i = stack->begin(); i != stack->end(); i++)
     {
-        model = (*i)*model;
+        model = model*(*i);
     }
 
     //absScaling = selfScalingMat*absScaling;
-    glm::vec4 upMat = (model*glm::vec4(up, 1.0f));
+    glm::vec4 upMat = (model*glm::vec4(up, 0.0f));
     up = glm::normalize(glm::vec3(upMat.x, upMat.y, upMat.z));
+    stack->pop_back();
 
     /* bounding boxes for collisions 
     if(avoidCollisionsWith != nullptr)
