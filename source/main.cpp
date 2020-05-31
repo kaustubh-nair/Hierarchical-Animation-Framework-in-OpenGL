@@ -74,9 +74,11 @@ int main()
                                   (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
     ((Person*) personC)->userControlled = false;
-    ((Head*) headA)->userControlled = false;
+    ((Head*) headC)->userControlled = false;
+    personC->avoidCollisionsWith = personB;
+    personB->avoidCollisionsWith = personC;
 
-    SceneNode *balloon = new Balloon(16, "data/meshes/balloon.ply", "data/textures/purple.jpeg",
+    SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/purple.jpeg",
                                          ORIGIN + Y, MAT, MAT, glm::scale(MAT, 3.0f*UNIT));
     SceneNode *basket = new Basket(17, "data/meshes/sphere.ply", "data/textures/skin.jpg",
                                          ORIGIN, MAT, MAT, MAT);
@@ -84,7 +86,9 @@ int main()
                                          ORIGIN, MAT, MAT, MAT);
 
     SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg",
-                                        Y + X + Z, glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
+                                        7.0f*(Y + X + Z), glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
+    bird->avoidCollisionsWith = balloon;
+    balloon->avoidCollisionsWith = bird;
     SceneNode *birdCam = new CameraNode(199, -X, X, Y);
 
 
@@ -153,7 +157,7 @@ int main()
 
     TargetNode *target3 = new TargetNode(302);
     ((MeshNode*)personC)->target = target3;
-    controller.model.addNode(target3, personA->id);
+    controller.model.addNode(target3, personB->id);
 
     TargetNode *target4 = new TargetNode(303);
     ((CameraNode*)leftHmdA)->target = target4;
@@ -220,12 +224,15 @@ void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, 
     {
         if(target != nullptr)
         {
-            glm::vec3 dir = glm::normalize(target->data - position);
-            position = position + (0.008f*dir);
-            translationMat = glm::translate(MAT, position);
+            if(minimumSeperation(avoidCollisionsWith) > 3.0f)
+            {
+                glm::vec3 dir = glm::normalize(target->data - position);
+                position = position + (0.008f*dir);
+                translationMat = glm::translate(MAT, position);
 
-            float angle = acos(glm::dot(front, dir));
-            rotationMat = glm::rotate(MAT, angle, Y);
+                float angle = acos(glm::dot(front, dir));
+                rotationMat = glm::rotate(MAT, angle, Y);
+            }
         }
     }
     // TODO: add else here?
@@ -237,9 +244,12 @@ void Bird::update(int timer, int event, int eventTargetNodeId, Shader shader, bo
 {
     if(target != nullptr)
     {
-        glm::vec3 dir = glm::normalize(target->data - position);
-        position = position + (0.005f*dir);
-        translationMat = glm::translate(MAT, position);
+        if(minimumSeperation(avoidCollisionsWith) > 0.05f)
+        {
+            glm::vec3 dir = glm::normalize(target->data - position);
+            position = position + (0.05f*dir);
+            translationMat = glm::translate(MAT, position);
+        }
     }
 
     for(auto itr = children.begin(); itr != children.end(); itr++)
@@ -306,7 +316,7 @@ void Balloon::update(int timer, int event, int eventTargetNodeId, Shader shader,
         position += diff;
 
         translationMat = glm::translate(translationMat, diff);
-        size += 0.005f;
+        size += 0.0007f;
         selfScalingMat = glm::scale(MAT, size);
     }
 

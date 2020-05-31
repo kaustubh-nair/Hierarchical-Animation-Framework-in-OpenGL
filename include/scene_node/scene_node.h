@@ -34,6 +34,7 @@ class SceneNode
         void addConnection(SceneNode *node);
 
         int id;
+        SceneNode *avoidCollisionsWith = nullptr;
 
     private:
 

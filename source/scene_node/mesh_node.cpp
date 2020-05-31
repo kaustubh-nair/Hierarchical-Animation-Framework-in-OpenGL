@@ -51,8 +51,16 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 
     absScaling = selfScalingMat*absScaling;
     glm::mat4 model = absTrans*absRotation*absScaling;
-    glm::vec4 upMat = (absTrans*glm::vec4(up, 0.0f));
-    up = glm::vec3(upMat.x, upMat.y, upMat.z);
+    glm::vec4 upMat = (absTrans*glm::vec4(up, 1.0f));
+    up = glm::normalize(glm::vec3(upMat.x, upMat.y, upMat.z));
+
+    /* bounding boxes for collisions */
+    if(avoidCollisionsWith != nullptr)
+    {
+        glm::vec4 bbMat = (absTrans*glm::vec4(1.0f));
+        boundingSpherePos = glm::vec3(bbMat.x, bbMat.y, bbMat.z);
+        boundingSphereRad = (absScaling*glm::vec4(1.0f)).x;
+    }
 
 
     shader.setMat4("model", model);
@@ -127,4 +135,10 @@ void MeshNode::setup(Shader shader)
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->setup(shader);
 
+}
+
+float MeshNode::minimumSeperation(SceneNode *node)
+{
+    MeshNode *mesh = (MeshNode*)node;
+    return glm::distance(boundingSpherePos, mesh->boundingSpherePos) - boundingSphereRad - mesh->boundingSphereRad;
 }

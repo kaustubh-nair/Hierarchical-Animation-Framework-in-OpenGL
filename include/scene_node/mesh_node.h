@@ -34,7 +34,9 @@ class MeshNode : public SceneNode
         glm::mat4 scalingMat;
         glm::mat4 selfScalingMat;
         
-        glm::vec3 boundingBoxPosition;
+        glm::vec3 boundingSpherePos;
+        float boundingSphereRad;
+        float minimumSeperation(SceneNode *node);  //check for collision
     private:
         unsigned int VAO, VBO, EBO;
         unsigned int texture;
