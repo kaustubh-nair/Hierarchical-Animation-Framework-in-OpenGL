@@ -49,8 +49,7 @@ int main()
     controller.model.addNode(meshGroup, 0);   //meshes
 
     SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
-    SceneNode *light3 = controller.model.addLightNode(14, 1, ORIGIN + (6.0f*Y) - (1.0f*X), "data/meshes/tetrahedron.ply", UNIT, SPOTLIGHT);
-    SceneNode *light2 = controller.model.addLightNode(15, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
+    SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
 
     /* main camera */
 
@@ -62,20 +61,22 @@ int main()
     SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg", -X + (0.5f*Y), MAT, MAT, MAT);
     SceneNode *headB = new Head(101, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.45f*Y)  + (0.04f*Z)+ (0.05f*X), MAT, glm::rotate(MAT,glm::radians(-90.0f),Y), glm::scale(MAT, 0.15f*UNIT));
 
-    SceneNode *personC = new Person(1092, "data/meshes/body.ply", "data/textures/skin.jpg", (0.5f*Y), MAT, MAT, MAT);
+    SceneNode *personC = new Person(1092, "data/meshes/body.ply", "data/textures/skin.jpg", (-6.0f*X) + (0.5f*Y), MAT, MAT, MAT);
     SceneNode *headC = new Head(102, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.45f*Y) + (0.05f*X) + (0.04f*Z), MAT, glm::rotate(MAT,glm::radians(-90.0f),Y), glm::scale(MAT, 0.15f*UNIT));
 
-    SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/purple.jpeg", ORIGIN + (4.0f*Y) , MAT, MAT, glm::scale(MAT, 2.0f*UNIT));
-    SceneNode *basket = new Basket(17, "data/meshes/cube.ply", "data/textures/skin.jpg", ORIGIN - Y, MAT, MAT, glm::scale(MAT,0.5f*UNIT));
-    SceneNode *animal = new Animal(18, "data/meshes/cow.ply", "data/textures/black.jpg", ORIGIN - Y - (0.2f*X), MAT, MAT, glm::scale(MAT,0.5f*UNIT));
+    SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/purple.jpeg", (3.0f*Y) , MAT, MAT, glm::scale(MAT, 2.0f*UNIT));
+    SceneNode *basket = new Basket(17, "data/meshes/cube.ply", "data/textures/skin.jpg", - (2.5f*Y), MAT, MAT, glm::scale(MAT,0.5f*UNIT));
+    SceneNode *animal = new Animal(18, "data/meshes/cow.ply", "data/textures/black.jpg", - (2.3f*Y) + (0.1f*X), MAT, MAT, glm::scale(MAT,0.5f*UNIT));
 
-    SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg", 7.0f*(Y + X + Z), glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
+    SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg", 10.0f*(Y + X + Z), glm::scale(MAT, 1.5f*UNIT), MAT, MAT);
 
-    SceneNode *camera = new CameraNode(4, 4, ORIGIN + (5.0f*Z) + Y, -Z - ORIGIN - (5.0f*Z) - X - Y, Y);
-    SceneNode *leftHmdA = new CameraNode(5, personA->id,  (0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
-    SceneNode *rightHmdA = new CameraNode(6, personA->id, -(0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
-    SceneNode *leftHmdB = new CameraNode(52, personB->id, (0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
-    SceneNode *rightHmdB = new CameraNode(69, personB->id, -(0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
+    SceneNode *camera = new CameraNode(4, 4, -(5.0f*Z) + Y, -Z + (5.0f*Z) - Y, Y);
+
+    SceneNode *leftHmdA = new CameraNode(5, personA->id,  (0.5f*X) +(1.0f*Y), Z + (1.5f*Y) + (0.5f*X) + (1.0f*Y), Y);
+    SceneNode *rightHmdA = new CameraNode(6, personA->id, -(0.5f*X) +(1.0f*Y), Z + (1.5f*Y) - (0.5f*X) + (1.0f*Y), Y);
+    SceneNode *leftHmdB = new CameraNode(52, personB->id, (0.5f*X) +(1.0f*Y), Z + (1.5f*Y) + (0.5f*X) + (1.0f*Y), Y);
+    SceneNode *rightHmdB = new CameraNode(69, personB->id, -(0.5f*X) +(1.0f*Y), Z + (1.5f*Y) - (0.5f*X) + (1.0f*Y), Y);
+
     SceneNode *birdCam = new CameraNode(199, bird->id, -X, Z + (0.5f*Y), Y);
 
     ((Head*) headA)->userControlled = false;
@@ -123,15 +124,15 @@ int main()
     cameraGroup->leftCamIds.push_back(leftHmdB->id);
     cameraGroup->rightCamIds.push_back(rightHmdB->id);
 
+    cameraGroup->leftCamIds.push_back(leftHmdB->id);
+    cameraGroup->rightCamIds.push_back(camera->id);
 
+    cameraGroup->leftCamIds.push_back(leftHmdA->id);
+    cameraGroup->rightCamIds.push_back(rightHmdA->id);
 
     TargetNode *target1 = new TargetNode(300);
     ((MeshNode*)bird)->target = target1;
     controller.model.addNode(target1, balloon->id);
-
-    TargetNode *target2 = new TargetNode(301);
-    ((LightNode*)light3)->target = target2;
-    controller.model.addNode(target2, bird->id);
 
     TargetNode *target3 = new TargetNode(302);
     ((MeshNode*)personC)->target = target3;
@@ -200,14 +201,21 @@ void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, 
     {
         if(target != nullptr)
         {
-            if(minimumSeperation(avoidCollisionsWith) > 3.0f)
+            static int timeAway = 500;
+            if(minimumSeperation(avoidCollisionsWith) > 0.5f && (timeAway == 500 || timeAway == 0))
             {
                 glm::vec3 dir = glm::normalize(target->data - position);
                 position = position + (0.008f*dir);
                 translationMat = glm::translate(MAT, position);
+                timeAway = 500;
+            }
+            else
+            {
+                timeAway--;
+                glm::vec3 dir = glm::normalize(target->data - position);
+                position = position - (0.008f*dir);
+                translationMat = glm::translate(MAT, position);
 
-                float angle = acos(glm::dot(front, dir));
-                rotationMat = glm::rotate(MAT, angle, Y);
             }
         }
     }
@@ -220,14 +228,23 @@ void Bird::update(int timer, int event, int eventTargetNodeId, Shader shader, bo
 {
     if(target != nullptr)
     {
-        if(minimumSeperation(avoidCollisionsWith) > 0.05f)
+        static int timeAway = 500;
+        if(minimumSeperation(avoidCollisionsWith) > 0.5f && (timeAway == 500 || timeAway == 0))
         {
             glm::vec3 dir = glm::normalize(target->data - position);
             position = position + (0.05f*dir);
             translationMat = glm::translate(MAT, position);
+            timeAway = 500;
+        }
+        else
+        {
+            timeAway--;
+            glm::vec3 dir = glm::normalize(target->data - position);
+            position = position - (0.05f*dir);
+            translationMat = glm::translate(MAT, position);
+
         }
     }
-
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->update(timer, event, eventTargetNodeId, shader, false, position, activeWindow);
 }
@@ -235,13 +252,41 @@ void Bird::update(int timer, int event, int eventTargetNodeId, Shader shader, bo
 
 void Animal::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
 {
+
     static float angle = 0.0f;
-    rotationMat = glm::rotate(MAT, angle, up);
-    angle += 0.01f;
+    if(settings.destroyedBalloon)
+    {
+        if(position.y > 2.5f)
+        {
+            auto diff = glm::vec3(0.0f, -0.009f, 0.0f);
+            position += diff;
+            translationMat = glm::translate(translationMat, diff);
+            rotationMat = glm::rotate(MAT, glm::radians(angle), X);
+            angle+=2.0f;
+        }
+    }
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position, activeWindow);
 }
 
 
-void Basket::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow) {};
+void Basket::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
+{
+
+    if(settings.destroyedBalloon)
+    {
+        if(position.y > 3.0f)
+        {
+            auto diff = glm::vec3(0.003f, -0.009f, 0.0f);
+            position += diff;
+            translationMat = glm::translate(translationMat, diff);
+        }
+
+    }
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        (*itr)->update(timer, event, eventTargetNodeId, shader, false, position, activeWindow);
+
+}
 
 
 void Head::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
@@ -297,12 +342,19 @@ void Balloon::update(int timer, int event, int eventTargetNodeId, Shader shader,
 {
     if(timer > time(4))
     {
-        glm::vec3 diff(0.003f, 0.006f, 0.0f);
-        position += diff;
+        if(size.x < 4.0f)  // WARNING: hard-coded for now
+        {
+            glm::vec3 diff(0.003f, 0.006f, 0.0f);
+            position += diff;
 
-        translationMat = glm::translate(translationMat, diff);
-        size += 0.0007f;
-        selfScalingMat = glm::scale(MAT, size);
+            translationMat = glm::translate(translationMat, diff);
+            size += 0.0014f;
+            selfScalingMat = glm::scale(MAT, size);
+        }
+        else
+        {
+            settings.destroyBalloon = true;
+        }
     }
 
     for(auto itr = children.begin(); itr != children.end(); itr++)

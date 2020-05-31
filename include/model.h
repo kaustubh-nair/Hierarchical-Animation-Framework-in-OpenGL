@@ -7,8 +7,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "../include/mesh.h"
 #include "../include/lighting.h"
+#include "../include/settings.h"
 
 
 #include "../include/scene_node/scene_node.h"
@@ -18,10 +18,11 @@
 #include "../include/scene_node/group_node.h"
 #include "../include/scene_node/camera_group_node.h"
 
+extern struct Settings settings;
+
 class Model
 {
     public:
-        std::vector<Mesh> meshes;
         SceneNode *sceneRoot = nullptr;
 
         int firstCameraId = 0;
@@ -51,6 +52,8 @@ class Model
         void drawLighting( Shader shader);
         void toggleObjectsActive();
         void toggleObjectsInActive();
+
+        void destroyBalloon();
 
 };
 

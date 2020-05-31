@@ -24,15 +24,17 @@ class MeshNode : public SceneNode
 
 
         TargetNode *target = nullptr; 
-    protected:
-        glm::vec3 position;
-        glm::vec3 front;
-        glm::vec3 up;
+        glm::vec3 size = glm::vec3(2.0f, 2.0f, 2.0f);
 
         glm::mat4 translationMat;
         glm::mat4 rotationMat;
         glm::mat4 scalingMat;
         glm::mat4 selfScalingMat;
+        glm::vec3 position;
+        glm::vec3 front;
+        glm::vec3 up;
+    protected:
+
         
         glm::vec3 boundingSpherePos;
         float boundingSphereRad;
