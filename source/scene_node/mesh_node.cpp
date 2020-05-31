@@ -55,13 +55,12 @@ void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 
     stack->pop_back();
 
-    /* bounding boxes for collisions 
     if(avoidCollisionsWith != nullptr)
     {
-        glm::vec4 bbMat = (absTrans*glm::vec4(1.0f));
+        glm::vec4 bbMat = (model*glm::vec4(0.0f));
         boundingSpherePos = glm::vec3(bbMat.x, bbMat.y, bbMat.z);
-        boundingSphereRad = (absScaling*glm::vec4(1.0f)).x;
-    }*/
+        boundingSphereRad = (model*glm::vec4(1.0f)).x;
+    }
 
 
     shader.setMat4("model", model);

@@ -38,6 +38,8 @@ class SceneNode
         bool active = false;
         void toggleActive();
         void toggleInActive();
+        SceneNode* findNodeByID(int id);
+        void deleteChildByID(int ID);
 
     private:
 

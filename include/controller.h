@@ -7,7 +7,6 @@
 #include "../include/view.h"
 #include "../include/shader.h"
 #include "../include/model.h"
-#include "../include/mesh.h"
 #include "../include/ply_parser.h"
 
 extern struct Settings settings;
