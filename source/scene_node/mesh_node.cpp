@@ -33,34 +33,29 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 
 void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)
 {
-    glm::mat4 absScaling = glm::mat4(1.0f);
-    glm::mat4 absTrans = glm::mat4(1.0f);
-    glm::mat4 absRotation = glm::mat4(1.0f);
+    glm::mat4 model = glm::mat4(1.0f);
 
     stack->push_back(scalingMat);
     stack->push_back(rotationMat);
     stack->push_back(translationMat);
 
     //stack but composition happens LIFO
-    for(auto i = stack->begin(); i != stack->end(); i+=3)
+    for(auto i = stack->begin(); i != stack->end(); i++)
     {
-        absScaling = (*i)*absScaling;
-        absRotation = (*(i+1))*absRotation;
-        absTrans = (*(i+2))*absTrans;
+        model = (*i)*model;
     }
 
-    absScaling = selfScalingMat*absScaling;
-    glm::mat4 model = absTrans*absRotation*absScaling;
-    glm::vec4 upMat = (absTrans*glm::vec4(up, 1.0f));
+    //absScaling = selfScalingMat*absScaling;
+    glm::vec4 upMat = (model*glm::vec4(up, 1.0f));
     up = glm::normalize(glm::vec3(upMat.x, upMat.y, upMat.z));
 
-    /* bounding boxes for collisions */
+    /* bounding boxes for collisions 
     if(avoidCollisionsWith != nullptr)
     {
         glm::vec4 bbMat = (absTrans*glm::vec4(1.0f));
         boundingSpherePos = glm::vec3(bbMat.x, bbMat.y, bbMat.z);
         boundingSphereRad = (absScaling*glm::vec4(1.0f)).x;
-    }
+    }*/
 
 
     shader.setMat4("model", model);
