@@ -33,6 +33,7 @@ int main()
 {
 
     Controller controller;
+    int id = 1;
 
     /* NOTE: Id order of group nodes should not be changed */
 
@@ -43,89 +44,69 @@ int main()
 
     /* NOTE: Camera nodes should be inserted with sequential ids */
 
+    controller.model.addNode(lightGroup, 0);   //lights
+    controller.model.addNode(cameraGroup, 0);   //cameras
+    controller.model.addNode(meshGroup, 0);   //meshes
+
+    SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
+    SceneNode *light3 = controller.model.addLightNode(14, 1, ORIGIN + (6.0f*Y) - (1.0f*X), "data/meshes/tetrahedron.ply", UNIT, SPOTLIGHT);
+    SceneNode *light2 = controller.model.addLightNode(15, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
+
     /* main camera */
     SceneNode *camera = new CameraNode(4, ORIGIN + (5.0f*Z) + Y, -Z - ORIGIN = (5.0f*Z) - X - Y, Y);
-    SceneNode *grass = new MeshNode(9, "data/meshes/rectangle.ply", "data/textures/grass.jpg",
-                                  ORIGIN, glm::scale(MAT, 40.0f * UNIT), MAT, MAT);
-
-
-    SceneNode *personA  = new Person(10, "data/meshes/body.ply",
-                                     "data/textures/skin.jpg",
-                              X + (0.5f*Y), MAT, MAT, MAT);
     SceneNode *leftHmdA = new CameraNode(5, (0.5f*X) +(2.0f*Y), Z, Y);
     SceneNode *rightHmdA = new CameraNode(6, -(0.5f*X) +(2.0f*Y), Z, Y);
-    SceneNode *headA = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
-                                  (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
-
-    ((Head*) headA)->userControlled = false;
-
-
-    SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg",
-                                                     -X + (0.5f*Y), MAT, MAT, MAT);
     SceneNode *leftHmdB = new CameraNode(52, (0.5f*X) +(2.0f*Y), Z, Y);
     SceneNode *rightHmdB = new CameraNode(69, -(0.5f*X) +(2.0f*Y), Z, Y);
-    SceneNode *headB = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
-                                  (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+    SceneNode *birdCam = new CameraNode(199, -X, X, Y);
+
+    SceneNode *grass = new MeshNode(9, "data/meshes/rectangle.ply", "data/textures/grass.jpg", ORIGIN, glm::scale(MAT, 40.0f * UNIT), MAT, MAT);
+
+    SceneNode *personA  = new Person(10, "data/meshes/body.ply", "data/textures/skin.jpg", X + (0.5f*Y), MAT, MAT, MAT);
+    SceneNode *headA = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
 
-    SceneNode *personC = new Person(1092, "data/meshes/body.ply", "data/textures/skin.jpg",
-                                                     (0.5f*Y), MAT, MAT, MAT);
-    SceneNode *headC = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg",
-                                  (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
+    SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg", -X + (0.5f*Y), MAT, MAT, MAT);
+    SceneNode *headB = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+
+
+    SceneNode *personC = new Person(1092, "data/meshes/body.ply", "data/textures/skin.jpg", (0.5f*Y), MAT, MAT, MAT);
+    SceneNode *headC = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+
+
+    SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/purple.jpeg", ORIGIN + (4.0f*Y) , MAT, MAT, glm::scale(MAT, 2.0f*UNIT));
+    SceneNode *basket = new Basket(17, "data/meshes/cube.ply", "data/textures/skin.jpg", ORIGIN - Y, MAT, MAT, glm::scale(MAT,0.5f*UNIT));
+    SceneNode *animal = new Animal(18, "data/meshes/cow.ply", "data/textures/black.jpg", ORIGIN - Y - (0.2f*X), MAT, MAT, glm::scale(MAT,0.5f*UNIT));
+
+    SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg", 7.0f*(Y + X + Z), glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
+
+    ((Head*) headA)->userControlled = false;
     ((Person*) personC)->userControlled = false;
     ((Head*) headC)->userControlled = false;
     personC->avoidCollisionsWith = personB;
     personB->avoidCollisionsWith = personC;
-
-    SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/purple.jpeg",
-                                         ORIGIN + (4.0f*Y) , MAT, MAT, glm::scale(MAT, 2.0f*UNIT));
-    SceneNode *basket = new Basket(17, "data/meshes/cube.ply", "data/textures/skin.jpg",
-                                         ORIGIN - Y, MAT, MAT, glm::scale(MAT,0.5f*UNIT));
-    SceneNode *animal = new Animal(18, "data/meshes/cow.ply", "data/textures/black.jpg",
-                                         ORIGIN - Y - (0.2f*X), MAT, MAT, glm::scale(MAT,0.5f*UNIT));
-
-    SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg",
-                                        7.0f*(Y + X + Z), glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
     bird->avoidCollisionsWith = balloon;
     balloon->avoidCollisionsWith = bird;
-    SceneNode *birdCam = new CameraNode(199, -X, X, Y);
-
 
     /* NOTE: id = 0 is scene root, which is inserted autoMATicallY. */
 
     /* id, parentId */
-    controller.model.addNode(lightGroup, 0);   //lights
-    controller.model.addNode(cameraGroup, 0);   //cameras
-    controller.model.addNode(meshGroup, 0);   //meshes
 
     /* NOTE: Camera nodes should be inserted with sequential ids */
 
     /* main camera */
     controller.model.addCameraNode(camera, 2);
-    controller.model.addNode(grass, 3);
-
-
-    controller.model.addNode(personA, 3);
-    controller.model.addNode(headA, 10);
-
-
     controller.model.addCameraNode(leftHmdA, 2);
     controller.model.addCameraNode(rightHmdA, 2);
-    controller.model.addConnection(personA, leftHmdA);
-    controller.model.addConnection(personA, rightHmdA);
-
-
-    controller.model.addNode(personB, 3);
-    controller.model.addNode(headB, 12);
-
     controller.model.addCameraNode(leftHmdB, 2);
     controller.model.addCameraNode(rightHmdB, 2);
-    controller.model.addConnection(personB, leftHmdB);
-    controller.model.addConnection(personB, rightHmdB);
 
-
-
+    controller.model.addNode(grass, 3);
+    controller.model.addNode(personA, 3);
+    controller.model.addNode(headA, 10);
+    controller.model.addNode(personB, 3);
+    controller.model.addNode(headB, 12);
     controller.model.addNode(personC, 3);
     controller.model.addNode(headC, 14);
     controller.model.addNode(balloon, 3);
@@ -133,9 +114,11 @@ int main()
     controller.model.addNode(animal, 16);
     controller.model.addNode(bird, 3);
 
-    SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
-    SceneNode *light3 = controller.model.addLightNode(14, 1, ORIGIN + (6.0f*Y) - (1.0f*X), "data/meshes/tetrahedron.ply", UNIT, SPOTLIGHT);
-    SceneNode *light2 = controller.model.addLightNode(15, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
+    controller.model.addConnection(personB, leftHmdB);
+    controller.model.addConnection(personB, rightHmdB);
+    controller.model.addConnection(personA, leftHmdA);
+    controller.model.addConnection(personA, rightHmdA);
+
 
 
     cameraGroup->leftCamIds.push_back(leftHmdA->id);
@@ -174,15 +157,18 @@ int main()
     //cameraGroup->rightCamIds.push_back(camera->id);
 
 
-
     controller.run();
+
+
     return 0;
 }
+
 
 int time(int seconds)
 {
     return 60 * seconds;  //assume 60fps
 }
+
 
 void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
 {
