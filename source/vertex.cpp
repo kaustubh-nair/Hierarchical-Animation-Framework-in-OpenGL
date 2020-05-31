@@ -87,9 +87,13 @@ glm::vec2 findSphPointFromObjectNormal(glm::vec3 position, glm::vec3 normal)
 }
 
 
-void Vertex::computeTextureCoords()
+void Vertex::computeTextureCoords(int id)
 {
-    TexCoords = findCylPointFromObjectNormal(position, normal);
+    // WARNING: head nodes hard coded for now
+    if(id == 100 || id == 101 || id == 102)
+        TexCoords = findSphPointFromObjectNormal(position, normal);
+    else
+        TexCoords = findCylPointFromObjectNormal(position, normal);
 }
 
 void Vertex::computeAvgNormals(std::vector<Vertex> &vertices, std::vector<Triangle> &triangles)

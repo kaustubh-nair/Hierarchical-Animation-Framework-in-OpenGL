@@ -108,7 +108,7 @@ int Controller::reactToCallback(int &event, CameraNode *activeCam)
     || (event == MOVE_BACKWARD)
     || (event == MOVE_RIGHT)
     )
-       return 4;  //WARNING hard-coded
+       return activeCam->meshId;
 
     else if(event == CHANGE_CAMERA)
     {

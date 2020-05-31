@@ -1,8 +1,9 @@
 #include "../../include/scene_node/camera_node.h"
 
-CameraNode::CameraNode(int Id, glm::vec3 positionVec, glm::vec3 frontVec, glm::vec3 upVec)
+CameraNode::CameraNode(int Id, int meshID, glm::vec3 positionVec, glm::vec3 frontVec, glm::vec3 upVec)
 {
     id = Id;
+    meshId = meshID;
     updateLookAt();
     yaw = 90.0f;
     pitch = 0.0f;

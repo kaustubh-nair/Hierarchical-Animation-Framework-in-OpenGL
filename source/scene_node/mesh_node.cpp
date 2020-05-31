@@ -28,7 +28,7 @@ MeshNode::MeshNode(int nodeId, std::string meshPath, std::string texturePath,
 
     /* compute and save texture map coordinates */
     for(auto vertex = vertices.begin(); vertex < vertices.end(); vertex++)
-        vertex->computeTextureCoords();
+        vertex->computeTextureCoords(id);
 }
 
 void MeshNode::render(Shader shader, std::vector<glm::mat4> *stack)

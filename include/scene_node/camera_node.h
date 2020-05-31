@@ -12,7 +12,7 @@
 class CameraNode : public SceneNode
 {
     public:
-        CameraNode(int Id, glm::vec3 positionVec, glm::vec3 frontVec, glm::vec3 upVec);
+        CameraNode(int Id, int meshID, glm::vec3 positionVec, glm::vec3 frontVec, glm::vec3 upVec);
 
         void render(Shader shader, std::vector <glm::mat4> *stack) {};
         void update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow);
@@ -28,6 +28,7 @@ class CameraNode : public SceneNode
         glm::vec3 up;
         glm::vec3 front;
         void updateLookAt();
+        int meshId;    //Mesh id that uses this camera - change later
     private:
 };
 
