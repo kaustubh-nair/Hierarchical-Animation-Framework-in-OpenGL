@@ -36,6 +36,24 @@ void SceneNode::toggleActive()
 void SceneNode::toggleInActive()
 {
     active = false;
-    for(auto itr = children.begin(); itr != children.end(); itr++)
-        (*itr)->toggleInActive();
 }
+
+
+SceneNode* SceneNode::findNodeByID(int id)
+{
+    if(this->id == id)
+        return this;
+
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+        return findNodeByID((*itr)->id);
+}
+
+void SceneNode::deleteChildByID(int ID)
+{
+    for(auto itr = children.begin(); itr != children.end(); itr++)
+    {
+        if((*itr)->id == ID)
+            children.erase(itr);
+    }
+}
+

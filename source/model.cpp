@@ -46,7 +46,7 @@ void Model::addConnection(SceneNode *node1, SceneNode *node2)
 
 CameraNode* Model::getCamera(int camId)
 {
-    /* Note: this assumes camera group node is always the second child of root */
+    /* WARNING: this assumes camera group node is always the second child of root */
     CameraGroupNode *cameraGroup = (CameraGroupNode *)(sceneRoot->children).at(1);
     return cameraGroup->getCamera(camId);
 }
@@ -75,47 +75,27 @@ void Model::render(Shader shader)
 void Model::update(int timer, int event, int eventTargetNodeId, Shader shader, GLFWwindow *activeWindow)
 {
     sceneRoot->update(timer, event, eventTargetNodeId, shader, false, glm::vec3(0.0f, 0.0f, 0.0f), activeWindow);
-}
-
-
-void Model::unselect()
-{
-    std::vector<Mesh>::iterator mesh;
-
-    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
+    if(settings.destroyBalloon == true)
     {
-        if(mesh->id == settings.selectedMesh)
-        {
-            mesh->selected = false;
-            break;
-        }
-    }
-    settings.selectedMesh = -1;
-}
-
-void Model::select(int id)
-{
-    if(settings.selectedMesh != -1)
-        return;
-    settings.selectedMesh = id;
-
-    std::vector<Mesh>::iterator mesh;
-    for (mesh = meshes.begin(); mesh < meshes.end(); mesh++)
-    {
-        if(mesh->id == id)
-        {
-            mesh->selected = true;
-            break;
-        }
+        destroyBalloon();
+        settings.destroyBalloon = false;
     }
 }
 
-void Model::translate(glm::vec2 direction)
+void Model::destroyBalloon()
 {
-    if(settings.selectedMesh == -1)
-        return;
-    meshes[settings.selectedMesh - 1].translate(direction);
+    // WARNING: hardcoded
+    SceneNode *meshGroup = (sceneRoot->children).at(2);
+    SceneNode *balloon = sceneRoot->findNodeByID(16);
+    SceneNode *basket = sceneRoot->findNodeByID(17);
+    SceneNode *animal = sceneRoot->findNodeByID(18);
+
+    meshGroup->deleteChildByID(balloon->id);
+    meshGroup->children.push_back(basket);
+    meshGroup->children.push_back(animal);
+
 }
+
 
 void Model::toggleObjectsActive()
 {
