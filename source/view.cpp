@@ -78,7 +78,6 @@ int View::listenToCallbacks(GLFWwindow *window)
         i++;
     }
     return NONE;
-
 }
 
 void View::reactToMouseCallbacks(GLFWwindow *window, CameraNode *camera)

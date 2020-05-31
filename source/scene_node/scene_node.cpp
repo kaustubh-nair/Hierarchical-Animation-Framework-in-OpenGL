@@ -24,3 +24,8 @@ void SceneNode::addConnection(SceneNode *node)
 {
     connections.push_back(node);
 }
+
+void SceneNode::toggleActive()
+{
+    active = !active;
+}

@@ -54,25 +54,25 @@ int main()
 
     /* main camera */
     SceneNode *camera = new CameraNode(4, ORIGIN + (5.0f*Z) + Y, -Z - ORIGIN = (5.0f*Z) - X - Y, Y);
-    SceneNode *leftHmdA = new CameraNode(5, (0.5f*X) +(2.0f*Y), Z, Y);
-    SceneNode *rightHmdA = new CameraNode(6, -(0.5f*X) +(2.0f*Y), Z, Y);
-    SceneNode *leftHmdB = new CameraNode(52, (0.5f*X) +(2.0f*Y), Z, Y);
-    SceneNode *rightHmdB = new CameraNode(69, -(0.5f*X) +(2.0f*Y), Z, Y);
-    SceneNode *birdCam = new CameraNode(199, -X, X, Y);
+    SceneNode *leftHmdA = new CameraNode(5, (0.5f*X) +(2.0f*Y), Z + (0.5f*Y), Y);
+    SceneNode *rightHmdA = new CameraNode(6, -(0.5f*X) +(2.0f*Y), Z + (0.5f*Y), Y);
+    SceneNode *leftHmdB = new CameraNode(52, (0.5f*X) +(2.0f*Y), Z + (0.5f*Y), Y);
+    SceneNode *rightHmdB = new CameraNode(69, -(0.5f*X) +(2.0f*Y), Z + (0.5f*Y), Y);
+    SceneNode *birdCam = new CameraNode(199, -X, Z + (0.5f*Y), Y);
 
     SceneNode *grass = new MeshNode(9, "data/meshes/rectangle.ply", "data/textures/grass.jpg", ORIGIN, glm::scale(MAT, 40.0f * UNIT), MAT, MAT);
 
     SceneNode *personA  = new Person(10, "data/meshes/body.ply", "data/textures/skin.jpg", X + (0.5f*Y), MAT, MAT, MAT);
-    SceneNode *headA = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+    SceneNode *headA = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.4f*Y) + (0.1f*X), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
 
 
     SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg", -X + (0.5f*Y), MAT, MAT, MAT);
-    SceneNode *headB = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+    SceneNode *headB = new Head(101, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.4f*Y) + (0.1f*X), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
 
     SceneNode *personC = new Person(1092, "data/meshes/body.ply", "data/textures/skin.jpg", (0.5f*Y), MAT, MAT, MAT);
-    SceneNode *headC = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.5f*Y), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+    SceneNode *headC = new Head(102, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.4f*Y) + (0.1f*X), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
 
 
     SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/purple.jpeg", ORIGIN + (4.0f*Y) , MAT, MAT, glm::scale(MAT, 2.0f*UNIT));
@@ -108,7 +108,7 @@ int main()
     controller.model.addNode(personB, 3);
     controller.model.addNode(headB, 12);
     controller.model.addNode(personC, 3);
-    controller.model.addNode(headC, 14);
+    controller.model.addNode(headC, 1092);
     controller.model.addNode(balloon, 3);
     controller.model.addNode(basket, 16);
     controller.model.addNode(animal, 16);
@@ -120,7 +120,7 @@ int main()
     controller.model.addConnection(personA, rightHmdA);
 
 
-
+    /*
     cameraGroup->leftCamIds.push_back(leftHmdA->id);
     cameraGroup->rightCamIds.push_back(rightHmdA->id);
 
@@ -129,6 +129,11 @@ int main()
 
     cameraGroup->leftCamIds.push_back(rightHmdA->id);
     cameraGroup->rightCamIds.push_back(rightHmdB->id);
+    */
+
+
+    cameraGroup->leftCamIds.push_back(camera->id);
+    cameraGroup->rightCamIds.push_back(camera->id);
 
     TargetNode *target1 = new TargetNode(300);
     ((MeshNode*)bird)->target = target1;
@@ -153,8 +158,6 @@ int main()
     controller.model.addNode(target5, headB->id);
 
 
-    //cameraGroup->leftCamIds.push_back(birdCam->id);  TODO
-    //cameraGroup->rightCamIds.push_back(camera->id);
 
 
     controller.run();
@@ -172,39 +175,36 @@ int time(int seconds)
 
 void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
 {
-    if(userControlled)
+    if(userControlled && active)
     {
-        if((id == eventTargetNodeId) || isConnection)
+        float sensitivity = 0.5f;
+
+        if(event == MOVE_FORWARD)
         {
-            float sensitivity = 0.5f;
-
-            if(event == MOVE_FORWARD)
-            {
-                position += sensitivity * glm::normalize(front - position);
-                translationMat = glm::translate(MAT, position);
-            }
-
-            else if(event == MOVE_BACKWARD)
-            {
-                position -= sensitivity * glm::normalize(front - position);
-                translationMat = glm::translate(MAT, position);
-            }
-
-            else if(event == MOVE_RIGHT)
-            {
-                position -= sensitivity * glm::normalize(glm::cross((position - front), up));
-                translationMat = glm::translate(MAT, position);
-            }
-
-            else if(event == MOVE_LEFT)
-            {
-                position += sensitivity * glm::normalize(glm::cross((position - front), up));
-                translationMat = glm::translate(MAT, position);
-            }
-
-            for(auto itr = connections.begin(); itr != connections.end(); itr++)
-                (*itr)->update(timer, event, eventTargetNodeId, shader, true, position, activeWindow);
+            position += sensitivity * glm::normalize(front - position);
+            translationMat = glm::translate(MAT, position);
         }
+
+        else if(event == MOVE_BACKWARD)
+        {
+            position -= sensitivity * glm::normalize(front - position);
+            translationMat = glm::translate(MAT, position);
+        }
+
+        else if(event == MOVE_RIGHT)
+        {
+            position -= sensitivity * glm::normalize(glm::cross((position - front), up));
+            translationMat = glm::translate(MAT, position);
+        }
+
+        else if(event == MOVE_LEFT)
+        {
+            position += sensitivity * glm::normalize(glm::cross((position - front), up));
+            translationMat = glm::translate(MAT, position);
+        }
+
+        for(auto itr = connections.begin(); itr != connections.end(); itr++)
+            (*itr)->update(timer, event, eventTargetNodeId, shader, true, position, activeWindow);
     }
     else
     {

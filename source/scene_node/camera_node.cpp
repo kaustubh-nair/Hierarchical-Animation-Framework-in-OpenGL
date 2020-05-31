@@ -14,11 +14,9 @@ CameraNode::CameraNode(int Id, glm::vec3 positionVec, glm::vec3 frontVec, glm::v
 
 void CameraNode::update(int timer, int event, int eventTargetNodeId, Shader shader, bool isConnection, glm::vec3 data, GLFWwindow *activeWindow)
 {
-    //TODO Remove?
-    if((eventTargetNodeId == id) || isConnection)
+    float sensitivity = 0.5f;
+    if(eventTargetNodeId == id)
     {
-        float sensitivity = 0.5f;
-
         if(event == MOVE_FORWARD)
             position -= sensitivity * glm::normalize(position - front);
 
@@ -30,16 +28,20 @@ void CameraNode::update(int timer, int event, int eventTargetNodeId, Shader shad
 
         else if(event == MOVE_LEFT)
             position += sensitivity * glm::normalize(glm::cross((position - front), up));
+    }
 
+    else if(isConnection)
+    {
+        position = data + glm::vec3(0.0f, 0.7f, 0.0f);
         for(auto itr = children.begin(); itr != children.end(); itr++)
             (*itr)->update(timer, event, eventTargetNodeId, shader, true, position, activeWindow);
     }
+
     if(target != nullptr)
     {
         front = target->data;
         glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0.0f, 1.0f, 0.0f)));
         up = glm::normalize(glm::cross(right, front));
-
         updateLookAt();
     }
 

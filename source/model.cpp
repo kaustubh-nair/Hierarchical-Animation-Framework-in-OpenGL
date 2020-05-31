@@ -116,3 +116,9 @@ void Model::translate(glm::vec2 direction)
         return;
     meshes[settings.selectedMesh - 1].translate(direction);
 }
+
+void Model::toggleObjectsActive()
+{
+    sceneRoot->toggleActive();
+
+}

@@ -49,6 +49,7 @@ class Model
         void translate(glm::vec2 direction);
 
         void drawLighting( Shader shader);
+        void toggleObjectsActive();
 
 };
 

@@ -54,7 +54,13 @@ void Controller::render(int timer, GLFWwindow *window, CameraNode *activeCam)
 
     if(view.windowIsActive(window))
     {
-        //view.reactToMouseCallbacks(window, activeCam);
+        if(activeCam->id == 4)   // WARNING: hardcoded
+        {
+            view.reactToMouseCallbacks(window, activeCam);
+            model.toggleObjectsActive();
+        }
+        else
+            model.toggleObjectsActive();
         int event = view.listenToCallbacks(window);
         int target = reactToCallback(event, activeCam);
         model.update(timer, event, target, shader, window);
@@ -101,7 +107,7 @@ int Controller::reactToCallback(int &event, CameraNode *activeCam)
     || (event == MOVE_BACKWARD)
     || (event == MOVE_RIGHT)
     )
-       return 12;  //change later
+       return 4;  //WARNING hard-coded
 
     else if(event == CHANGE_CAMERA)
     {
