@@ -72,10 +72,12 @@ int main()
     SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg", 7.0f*(Y + X + Z), glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
 
     SceneNode *camera = new CameraNode(4, 4, ORIGIN + (5.0f*Z) + Y, -Z - ORIGIN - (5.0f*Z) - X - Y, Y);
-    SceneNode *leftHmdA = new CameraNode(5, personA->id,  (0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
-    SceneNode *rightHmdA = new CameraNode(6, personA->id, -(0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
-    SceneNode *leftHmdB = new CameraNode(52, personB->id, (0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
-    SceneNode *rightHmdB = new CameraNode(69, personB->id, -(0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
+
+    SceneNode *leftHmdA = new CameraNode(5, personA->id,  (0.5f*X) +(1.0f*Y), Z + (1.5f*Y) + (0.5f*X) + (1.0f*Y), Y);
+    SceneNode *rightHmdA = new CameraNode(6, personA->id, -(0.5f*X) +(1.0f*Y), Z + (1.5f*Y) - (0.5f*X) + (1.0f*Y), Y);
+    SceneNode *leftHmdB = new CameraNode(52, personB->id, (0.5f*X) +(1.0f*Y), Z + (1.5f*Y) + (0.5f*X) + (1.0f*Y), Y);
+    SceneNode *rightHmdB = new CameraNode(69, personB->id, -(0.5f*X) +(1.0f*Y), Z + (1.5f*Y) - (0.5f*X) + (1.0f*Y), Y);
+
     SceneNode *birdCam = new CameraNode(199, bird->id, -X, Z + (0.5f*Y), Y);
 
     ((Head*) headA)->userControlled = false;
