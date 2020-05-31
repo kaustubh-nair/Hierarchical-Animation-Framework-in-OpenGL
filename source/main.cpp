@@ -57,13 +57,13 @@ int main()
     SceneNode *grass = new MeshNode(9, "data/meshes/rectangle.ply", "data/textures/grass.jpg", ORIGIN, glm::scale(MAT, 40.0f * UNIT), MAT, MAT);
 
     SceneNode *personA  = new Person(10, "data/meshes/body.ply", "data/textures/skin.jpg", X + (0.5f*Y), MAT, MAT, MAT);
-    SceneNode *headA = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.4f*Y) + (0.2f*X), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+    SceneNode *headA = new Head(100, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.45f*Y) + (0.04f*Z) + (0.05f*X), MAT, glm::rotate(MAT,glm::radians(-90.0f),Y), glm::scale(MAT, 0.15f*UNIT));
 
     SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg", -X + (0.5f*Y), MAT, MAT, MAT);
-    SceneNode *headB = new Head(101, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.4f*Y) + (0.2f*X), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+    SceneNode *headB = new Head(101, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.45f*Y)  + (0.04f*Z)+ (0.05f*X), MAT, glm::rotate(MAT,glm::radians(-90.0f),Y), glm::scale(MAT, 0.15f*UNIT));
 
     SceneNode *personC = new Person(1092, "data/meshes/body.ply", "data/textures/skin.jpg", (0.5f*Y), MAT, MAT, MAT);
-    SceneNode *headC = new Head(102, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.4f*Y) + (0.2f*X), MAT, MAT, glm::scale(MAT, 0.2f*UNIT));
+    SceneNode *headC = new Head(102, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.45f*Y) + (0.05f*X) + (0.04f*Z), MAT, glm::rotate(MAT,glm::radians(-90.0f),Y), glm::scale(MAT, 0.15f*UNIT));
 
     SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/purple.jpeg", ORIGIN + (4.0f*Y) , MAT, MAT, glm::scale(MAT, 2.0f*UNIT));
     SceneNode *basket = new Basket(17, "data/meshes/cube.ply", "data/textures/skin.jpg", ORIGIN - Y, MAT, MAT, glm::scale(MAT,0.5f*UNIT));
@@ -71,11 +71,11 @@ int main()
 
     SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg", 7.0f*(Y + X + Z), glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
 
-    SceneNode *camera = new CameraNode(4, 4, ORIGIN + (5.0f*Z) + Y, -Z - ORIGIN = (5.0f*Z) - X - Y, Y);
-    SceneNode *leftHmdA = new CameraNode(5, personA->id,  (0.5f*X) +(2.0f*Y), Z + (0.5f*Y), Y);
-    SceneNode *rightHmdA = new CameraNode(6, personA->id, -(0.5f*X) +(2.0f*Y), Z + (0.5f*Y), Y);
-    SceneNode *leftHmdB = new CameraNode(52, personB->id, (0.5f*X) +(2.0f*Y), Z + (0.5f*Y), Y);
-    SceneNode *rightHmdB = new CameraNode(69, personB->id, -(0.5f*X) +(2.0f*Y), Z + (0.5f*Y), Y);
+    SceneNode *camera = new CameraNode(4, 4, ORIGIN + (5.0f*Z) + Y, -Z - ORIGIN - (5.0f*Z) - X - Y, Y);
+    SceneNode *leftHmdA = new CameraNode(5, personA->id,  (0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
+    SceneNode *rightHmdA = new CameraNode(6, personA->id, -(0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
+    SceneNode *leftHmdB = new CameraNode(52, personB->id, (0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
+    SceneNode *rightHmdB = new CameraNode(69, personB->id, -(0.5f*X) +(1.0f*Y), Z + (1.5f*Y), Y);
     SceneNode *birdCam = new CameraNode(199, bird->id, -X, Z + (0.5f*Y), Y);
 
     ((Head*) headA)->userControlled = false;
