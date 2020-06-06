@@ -50,7 +50,7 @@ int main()
 
     SceneNode *light1 = controller.model.addLightNode(13, 1, ORIGIN + (4.0f*Y) + (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
     SceneNode *light2 = controller.model.addLightNode(14, 1, ORIGIN + (4.0f*Y) - (3.0f*X), "data/meshes/sphere.ply", UNIT, POINTLIGHT);
-    SceneNode *light3 = controller.model.addLightNode(15, 1, ORIGIN + (6.0f*Y) - (1.0f*X), "data/meshes/tetrahedron.ply", UNIT, SPOTLIGHT);
+    SceneNode *light3 = controller.model.addLightNode(15, 1, ORIGIN + (2.0f*Y) - (1.0f*X), "data/meshes/tetrahedron.ply", UNIT, SPOTLIGHT);
 
     /* main camera */
 
@@ -62,14 +62,14 @@ int main()
     SceneNode *personB = new Person(12, "data/meshes/body.ply", "data/textures/skin.jpg", -X + (0.5f*Y), MAT, MAT, MAT);
     SceneNode *headB = new Head(101, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.45f*Y)  + (0.04f*Z)+ (0.05f*X), MAT, glm::rotate(MAT,glm::radians(-90.0f),Y), glm::scale(MAT, 0.15f*UNIT));
 
-    SceneNode *personC = new Person(1092, "data/meshes/body.ply", "data/textures/skin.jpg", (-2.0f*X) + (0.5f*Y), MAT, MAT, MAT);
+    SceneNode *personC = new Person(1092, "data/meshes/body.ply", "data/textures/skin.jpg", (-6.0f*X) + (0.5f*Y), MAT, MAT, MAT);
     SceneNode *headC = new Head(102, "data/meshes/sphere.ply", "data/textures/face.jpg", (0.45f*Y) + (0.05f*X) + (0.04f*Z), MAT, glm::rotate(MAT,glm::radians(-90.0f),Y), glm::scale(MAT, 0.15f*UNIT));
 
     SceneNode *balloon = new Balloon(16, "data/meshes/sphere.ply", "data/textures/purple.jpeg", (3.0f*Y) , MAT, MAT, glm::scale(MAT, 2.0f*UNIT));
     SceneNode *basket = new Basket(17, "data/meshes/cube.ply", "data/textures/skin.jpg", - (2.5f*Y), MAT, MAT, glm::scale(MAT,0.5f*UNIT));
     SceneNode *animal = new Animal(18, "data/meshes/cow.ply", "data/textures/black.jpg", - (2.3f*Y) + (0.1f*X), MAT, MAT, glm::scale(MAT,0.5f*UNIT));
 
-    SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg", 7.0f*(Y + X + Z), glm::scale(MAT, 0.5f*UNIT), MAT, MAT);
+    SceneNode *bird = new Bird(19, "data/meshes/humbird.ply", "data/textures/feather.jpg", 10.0f*(Y + X + Z), glm::scale(MAT, 1.5f*UNIT), MAT, MAT);
 
     SceneNode *camera = new CameraNode(4, 4, -(5.0f*Z) + Y, -Z + (5.0f*Z) - Y, Y);
 
@@ -202,14 +202,21 @@ void Person::update(int timer, int event, int eventTargetNodeId, Shader shader, 
     {
         if(target != nullptr)
         {
-            if(minimumSeperation(avoidCollisionsWith) > 3.0f)
+            static int timeAway = 500;
+            if(minimumSeperation(avoidCollisionsWith) > 0.5f && (timeAway == 500 || timeAway == 0))
             {
                 glm::vec3 dir = glm::normalize(target->data - position);
                 position = position + (0.008f*dir);
                 translationMat = glm::translate(MAT, position);
+                timeAway = 500;
+            }
+            else
+            {
+                timeAway--;
+                glm::vec3 dir = glm::normalize(target->data - position);
+                position = position - (0.008f*dir);
+                translationMat = glm::translate(MAT, position);
 
-                float angle = acos(glm::dot(front, dir));
-                rotationMat = glm::rotate(MAT, angle, Y);
             }
         }
     }
@@ -222,14 +229,23 @@ void Bird::update(int timer, int event, int eventTargetNodeId, Shader shader, bo
 {
     if(target != nullptr)
     {
-        if(minimumSeperation(avoidCollisionsWith) > 0.05f)
+        static int timeAway = 500;
+        if(minimumSeperation(avoidCollisionsWith) > 0.5f && (timeAway == 500 || timeAway == 0))
         {
             glm::vec3 dir = glm::normalize(target->data - position);
             position = position + (0.05f*dir);
             translationMat = glm::translate(MAT, position);
+            timeAway = 500;
+        }
+        else
+        {
+            timeAway--;
+            glm::vec3 dir = glm::normalize(target->data - position);
+            position = position - (0.05f*dir);
+            translationMat = glm::translate(MAT, position);
+
         }
     }
-
     for(auto itr = children.begin(); itr != children.end(); itr++)
         (*itr)->update(timer, event, eventTargetNodeId, shader, false, position, activeWindow);
 }

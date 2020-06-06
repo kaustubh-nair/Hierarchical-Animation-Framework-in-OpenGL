@@ -80,6 +80,7 @@ void LightNode::update(int timer, int event, int eventTargetNodeId, Shader shade
     if(target != nullptr)
     {
         direction = glm::normalize(target->data);
+        direction = glm::vec3(0.0f,-1.0f,0.0f);
         shader.setVec3("lights[" + std::to_string(lightId) + "].dir", direction);
     }
 }

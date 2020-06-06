@@ -24,6 +24,7 @@ class MeshNode : public SceneNode
 
 
         TargetNode *target = nullptr; 
+        glm::vec3 size = glm::vec3(2.0f, 2.0f, 2.0f);
     protected:
         glm::vec3 position;
         glm::vec3 front;

@@ -107,10 +107,10 @@ class PlyParser
                 int v3 = std::stoi(split_line[3].c_str());
                 int v4 = std::stoi(split_line[4].c_str());
 
-                Triangle triangle1(v1, v2, v3);
+                Triangle triangle1(v3, v2, v1);
                 triangles.push_back(triangle1);
 
-                Triangle triangle2(v3, v4, v1);
+                Triangle triangle2(v1, v4, v3);
                 triangles.push_back(triangle2);
             }
             else if(std::stoi(split_line[0]) == 3)
